@@ -20,29 +20,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="目录遍历">
+    <meta name="description" content="如何判断windows是物理机还是虚拟机，确定渗透方向">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pikachu靶场系列-目录遍历">
-<meta property="og:url" content="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/index.html">
+<meta property="og:title" content="判断windows是物理机还是虚拟机">
+<meta property="og:url" content="http://example.com/2023/05/17/windows%E7%9B%B8%E5%85%B3/%E5%88%A4%E6%96%ADwindows%E6%98%AF%E7%89%A9%E7%90%86%E6%9C%BA%E8%BF%98%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA/index.html">
 <meta property="og:site_name" content="欢 迎 光 临">
-<meta property="og:description" content="目录遍历">
+<meta property="og:description" content="如何判断windows是物理机还是虚拟机，确定渗透方向">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/image-20230110143442285.png">
-<meta property="article:published_time" content="2023-05-04T02:28:11.465Z">
-<meta property="article:modified_time" content="2023-05-04T13:57:34.960Z">
+<meta property="og:image" content="http://example.com/images/image-20230417095630088.png">
+<meta property="og:image" content="http://example.com/images/image-20230417095750129.png">
+<meta property="article:published_time" content="2023-05-17T08:07:51.112Z">
+<meta property="article:modified_time" content="2023-05-17T08:07:51.112Z">
 <meta property="article:author" content="fn">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/image-20230110143442285.png">
+<meta name="twitter:image" content="http://example.com/images/image-20230417095630088.png">
 
 
-<link rel="canonical" href="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/">
+<link rel="canonical" href="http://example.com/2023/05/17/windows%E7%9B%B8%E5%85%B3/%E5%88%A4%E6%96%ADwindows%E6%98%AF%E7%89%A9%E7%90%86%E6%9C%BA%E8%BF%98%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/","path":"2023/05/04/pikachu靶场系列/目录遍历/","title":"pikachu靶场系列-目录遍历"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/05/17/windows%E7%9B%B8%E5%85%B3/%E5%88%A4%E6%96%ADwindows%E6%98%AF%E7%89%A9%E7%90%86%E6%9C%BA%E8%BF%98%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA/","path":"2023/05/17/windows相关/判断windows是物理机还是虚拟机/","title":"判断windows是物理机还是虚拟机"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>pikachu靶场系列-目录遍历 | 欢 迎 光 临</title>
+<title>判断windows是物理机还是虚拟机 | 欢 迎 光 临</title>
   
 
 
@@ -141,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分析</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#111"><span class="nav-number">1.</span> <span class="nav-text">111</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#222"><span class="nav-number">2.</span> <span class="nav-text">222</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -187,7 +188,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/17/windows%E7%9B%B8%E5%85%B3/%E5%88%A4%E6%96%ADwindows%E6%98%AF%E7%89%A9%E7%90%86%E6%9C%BA%E8%BF%98%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,12 +201,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="pikachu靶场系列-目录遍历 | 欢 迎 光 临">
-      <meta itemprop="description" content="目录遍历">
+      <meta itemprop="name" content="判断windows是物理机还是虚拟机 | 欢 迎 光 临">
+      <meta itemprop="description" content="如何判断windows是物理机还是虚拟机，确定渗透方向">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          pikachu靶场系列-目录遍历
+          判断windows是物理机还是虚拟机
         </h1>
 
         <div class="post-meta-container">
@@ -215,9 +216,8 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-05-04 10:28:11 / 修改时间：21:57:34" itemprop="dateCreated datePublished" datetime="2023-05-04T10:28:11+08:00">2023-05-04</time>
+      <time title="创建时间：2023-05-17 16:07:51" itemprop="dateCreated datePublished" datetime="2023-05-17T16:07:51+08:00">2023-05-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -225,7 +225,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">pikachu靶场系列</span></a>
+          <a href="/categories/windows%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">windows相关</span></a>
         </span>
     </span>
 
@@ -236,7 +236,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>421</span>
+      <span>99</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -247,7 +247,7 @@
     </span>
 </div>
 
-            <div class="post-description">目录遍历</div>
+            <div class="post-description">如何判断windows是物理机还是虚拟机，确定渗透方向</div>
         </div>
       </header>
 
@@ -255,22 +255,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>目录遍历，这里更像是路径穿越</p>
-<p>很像本地文件包含</p>
-<p>如果是linux系统，可以访问</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+        <h3 id="111"><a href="#111" class="headerlink" title="111"></a>111</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Systeminfo | findstr /i &quot;BIOS&quot;</span><br></pre></td></tr></table></figure>
 
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这里可以看下源码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if(isset($_GET[&#x27;title&#x27;]))&#123;</span><br><span class="line">    $filename=$_GET[&#x27;title&#x27;];</span><br><span class="line">    //这里直接把传进来的内容进行了require(),造成问题</span><br><span class="line">    require &quot;soup/$filename&quot;;</span><br><span class="line">//    echo $html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/image-20230417095630088.png" alt="image-20230417095630088"></p>
+<h3 id="222"><a href="#222" class="headerlink" title="222"></a>222</h3><p>powershell命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell get-wmiobject win32_computersystem</span><br></pre></td></tr></table></figure>
 
-<p>require()也是用于文件包含的函数</p>
-<p>和include()的区别在于</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">include() 出错仅是警告，脚本继续执行 </span><br><span class="line">require() 出错则爆出致命错误，脚本立刻终止 </span><br></pre></td></tr></table></figure>
-
-<p>所以这里当作文件包含利用即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/dir/dir_list.php?title=../../../shell.txt</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110143442285.png" alt="image-20230110143442285"></p>
+<p><img src="/images/image-20230417095750129.png" alt="image-20230417095750129"></p>
 
     </div>
 
@@ -298,14 +289,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/" rel="prev" title="pikachu靶场系列-敏感信息泄露">
-                  <i class="fa fa-chevron-left"></i> pikachu靶场系列-敏感信息泄露
+                <a href="/2023/05/17/windows%E7%9B%B8%E5%85%B3/windows%E4%B8%AD%E7%9A%84cat%E5%91%BD%E4%BB%A4/" rel="prev" title="windows中的cat命令">
+                  <i class="fa fa-chevron-left"></i> windows中的cat命令
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" rel="next" title="pikachu靶场系列-文件包含">
-                  pikachu靶场系列-文件包含 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
